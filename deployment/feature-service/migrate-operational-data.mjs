@@ -20,7 +20,9 @@ async function queryAll(layerUrl, returnGeometry = true) {
   for (let i = 0; i < objectIds.length; i += 500) chunks.push(objectIds.slice(i, i + 500));
   const rows = [];
   for (const chunk of chunks) {
-    const page = await post(`${layerUrl}/query`, { objectIds: chunk.join(','), outFields: '*', returnGeometry: String(returnGeometry), outSR: '4326' });
+    // Keep migrated geometry in the target service's Web Mercator spatial reference.
+    // Inserting bare WGS84 coordinates into a Web Mercator layer places features near Null Island.
+    const page = await post(`${layerUrl}/query`, { objectIds: chunk.join(','), outFields: '*', returnGeometry: String(returnGeometry), outSR: '102100' });
     rows.push(...(page.features || []));
   }
   return rows;
@@ -38,7 +40,7 @@ async function migrate({ layerId, keyField, label }) {
   const existing = new Set(targetRows.map(f => String(f.attributes?.[keyField] || '').trim().toLowerCase()).filter(Boolean));
   const additions = sourceRows
     .filter(f => !existing.has(String(f.attributes?.[keyField] || '').trim().toLowerCase()))
-    .map(f => ({ attributes: cleanAttributes(f.attributes, targetInfo.fields || []), geometry: f.geometry }));
+    .map(f => ({ attributes: cleanAttributes(f.attributes, targetInfo.fields || []), geometry: { ...f.geometry, spatialReference: { wkid: 102100, latestWkid: 3857 } } }));
   let added = 0;
   for (let i = 0; i < additions.length; i += 200) {
     const result = await post(`${targetUrl}/addFeatures`, { features: JSON.stringify(additions.slice(i, i + 200)), rollbackOnFailure: 'true' });
