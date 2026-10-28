@@ -84,6 +84,10 @@ export class WorkflowClient {
 
   addComment(jobId, comment) { return this.call(`jobs/${encodeURIComponent(jobId)}/comments`, { method: 'POST', body: { comment: String(comment) } }); }
 
+  async getComments(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/comments`); return result.jobComments||result.comments||[]; }
+
+  async getHistory(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/history`); return result.jobHistory||result.history||[]; }
+
   assignStep(jobId, stepId, username) {
     return this.call(`jobs/${encodeURIComponent(jobId)}/${encodeURIComponent(stepId)}`, { method: 'POST', body: { assignedType: 'User', assignedTo: username } });
   }
