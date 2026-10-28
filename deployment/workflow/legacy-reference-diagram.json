@@ -1,0 +1,871 @@
+﻿{
+    "diagramId":  "L6OuwzgpQFe_MV_OWJR4DA",
+    "diagramVersion":  5,
+    "diagramName":  "EOC Resource Request / Approval",
+    "description":  "Submit -\u003e Logistics review -\u003e Approve/Deny -\u003e Source -\u003e Mobilize -\u003e Deploy -\u003e Demobilize -\u003e Return -\u003e Close.",
+    "initialStepId":  "rr-submitted",
+    "initialStepName":  "Request Submitted",
+    "steps":  [
+                  {
+                      "id":  "rr-submitted",
+                      "name":  "Request Submitted",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d6MdyiKjHtuS9dJ6",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "0, 0, 120, 60",
+                      "shape":  3,
+                      "color":  "130, 202, 237",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "A resource request (ICS 213RR) has been submitted. Route it to Logistics for review.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-review",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  64,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  136,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  true
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-review",
+                      "name":  "Logistics Review",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  false,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "200, 0, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Logistics: validate the request â€” confirm the NIMS category/kind/type, quantity, priority and incident. Check inventory availability before routing for approval.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-q-approve",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "df1edfcbf6c84833901b2abc39698954",
+                                        "points":  [
+                                                       {
+                                                           "x":  264,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  336,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-q-approve",
+                      "name":  "Approve Request?",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8eAS3yiKjHtuS9dQ1",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "400, 0, 120, 90",
+                      "shape":  4,
+                      "color":  "170, 219, 164",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Question",
+                                     "args":  {
+                                                  "question":  "Does the Approving Authority approve this resource request?",
+                                                  "questionResponses":  {
+                                                                            "Approved":  {
+                                                                                             "displayName":  "Approved",
+                                                                                             "value":  1,
+                                                                                             "order":  0
+                                                                                         },
+                                                                            "Denied":  {
+                                                                                           "displayName":  "Denied",
+                                                                                           "value":  0,
+                                                                                           "order":  1
+                                                                                       }
+                                                                        },
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-notify-approved",
+                                        "expression":  "$retVal == 1",
+                                        "label":  "Approved",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  464,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  498,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  498,
+                                                           "y":  -150
+                                                       },
+                                                       {
+                                                           "x":  536,
+                                                           "y":  -150
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    },
+                                    {
+                                        "nextStep":  "rr-notify-denied",
+                                        "expression":  "$retVal == 0",
+                                        "label":  "Denied",
+                                        "assignedTo":  "9086099f1159417cab56523a46721e54",
+                                        "points":  [
+                                                       {
+                                                           "x":  400,
+                                                           "y":  49
+                                                       },
+                                                       {
+                                                           "x":  400,
+                                                           "y":  186
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "BOTTOM",
+                                                      "TOP"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-notify-approved",
+                      "name":  "Notify Logistics â€” Approved",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8eAS3yiKjHtuS9dEZ",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "600, 150, 120, 60",
+                      "shape":  1,
+                      "color":  "170, 184, 242",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Email",
+                                     "args":  {
+                                                  "subject":  "Resource request APPROVED â€” source and mobilize",
+                                                  "body":  "\u0027\u003cp\u003eA resource request has been \u003cb\u003eapproved\u003c/b\u003e and is ready to source.\u003c/p\u003e\u0027 + \u0027\u003cp\u003e\u003cb\u003eRequest:\u003c/b\u003e \u0027 + jobExtendedProperty($job, \u0027resource_request\u0027, \u0027request_title\u0027) + \u0027\u003c/p\u003e\u0027 + \u0027\u003cp\u003e\u003cb\u003eIncident:\u003c/b\u003e \u0027 + jobExtendedProperty($job, \u0027resource_request\u0027, \u0027incident_name\u0027) + \u0027\u003c/p\u003e\u0027",
+                                                  "notificationServiceRecipients":  {
+                                                                                        "toGroup":  "04e7447c37ba4d98b24e233456dd1e25"
+                                                                                    }
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-source",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  600,
+                                                           "y":  -116
+                                                       },
+                                                       {
+                                                           "x":  600,
+                                                           "y":  -75
+                                                       },
+                                                       {
+                                                           "x":  800,
+                                                           "y":  -75
+                                                       },
+                                                       {
+                                                           "x":  800,
+                                                           "y":  -34
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "BOTTOM",
+                                                      "TOP"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  true
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-source",
+                      "name":  "Source / Commit Resource",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  false,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "800, 0, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Logistics: identify and commit an available NIMS-typed resource to this request. Set the request status to Sourced and record the sourced resource.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-mobilize",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  864,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  936,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-mobilize",
+                      "name":  "Mobilize / Dispatch",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "1000, 0, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Mobilize the resource and dispatch to the incident. Set the request status to En Route.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-deploy",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "9f742aac031740e3801e23815e18d0f8",
+                                        "points":  [
+                                                       {
+                                                           "x":  1064,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  1136,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  true
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-deploy",
+                      "name":  "Deploy / In Use",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  false,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "1200, 0, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Operations: receive and employ the resource at the incident. Set the request status to Deployed.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-q-return",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "9f742aac031740e3801e23815e18d0f8",
+                                        "points":  [
+                                                       {
+                                                           "x":  1264,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  1336,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-q-return",
+                      "name":  "Ready to Return?",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8eAS3yiKjHtuS9dQ1",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "1400, 0, 120, 90",
+                      "shape":  4,
+                      "color":  "170, 219, 164",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Question",
+                                     "args":  {
+                                                  "question":  "Is the resource ready to demobilize and return?",
+                                                  "questionResponses":  {
+                                                                            "Yes":  {
+                                                                                        "displayName":  "Yes",
+                                                                                        "value":  1,
+                                                                                        "order":  0
+                                                                                    },
+                                                                            "StillDeployed":  {
+                                                                                                  "displayName":  "Still Deployed",
+                                                                                                  "value":  0,
+                                                                                                  "order":  1
+                                                                                              }
+                                                                        },
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-demob",
+                                        "expression":  "$retVal == 1",
+                                        "label":  "Yes",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  1464,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  1536,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  true
+                                    },
+                                    {
+                                        "nextStep":  "rr-deploy",
+                                        "expression":  "$retVal == 0",
+                                        "label":  "StillDeployed",
+                                        "assignedTo":  "9f742aac031740e3801e23815e18d0f8",
+                                        "points":  [
+                                                       {
+                                                           "x":  1400,
+                                                           "y":  -49
+                                                       },
+                                                       {
+                                                           "x":  1400,
+                                                           "y":  -54
+                                                       },
+                                                       {
+                                                           "x":  1200,
+                                                           "y":  -54
+                                                       },
+                                                       {
+                                                           "x":  1200,
+                                                           "y":  -34
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "TOP",
+                                                      "TOP"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  true
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-demob",
+                      "name":  "Demobilize",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  false,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "1600, 0, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Logistics: demobilize the resource and coordinate its return. Set the request status to Demobilizing.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-returned",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  1664,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  1736,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-returned",
+                      "name":  "Return \u0026 Restock",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "1800, 0, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Confirm the resource has been returned, inspected and restocked to available inventory. Set the request status to Returned.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-closed",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "points":  [
+                                                       {
+                                                           "x":  1864,
+                                                           "y":  0
+                                                       },
+                                                       {
+                                                           "x":  1936,
+                                                           "y":  0
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Unassigned",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-notify-denied",
+                      "name":  "Notify Requestor â€” Denied",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8eAS3yiKjHtuS9dEZ",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "400, -220, 120, 60",
+                      "shape":  1,
+                      "color":  "170, 184, 242",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Email",
+                                     "args":  {
+                                                  "subject":  "Resource request DENIED â€” review, revise and resubmit",
+                                                  "body":  "\u0027\u003cp\u003eYour resource request has been \u003cb\u003edenied\u003c/b\u003e by the Approving Authority. The request details, full audit trail and the reason for denial are below, along with a link to revise and resubmit it.\u003c/p\u003e\u0027 + $job.description",
+                                                  "notificationServiceRecipients":  {
+                                                                                        "toGroup":  "9086099f1159417cab56523a46721e54"
+                                                                                    }
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-denied",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "04e7447c37ba4d98b24e233456dd1e25",
+                                        "points":  [
+                                                       {
+                                                           "x":  464,
+                                                           "y":  220
+                                                       },
+                                                       {
+                                                           "x":  536,
+                                                           "y":  220
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-denied",
+                      "name":  "Record Denial",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d-MryiKjHtuS9dJ7",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "600, -220, 120, 60",
+                      "shape":  1,
+                      "color":  "242, 226, 121",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Record the denial rationale and notify the requestor of alternatives. Set the request status to Denied.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-q-resubmit",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "9086099f1159417cab56523a46721e54",
+                                        "points":  [
+                                                       {
+                                                           "x":  664,
+                                                           "y":  220
+                                                       },
+                                                       {
+                                                           "x":  736,
+                                                           "y":  220
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "RIGHT",
+                                                      "LEFT"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-q-resubmit",
+                      "name":  "Resubmitted?",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8eAS3yiKjHtuS9dQ1",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "800, -220, 120, 90",
+                      "shape":  4,
+                      "color":  "170, 219, 164",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Question",
+                                     "args":  {
+                                                  "question":  "Has the requestor revised and resubmitted the request for approval?",
+                                                  "questionResponses":  {
+                                                                            "Resubmitted":  {
+                                                                                                "displayName":  "Resubmitted",
+                                                                                                "value":  1,
+                                                                                                "order":  0
+                                                                                            },
+                                                                            "Withdrawn":  {
+                                                                                              "displayName":  "Withdrawn",
+                                                                                              "value":  0,
+                                                                                              "order":  1
+                                                                                          }
+                                                                        },
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-notify-resubmitted",
+                                        "expression":  "$retVal == 1",
+                                        "label":  "Resubmitted",
+                                        "assignedTo":  "df1edfcbf6c84833901b2abc39698954",
+                                        "points":  [
+                                                       {
+                                                           "x":  800,
+                                                           "y":  269
+                                                       },
+                                                       {
+                                                           "x":  800,
+                                                           "y":  366
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "BOTTOM",
+                                                      "TOP"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    },
+                                    {
+                                        "nextStep":  "rr-closed",
+                                        "expression":  "$retVal == 0",
+                                        "label":  "Withdrawn",
+                                        "points":  [
+                                                       {
+                                                           "x":  800,
+                                                           "y":  269
+                                                       },
+                                                       {
+                                                           "x":  800,
+                                                           "y":  274
+                                                       },
+                                                       {
+                                                           "x":  2000,
+                                                           "y":  274
+                                                       },
+                                                       {
+                                                           "x":  2000,
+                                                           "y":  34
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "BOTTOM",
+                                                      "BOTTOM"
+                                                  ],
+                                        "assignedType":  "Unassigned",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-notify-resubmitted",
+                      "name":  "Notify Approver â€” Resubmitted",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8eAS3yiKjHtuS9dEZ",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "800, -400, 120, 60",
+                      "shape":  1,
+                      "color":  "170, 184, 242",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Email",
+                                     "args":  {
+                                                  "subject":  "Resource request MODIFIED and RESUBMITTED â€” re-approval needed",
+                                                  "body":  "\u0027\u003cp\u003eA previously denied resource request has been \u003cb\u003emodified and resubmitted\u003c/b\u003e for approval. The current details and the full audit trail are below.\u003c/p\u003e\u0027 + $job.description",
+                                                  "notificationServiceRecipients":  {
+                                                                                        "toGroup":  "df1edfcbf6c84833901b2abc39698954"
+                                                                                    }
+                                              }
+                                 },
+                      "paths":  [
+                                    {
+                                        "nextStep":  "rr-q-approve",
+                                        "expression":  "$retVal == $stepSuccess",
+                                        "assignedTo":  "df1edfcbf6c84833901b2abc39698954",
+                                        "points":  [
+                                                       {
+                                                           "x":  736,
+                                                           "y":  400
+                                                       },
+                                                       {
+                                                           "x":  400,
+                                                           "y":  400
+                                                       },
+                                                       {
+                                                           "x":  400,
+                                                           "y":  49
+                                                       }
+                                                   ],
+                                        "ports":  [
+                                                      "LEFT",
+                                                      "BOTTOM"
+                                                  ],
+                                        "assignedType":  "Group",
+                                        "notifications":  [
+
+                                                          ],
+                                        "isAssignedToCustomExpression":  false,
+                                        "forceGroupAssignment":  false
+                                    }
+                                ]
+                  },
+                  {
+                      "id":  "rr-closed",
+                      "name":  "Request Closed",
+                      "description":  "",
+                      "stepTemplateId":  "AVw8d6MdyiKjHtuS9dJ6",
+                      "automatic":  true,
+                      "proceedNext":  true,
+                      "canSkip":  false,
+                      "position":  "2000, 0, 120, 60",
+                      "shape":  3,
+                      "color":  "130, 202, 237",
+                      "labelColor":  "black",
+                      "action":  {
+                                     "actionType":  "Manual",
+                                     "args":  {
+                                                  "userPrompt":  "Resource request closed. Confirm the request status is Returned/Closed (or Denied). This completes the job.",
+                                                  "canComment":  false,
+                                                  "commentRequired":  false
+                                              }
+                                 },
+                      "paths":  [
+
+                                ]
+                  }
+              ],
+    "centralizedDataReferences":  [
+
+                                  ],
+    "annotations":  [
+
+                    ],
+    "displayGrid":  true,
+    "useCentralizedDataReferences":  true
+}

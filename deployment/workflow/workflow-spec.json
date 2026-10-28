@@ -1,0 +1,24 @@
+{
+  "name": "EOC Resource Request Workflow v2",
+  "jobTemplate": "Resource Request",
+  "extendedPropertyTable": "resource_request",
+  "groups": [
+    "EOC — Requestors",
+    "EOC — Logistics Section",
+    "EOC — Approving Authority",
+    "EOC — Operations Section"
+  ],
+  "steps": [
+    "Request Submitted",
+    "Logistics Review",
+    "Approve Request?",
+    "Source / Commit Resource",
+    "Mobilize / Dispatch",
+    "Deploy / In Use",
+    "Ready to Return?",
+    "Demobilize",
+    "Return & Restock",
+    "Request Closed"
+  ],
+  "status": "TODO: convert to the validated provisioning schema before apply"
+}

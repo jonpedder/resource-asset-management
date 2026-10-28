@@ -1,0 +1,23 @@
+{
+  "portalUrl": "https://YOUR_ORG.maps.arcgis.com",
+  "oauthClientId": "NEW_OAUTH_CLIENT_ID",
+  "featureServiceUrl": "NEW_FEATURE_SERVICE_URL",
+  "webmapId": "NEW_WEBMAP_ITEM_ID",
+  "workflow": {
+    "orgId": "NEW_ORG_ID",
+    "itemId": "NEW_WORKFLOW_ITEM_ID",
+    "diagramId": "NEW_DIAGRAM_ID",
+    "jobTemplateId": "NEW_JOB_TEMPLATE_ID",
+    "approvalStepId": "NEW_APPROVAL_STEP_ID"
+  },
+  "layers": {
+    "resources": 0,
+    "facilities": 1,
+    "requests": 2
+  },
+  "branding": {
+    "appName": "Resource & Asset Management",
+    "subtitle": "FEMA NIMS Common Operating Picture",
+    "logoUrl": ""
+  }
+}

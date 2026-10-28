@@ -1,0 +1,6 @@
+{
+  "title": "EOC Resource & Asset Management v2",
+  "basemap": "dark-gray-vector",
+  "operationalLayers": ["Resources", "Facilities"],
+  "status": "TODO: resolve new feature-service item and layer URLs during deployment"
+}

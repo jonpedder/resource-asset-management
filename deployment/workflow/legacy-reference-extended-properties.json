@@ -1,0 +1,101 @@
+[
+  {
+    "tableName": "resource_request",
+    "tableAlias": "Resource Request",
+    "relationshipType": "OneToOne",
+    "extendedPropertyDefinitions": [
+      {
+        "propertyName": "globalid",
+        "propertyAlias": "Request GlobalID",
+        "propertyOrder": 0,
+        "dataType": "String",
+        "fieldLength": 38,
+        "required": false,
+        "editable": false,
+        "visible": true
+      },
+      {
+        "propertyName": "request_title",
+        "propertyAlias": "Request Title",
+        "propertyOrder": 1,
+        "dataType": "String",
+        "fieldLength": 200,
+        "required": false,
+        "editable": false,
+        "visible": true
+      },
+      {
+        "propertyName": "requested_category",
+        "propertyAlias": "Requested Category",
+        "propertyOrder": 2,
+        "dataType": "String",
+        "fieldLength": 100,
+        "required": false,
+        "editable": false,
+        "visible": true
+      },
+      {
+        "propertyName": "requested_kind",
+        "propertyAlias": "Requested Kind",
+        "propertyOrder": 3,
+        "dataType": "String",
+        "fieldLength": 50,
+        "required": false,
+        "editable": false,
+        "visible": true
+      },
+      {
+        "propertyName": "requested_type",
+        "propertyAlias": "Requested Type",
+        "propertyOrder": 4,
+        "dataType": "String",
+        "fieldLength": 20,
+        "required": false,
+        "editable": false,
+        "visible": true
+      },
+      {
+        "propertyName": "quantity_requested",
+        "propertyAlias": "Quantity",
+        "propertyOrder": 5,
+        "dataType": "Integer",
+        "required": false,
+        "editable": true,
+        "visible": true
+      },
+      {
+        "propertyName": "priority",
+        "propertyAlias": "Priority",
+        "propertyOrder": 6,
+        "dataType": "String",
+        "fieldLength": 20,
+        "required": false,
+        "editable": true,
+        "visible": true
+      },
+      {
+        "propertyName": "incident_name",
+        "propertyAlias": "Incident",
+        "propertyOrder": 7,
+        "dataType": "String",
+        "fieldLength": 150,
+        "required": false,
+        "editable": true,
+        "visible": true
+      },
+      {
+        "propertyName": "request_status",
+        "propertyAlias": "Request Status",
+        "propertyOrder": 8,
+        "dataType": "String",
+        "fieldLength": 30,
+        "required": false,
+        "editable": true,
+        "visible": true
+      }
+    ],
+    "jobTemplates": [
+      "TT6jCcesRpKdlMwb3D0f8Q"
+    ]
+  }
+]

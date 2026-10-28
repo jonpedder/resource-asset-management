@@ -1,0 +1,11 @@
+app-config.json
+.env
+.env.*
+!.env.example
+node_modules/
+coverage/
+out/
+.tmp/
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,14 @@
+{
+  "name": "resource-asset-management",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "EOC Resource & Asset Management with ArcGIS Workflow Manager",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "verify": "node deployment/verify/verify-config.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

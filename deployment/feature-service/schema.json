@@ -1,0 +1,11 @@
+{
+  "serviceName": "EOC_Resource_Asset_Management_V2",
+  "layers": [
+    { "id": 0, "name": "Resources", "geometryType": "esriGeometryPoint" },
+    { "id": 1, "name": "Facilities", "geometryType": "esriGeometryPoint" }
+  ],
+  "tables": [
+    { "id": 2, "name": "ResourceRequests" }
+  ],
+  "status": "TODO: expand fields from docs/REBUILD_PROMPT.md before provisioning"
+}
