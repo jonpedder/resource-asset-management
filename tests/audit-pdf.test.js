@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildAuditPdf } from '../src/audit-pdf.js';
+import { buildAuditPdf, buildRequestPdf } from '../src/audit-pdf.js';
 
 test('builds a downloadable PDF containing request and audit text', async () => {
   const blob = buildAuditPdf(
@@ -35,4 +35,15 @@ test('applies app branding and embeds an agency logo', async () => {
   assert.match(pdf, /\/Subtype \/Image/);
   assert.match(pdf, /\/Logo Do/);
   assert.match(pdf, /0\.067 0\.133 0\.200 rg/);
+});
+
+test('builds a directly downloadable branded request PDF', async () => {
+  const pdf = await buildRequestPdf({ RequestTitle: 'Generator Request', IncidentName: 'Storm Response', RequestedKind: 'Generator', Notes: 'Deliver to staging.' }, new Date('2026-10-28T18:00:00Z'), { appName: 'County Emergency Management' }, 'Alex Approver').text();
+  assert.match(pdf, /^%PDF-1\.4/);
+  assert.match(pdf, /RESOURCE REQUEST REPORT/);
+  assert.match(pdf, /Generator Request/);
+  assert.match(pdf, /Storm Response/);
+  assert.match(pdf, /Deliver to staging/);
+  assert.match(pdf, /Alex Approver/);
+  assert.match(pdf, /%%EOF$/);
 });
