@@ -17,10 +17,11 @@ test('symbols use asset type and logarithmic available-quantity sizes', () => {
   assert.deepEqual(renderer.uniqueValueInfos[1].symbol.color, [198, 154, 75, 0.92]);
   const size = renderer.visualVariables[0];
   assert.equal(size.type, 'size');
-  assert.match(size.valueExpression, /Log10/);
-  assert.match(size.valueExpressionTitle, /logarithmic/i);
+  assert.equal(size.field, 'Quantity');
+  assert.match(size.legendOptions.title, /logarithmic/i);
   assert.equal(size.stops.at(-1).label, '10,000 available');
   assert.equal(size.stops.at(-1).size, 30);
+  assert.ok(size.stops.every((stop, index, stops) => index === 0 || stop.value > stops[index - 1].value));
 });
 
 test('quantity labels appear beside symbols only at operational scales', () => {

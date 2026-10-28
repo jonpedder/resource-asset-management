@@ -16,13 +16,14 @@ function marker(index, color = MUTED_AMBER) {
 }
 
 function quantityStops(maxQuantity) {
-  const middleQuantity = Math.max(1, Math.round(Math.sqrt(maxQuantity)));
-  return [
-    { value: 0, size: 7, label: '0 available' },
-    { value: logQuantity(1), size: 10, label: '1 available' },
-    { value: logQuantity(middleQuantity), size: 19, label: `${middleQuantity.toLocaleString()} available` },
-    { value: logQuantity(maxQuantity), size: 30, label: `${maxQuantity.toLocaleString()} available` }
-  ].filter((stop, index, stops) => index === 0 || stop.value > stops[index - 1].value);
+  const candidates = [0, 1, 10, 100, 1000, maxQuantity].filter(value => value <= maxQuantity || value === 0);
+  const quantities = [...new Set(candidates)].sort((a, b) => a - b);
+  const maximumLog = Math.max(1, logQuantity(maxQuantity));
+  return quantities.map(quantity => ({
+    value: quantity,
+    size: quantity === 0 ? 7 : Math.round(7 + (23 * logQuantity(quantity) / maximumLog)),
+    label: `${quantity.toLocaleString()} available`
+  }));
 }
 
 export function buildResourceRenderer(features = []) {
@@ -42,8 +43,8 @@ export function buildResourceRenderer(features = []) {
     })),
     visualVariables: [{
       type: 'size',
-      valueExpression: 'Log10(Max(0, DefaultValue($feature.Quantity, 0)) + 1)',
-      valueExpressionTitle: 'Symbol size: quantity available (logarithmic)',
+      field: 'Quantity',
+      legendOptions: { title: 'Quantity available (logarithmic stops)' },
       stops: quantityStops(maxQuantity)
     }]
   };
