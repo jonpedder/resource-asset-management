@@ -62,14 +62,20 @@ export class WorkflowClient {
   getJob(jobId) { return this.call(`jobs/${encodeURIComponent(jobId)}?extProps=true`); }
 
   async findJobsByExtendedProperty(name, value) {
-    const result = await this.call('jobs/search', { method: 'POST', body: { q: `${name} = "${String(value).replace(/["\\]/g, '\\$&')}"`, search: name, value: String(value) } });
-    return result.jobs || result.results || result.items || [];
+    const escaped=String(value).replace(/'/g,"''");
+    const fields=['jobId','jobName','jobStatus','closed','currentStep','currentStepId'];
+    const result=await this.call('jobs/search',{method:'POST',body:{q:`${name} = '${escaped}'`,fields,num:10}});
+    if(Array.isArray(result.jobs))return result.jobs;
+    if(Array.isArray(result.items))return result.items;
+    if(!Array.isArray(result.results))return [];
+    const names=(result.fields||fields).map(field=>typeof field==='string'?field:field.name);
+    return result.results.map(row=>Array.isArray(row)?Object.fromEntries(names.map((field,index)=>[field,row[index]])):row);
   }
 
   async createJob(jobTemplateId, options = {}) {
-    const properties = stringsOnly(options.extendedProperties);
-    const body = { jobTemplateId, numberOfJobs: 1, jobName: String(options.name || 'Resource Request'), extendedProperties: properties };
-    const result = await this.call('jobs', { method: 'POST', body });
+    const properties = Object.entries(stringsOnly(options.extendedProperties)).map(([identifier,value])=>({identifier,value}));
+    const body = { numberOfJobs: 1, jobName: String(options.name || 'Resource Request'), extendedProperties: properties };
+    const result = await this.call(`jobTemplates/${encodeURIComponent(jobTemplateId)}/job`, { method: 'POST', body });
     const job = result.jobs?.[0] || result.job || result;
     const jobId = job.jobId || job.id || result.jobIds?.[0];
     if (!jobId) throw new Error('Workflow Manager did not return a job ID.');
