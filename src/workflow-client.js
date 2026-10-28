@@ -96,6 +96,16 @@ export class WorkflowClient {
     return this.call(`jobs/${encodeURIComponent(jobId)}/action`, { method: 'POST', body: { type, stepIds: stepId ? [stepId] : undefined } });
   }
 
+  async finishStep(jobId, stepId) {
+    const username = await this.getUsername();
+    if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
+    await this.jobAction(jobId, 'Run', stepId).catch(() => undefined);
+    const result = assertStepAction(await this.jobAction(jobId, 'Finish', stepId), 'Finish');
+    const job = await this.getJob(jobId);
+    if ((job.currentSteps || []).some(step => step.stepId === stepId)) throw new Error(`Workflow step ${stepId} did not complete.`);
+    return { result, currentSteps: job.currentSteps || [] };
+  }
+
   async sendStepInformation(jobId, stepId, response, note, timeoutMs = 20000) {
     if (!this.WebSocketImpl) throw new Error('This browser does not support the Workflow Manager notification connection.');
     const token = await this.getToken();

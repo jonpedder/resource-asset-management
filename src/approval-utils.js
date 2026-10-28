@@ -3,12 +3,15 @@ export const WORKFLOW_ACTIONS = Object.freeze({
   'Logistics Review': [{ label: 'Complete logistics review', response: null }],
   'Approve Request?': [{ label: 'Approved', response: 1 }, { label: 'Denied', response: 0 }],
   'Source / Commit Resource': [{ label: 'Resource sourced / committed', response: null }],
+  'Notify Ready to Deploy': [{ label: 'Send ready-to-deploy notification', mode: 'finish' }],
   'Mobilize / Dispatch': [{ label: 'Resource mobilized / dispatched', response: null }],
   'Deploy / In Use': [{ label: 'Resource deployed / in use', response: null }],
   'Ready to Return?': [{ label: 'Ready to return', response: 1 }, { label: 'Remain deployed', response: 0 }],
   'Demobilize': [{ label: 'Resource demobilized', response: null }],
   'Return & Restock': [{ label: 'Resource returned / restocked', response: null }],
+  'Notify Resource Returned': [{ label: 'Send resource-returned notification', mode: 'finish' }],
   'Record Denial': [{ label: 'Denial recorded', response: null }],
+  'Notify Request Denied': [{ label: 'Send request-denied notification', mode: 'finish' }],
   'Resubmit Request?': [{ label: 'Resubmit', response: 1 }, { label: 'Close without resubmission', response: 0 }],
   'Request Closed': [{ label: 'Acknowledge closeout', response: null }]
 });

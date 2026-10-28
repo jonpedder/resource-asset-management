@@ -5,6 +5,9 @@ import { actionsForStep, mailtoForRequest, requestorEmail } from '../src/approva
 test('maps question and manual workflow steps to their live actions', () => {
   assert.deepEqual(actionsForStep('Approve Request?').map(a => a.response), [1, 0]);
   assert.equal(actionsForStep('Mobilize / Dispatch')[0].label, 'Resource mobilized / dispatched');
+  assert.equal(actionsForStep('Notify Ready to Deploy')[0].mode, 'finish');
+  assert.equal(actionsForStep('Notify Request Denied')[0].mode, 'finish');
+  assert.equal(actionsForStep('Notify Resource Returned')[0].mode, 'finish');
   assert.deepEqual(actionsForStep('Unknown step'), []);
 });
 
