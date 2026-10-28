@@ -1,7 +1,7 @@
 import { loadConfig, saveConfigOverrides, clearConfigOverrides } from './config.js';
 import { applyPresentation } from './presentation.js';
 import { loadPdfLogo } from './audit-pdf.js?v=20261028-2';
-import { buildHelpPdf } from './help-pdf.js';
+import { buildHelpPdf } from './help-pdf.js?v=20261028-2';
 const $=id=>document.getElementById(id);let config;let draftLogo='';
 const defaults={colors:{navy:'#003b5c',background:'#071824',panel:'#0c2231',panelAlt:'#123247',accent:'#f2a900',text:'#f4f7f9',muted:'#afc3cf',border:'#28495b'},statusColors:{Available:'#36b37e',Committed:'#3498db','En Route':'#f2c94c','Out of Service':'#d9364f',Demobilized:'#95a5a6'}};
 function toast(message,kind='success'){const n=document.createElement('div');n.className=`toast ${kind}`;n.textContent=message;$('toastRegion').append(n);setTimeout(()=>n.remove(),4000);}
