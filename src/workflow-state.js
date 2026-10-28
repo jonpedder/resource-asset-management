@@ -1,3 +1,25 @@
+export const WORKFLOW_TIMELINE_STEPS = Object.freeze([
+  'Request Submitted',
+  'Logistics Review',
+  'Approve Request?',
+  'Source / Commit Resource',
+  'Notify Ready to Deploy',
+  'Mobilize / Dispatch',
+  'Deploy / In Use',
+  'Ready to Return?',
+  'Demobilize',
+  'Return & Restock',
+  'Notify Resource Returned',
+  'Record Denial',
+  'Notify Request Denied',
+  'Resubmit Request?',
+  'Request Closed'
+]);
+
+export function timelineForStep(currentStep) {
+  return WORKFLOW_TIMELINE_STEPS.map(step => ({ step, pending: step === currentStep }));
+}
+
 export const STEP_STATUS = Object.freeze({
   'Request Submitted': 'Submitted',
   'Logistics Review': 'Under Review',

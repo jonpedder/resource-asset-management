@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { statusForStep, nextActionForStep, responsibleForStep } from '../src/workflow-state.js';
+import { statusForStep, nextActionForStep, responsibleForStep, timelineForStep } from '../src/workflow-state.js';
 
 test('maps authoritative workflow steps to request statuses', () => {
   assert.equal(statusForStep('Request Submitted'), 'Submitted');
@@ -17,4 +17,11 @@ test('describes the next required approval or operational action', () => {
   assert.equal(responsibleForStep('Approve Request?'), 'Approving Authority');
   assert.equal(responsibleForStep('Ready to Return?'), 'Operations');
   assert.equal(nextActionForStep('Unknown'), '');
+});
+
+test('builds a green timeline with exactly the current step pending', () => {
+  const timeline = timelineForStep('Notify Ready to Deploy');
+  assert.equal(timeline.filter(item => item.pending).length, 1);
+  assert.equal(timeline.find(item => item.pending).step, 'Notify Ready to Deploy');
+  assert.equal(timeline.every(item => item.pending || item.step), true);
 });
