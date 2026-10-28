@@ -1,20 +1,11 @@
-const COLORS = [
-  [49, 168, 255, 0.92],
-  [62, 207, 142, 0.92],
-  [255, 184, 61, 0.92],
-  [197, 125, 255, 0.92],
-  [255, 105, 120, 0.92],
-  [52, 211, 211, 0.92],
-  [255, 132, 66, 0.92],
-  [145, 164, 255, 0.92]
-];
+const MUTED_AMBER = [198, 154, 75, 0.92];
 const STYLES = ['circle', 'square', 'diamond', 'triangle', 'cross', 'x'];
 
 const attributes = feature => feature?.attributes || feature || {};
 const typeName = value => value == null || String(value).trim() === '' ? 'Unspecified' : String(value).trim();
 const logQuantity = quantity => Math.log10(Math.max(0, quantity) + 1);
 
-function marker(index, color = COLORS[index % COLORS.length]) {
+function marker(index, color = MUTED_AMBER) {
   return {
     type: 'simple-marker',
     style: STYLES[index % STYLES.length],
@@ -43,7 +34,7 @@ export function buildResourceRenderer(features = []) {
     type: 'unique-value',
     field: 'TypeClass',
     defaultLabel: 'Unspecified / other type',
-    defaultSymbol: marker(0, [145, 155, 165, 0.88]),
+    defaultSymbol: marker(0, [198, 154, 75, 0.78]),
     uniqueValueInfos: types.filter(type => type !== 'Unspecified').map((type, index) => ({
       value: type,
       label: type,
@@ -55,6 +46,20 @@ export function buildResourceRenderer(features = []) {
       valueExpressionTitle: 'Symbol size: quantity available (logarithmic)',
       stops: quantityStops(maxQuantity)
     }]
+  };
+}
+
+export function buildFacilityRenderer() {
+  const buildingSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="#b58bff" stroke="#fff" stroke-width="3" d="M6 24 32 8l26 16v6H6zm6 10h8v18h8V34h8v18h8V34h8v18h6v6H6v-6h6z"/></svg>`;
+  return {
+    type: 'simple',
+    label: 'Facility',
+    symbol: {
+      type: 'picture-marker',
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(buildingSvg)}`,
+      width: 24,
+      height: 24
+    }
   };
 }
 

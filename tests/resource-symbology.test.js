@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildResourceQuantityLabels, buildResourceRenderer } from '../src/resource-symbology.js';
+import { buildFacilityRenderer, buildResourceQuantityLabels, buildResourceRenderer } from '../src/resource-symbology.js';
 
 test('symbols use asset type and logarithmic available-quantity sizes', () => {
   const renderer = buildResourceRenderer([
@@ -13,6 +13,8 @@ test('symbols use asset type and logarithmic available-quantity sizes', () => {
   assert.equal(renderer.field, 'TypeClass');
   assert.deepEqual(renderer.uniqueValueInfos.map(info => info.value), ['Type I', 'Type II']);
   assert.notEqual(renderer.uniqueValueInfos[0].symbol.style, renderer.uniqueValueInfos[1].symbol.style);
+  assert.deepEqual(renderer.uniqueValueInfos[0].symbol.color, [198, 154, 75, 0.92]);
+  assert.deepEqual(renderer.uniqueValueInfos[1].symbol.color, [198, 154, 75, 0.92]);
   const size = renderer.visualVariables[0];
   assert.equal(size.type, 'size');
   assert.match(size.valueExpression, /Log10/);
@@ -28,6 +30,14 @@ test('quantity labels appear beside symbols only at operational scales', () => {
   assert.equal(label.minScale, 150000);
   assert.equal(label.deconflictionStrategy, 'static');
   assert.equal(buildResourceQuantityLabels(75000)[0].minScale, 75000);
+});
+
+test('facilities use a fixed building icon without quantity scaling', () => {
+  const renderer = buildFacilityRenderer();
+  assert.equal(renderer.type, 'simple');
+  assert.equal(renderer.symbol.type, 'picture-marker');
+  assert.match(renderer.symbol.url, /^data:image\/svg\+xml/);
+  assert.equal(renderer.visualVariables, undefined);
 });
 
 test('renderer remains valid when quantity or type is absent', () => {
