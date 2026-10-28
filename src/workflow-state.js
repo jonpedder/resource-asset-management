@@ -5,10 +5,12 @@ export const STEP_STATUS = Object.freeze({
   'Source / Commit Resource': 'Approved',
   'Mobilize / Dispatch': 'En Route',
   'Deploy / In Use': 'Deployed',
+  'Ready to Return?': 'Deployed',
   'Demobilize': 'Demobilizing',
   'Return & Restock': 'Returned',
   'Request Closed': 'Closed',
-  'Record Denial': 'Denied'
+  'Record Denial': 'Denied',
+  'Resubmit Request?': 'Denied'
 });
 
 export function statusForStep(stepName) {
