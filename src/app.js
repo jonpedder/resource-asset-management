@@ -59,11 +59,31 @@ function toggleDrawer(open){$('requestsDrawer').classList.toggle('open',open);$(
 
 async function setupArcGIS() {
   const cfg=state.config; window.require(['esri/WebMap','esri/views/MapView','esri/config','esri/identity/IdentityManager','esri/identity/OAuthInfo'], async (WebMap,MapView,esriConfig,IdentityManager,OAuthInfo)=>{
-    esriConfig.portalUrl=cfg.portalUrl; if(cfg.oauthClientId && !cfg.oauthClientId.startsWith('NEW_')) IdentityManager.registerOAuthInfos([new OAuthInfo({appId:cfg.oauthClientId,portalUrl:cfg.portalUrl,popup:true})]);
-    const credential = await IdentityManager.checkSignInStatus(`${cfg.portalUrl}/sharing`).catch(()=>null); if(credential) await setUser(credential, IdentityManager);
-    $('sessionButton').onclick=async()=>{if(state.user){IdentityManager.destroyCredentials();location.reload();}else{try{const c=await IdentityManager.getCredential(`${cfg.portalUrl}/sharing`);await setUser(c,IdentityManager);location.reload();}catch(e){toast(e.message,'error');}}};
-    const map=new WebMap({portalItem:{id:cfg.webmapId}}); const view=new MapView({container:'mapView',map,ui:{components:['zoom','compass','attribution']}}); state.view=view; window.__esriView=view;window.__esriMap=map;window.__esriLayers={};
-    try{await view.when();$('mapMessage').hidden=true; const layers=map.allLayers.toArray(); for(const l of layers)window.__esriLayers[l.title]=l; const resource=layers.find(l=>l.title==='Resources')||layers[0]; if(resource){const q=resource.createQuery();q.where='1=1';q.outFields=['*'];q.returnGeometry=true;state.resources=(await resource.queryFeatures(q)).features;} const facilities=layers.find(l=>l.title==='Facilities'); $('facilityTotal').textContent=facilities?await facilities.queryFeatureCount():0; $('resourceTotal').textContent=state.resources.length;$('availableTotal').textContent=state.resources.filter(r=>attrs(r).Status==='Available').length; buildChecks('statusFilters','Status',unique('Status'));buildChecks('categoryFilters','NIMS_Category',unique('NIMS_Category'));buildChecks('typingFilters','NIMS_Kind',[...new Set([...unique('NIMS_Kind'),...unique('TypeClass')])]);renderResources();await loadRequests();setStatus('Operational');$('lastUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;}catch(e){$('mapMessage').querySelector('p').textContent=e.message;setStatus('Configuration error',true);}
+    esriConfig.portalUrl=cfg.portalUrl;
+    if(cfg.oauthClientId && !cfg.oauthClientId.startsWith('NEW_')) IdentityManager.registerOAuthInfos([new OAuthInfo({appId:cfg.oauthClientId,portalUrl:cfg.portalUrl,popup:true})]);
+
+    const showSignedOut=()=>{
+      state.user=null;
+      $('sessionUser').textContent='Not signed in'; $('sessionButton').textContent='Sign in'; $('sessionDot').classList.remove('online');
+      setStatus('Sign-in required',true); $('lastUpdated').textContent='ArcGIS session required';
+      $('mapMessage').hidden=false; $('mapMessage').querySelector('h2').textContent='Sign in required';
+      $('mapMessage').querySelector('p').textContent='Sign in with your ArcGIS organization account to load the private operations map and resource data.';
+    };
+    const buildMap=async()=>{
+      setStatus('Loading'); $('mapMessage').hidden=false; $('mapMessage').querySelector('h2').textContent='Operations Map'; $('mapMessage').querySelector('p').textContent='Loading secured ArcGIS content…';
+      const map=new WebMap({portalItem:{id:cfg.webmapId}}); const view=new MapView({container:'mapView',map,ui:{components:['zoom','compass','attribution']}}); state.view=view; window.__esriView=view;window.__esriMap=map;window.__esriLayers={};
+      try{await view.when();$('mapMessage').hidden=true; const layers=map.allLayers.toArray(); for(const l of layers)window.__esriLayers[l.title]=l; const resource=layers.find(l=>l.title==='Resources')||layers[0]; if(resource){const q=resource.createQuery();q.where='1=1';q.outFields=['*'];q.returnGeometry=true;state.resources=(await resource.queryFeatures(q)).features;} const facilities=layers.find(l=>l.title==='Facilities'); $('facilityTotal').textContent=facilities?await facilities.queryFeatureCount():0; $('resourceTotal').textContent=state.resources.length;$('availableTotal').textContent=state.resources.filter(r=>attrs(r).Status==='Available').length; buildChecks('statusFilters','Status',unique('Status'));buildChecks('categoryFilters','NIMS_Category',unique('NIMS_Category'));buildChecks('typingFilters','NIMS_Kind',[...new Set([...unique('NIMS_Kind'),...unique('TypeClass')])]);renderResources();await loadRequests();setStatus('Operational');$('lastUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;}catch(e){$('mapMessage').hidden=false;$('mapMessage').querySelector('p').textContent=e.message;setStatus('Content unavailable',true);}
+    };
+    $('sessionButton').onclick=async()=>{
+      if(state.user){IdentityManager.destroyCredentials();location.reload();return;}
+      $('sessionButton').disabled=true;
+      try{const c=await IdentityManager.getCredential(`${cfg.portalUrl}/sharing`);await setUser(c,IdentityManager);await buildMap();}
+      catch(e){showSignedOut();if(!/cancel/i.test(e?.message||''))toast(e.message||'Sign-in was not completed.','error');}
+      finally{$('sessionButton').disabled=false;}
+    };
+    const credential=await IdentityManager.checkSignInStatus(`${cfg.portalUrl}/sharing`).catch(()=>null);
+    if(!credential){showSignedOut();return;}
+    try{await setUser(credential,IdentityManager);await buildMap();}catch(e){showSignedOut();toast(e.message||'The ArcGIS session could not be restored.','error');}
   });
 }
 async function setUser(credential, IdentityManager){const response=await fetch(`${state.config.portalUrl}/sharing/rest/community/self?f=json&token=${encodeURIComponent(credential.token)}`);state.user=await response.json();state.user.credential=credential;$('sessionUser').textContent=state.user.fullName||state.user.username;$('sessionButton').textContent='Sign out';$('sessionDot').classList.add('online');}
