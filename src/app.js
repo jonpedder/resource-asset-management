@@ -67,7 +67,7 @@ function selectResource(feature) {
   renderResources();
   openRequest();
   highlightSelectedResource(feature);
-  if (state.view && feature.geometry) state.view.goTo(feature.geometry, { scale: 24000 }).catch(()=>{});
+  if (state.view && feature.geometry) state.view.goTo({ target: feature.geometry, scale: 24000 }, { duration: 650 }).catch(()=>{});
 }
 function openRequest() {
   const a=attrs(state.selected);
