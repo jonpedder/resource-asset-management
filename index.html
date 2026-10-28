@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071824">
   <title>Operations Map | Resource &amp; Asset Management</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
-  <link rel="stylesheet" href="./styles/app.css?v=20261028-10">
+  <link rel="stylesheet" href="./styles/app.css?v=20261028-11">
   <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
@@ -41,10 +41,15 @@
       <div class="panel-header"><h1 id="inventoryTitle"><span id="resourceInventoryHeading">Resource Inventory</span></h1><span class="count-badge" id="visibleCount">0</span></div>
       <div class="panel-section">
         <div class="search-wrap"><label class="sr-only" for="resourceSearch">Search inventory</label><input id="resourceSearch" type="search" placeholder="Search resource, agency, or site" autocomplete="off"></div>
-        <details class="filter-group" open><summary>Status</summary><div class="check-grid" id="statusFilters"></div></details>
-        <details class="filter-group"><summary>NIMS category</summary><div class="check-grid" id="categoryFilters"></div></details>
-        <details class="filter-group"><summary>Kind and type</summary><div class="check-grid" id="typingFilters"></div></details>
-        <button class="btn btn-quiet" id="clearFilters" type="button">Clear filters</button>
+        <details class="inventory-filters">
+          <summary>Filters</summary>
+          <div class="inventory-filter-body">
+            <details class="filter-group" open><summary>Status</summary><div class="check-grid" id="statusFilters"></div></details>
+            <details class="filter-group"><summary>NIMS category</summary><div class="check-grid" id="categoryFilters"></div></details>
+            <details class="filter-group"><summary>Kind and type</summary><div class="check-grid" id="typingFilters"></div></details>
+            <button class="btn btn-quiet" id="clearFilters" type="button">Clear filters</button>
+          </div>
+        </details>
       </div>
       <div class="panel-scroll"><ul class="resource-list" id="resourceList" aria-live="polite"></ul></div>
     </aside>
@@ -69,6 +74,7 @@
             <div class="pane-form-row"><div><label class="required" for="quantityRequested">Quantity</label><input id="quantityRequested" name="QuantityRequested" type="number" min="1" step="1" required></div><div><label class="required" for="priority">Priority</label><select id="priority" name="Priority" required><option value="Routine">Routine</option><option value="Urgent">Urgent</option><option value="Immediate">Immediate</option></select></div></div>
             <div><label class="required" for="requestor">Requestor</label><input id="requestor" name="Requestor" type="text" maxlength="150" required></div>
             <div><label class="required" for="incidentName">Incident</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
+            <div><label for="resourceLocation">Current resource location</label><input id="resourceLocation" type="text" readonly aria-describedby="resourceLocationHelp"><span class="field-help" id="resourceLocationHelp">Copied into the request notes on submission.</span></div>
             <div><label class="required" for="dateNeeded">Date needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
             <div><label for="requestNotes">Notes / justification</label><textarea id="requestNotes" class="auto-grow" name="Notes" maxlength="4000" rows="5" placeholder="Explain the operational need, intended use, delivery location, and any constraints."></textarea></div>
             <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
@@ -87,6 +93,6 @@
   </aside>
 
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
-  <script type="module" src="./src/app.js?v=20261028-8"></script>
+  <script type="module" src="./src/app.js?v=20261028-11"></script>
 </body>
 </html>

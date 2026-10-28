@@ -3,7 +3,7 @@ import { createLinkedRequest } from './request-saga.js';
 import { applyPresentation } from './presentation.js';
 
 const $ = (id) => document.getElementById(id);
-const state = { config: null, view: null, resources: [], requests: [], selected: null, user: null, requestPoll: null };
+const state = { config: null, view: null, resourceLayer: null, selectionHighlight: null, resources: [], requests: [], selected: null, user: null, requestPoll: null };
 const text = (v) => v == null ? '' : String(v);
 const statusClass = (v) => `status-${text(v).toLowerCase().replace(/[^a-z0-9]+/g, '') || 'neutral'}`;
 
@@ -46,10 +46,26 @@ function renderResources() {
   }
   if (!rows.length) list.append(el('li','empty-state','No resources match the current filters.'));
 }
+async function highlightSelectedResource(feature) {
+  state.selectionHighlight?.remove();
+  state.selectionHighlight=null;
+  if (!state.view || !state.resourceLayer || !feature) return;
+  try {
+    const layerView=await state.view.whenLayerView(state.resourceLayer);
+    state.selectionHighlight=layerView.highlight(feature);
+  } catch (error) { console.warn('Resource highlight failed',error); }
+}
+function resourceLocation(feature) {
+  const a=attrs(feature); const point=feature?.geometry;
+  const longitude=Number(point?.longitude); const latitude=Number(point?.latitude);
+  const coordinates=Number.isFinite(longitude)&&Number.isFinite(latitude) ? `${latitude.toFixed(5)}, ${longitude.toFixed(5)}` : '';
+  return [text(a.SiteName),coordinates].filter(Boolean).join(' · ') || 'Location not recorded';
+}
 function selectResource(feature) {
   state.selected = feature;
   renderResources();
   openRequest();
+  highlightSelectedResource(feature);
   if (state.view && feature.geometry) state.view.goTo(feature.geometry, { scale: 24000 }).catch(()=>{});
 }
 function openRequest() {
@@ -61,6 +77,7 @@ function openRequest() {
   $('quantityRequested').value='1';
   $('requestor').value=state.user?.email || state.user?.username || state.user?.fullName || '';
   $('resourceGlobalId').value=text(a.GlobalID);
+  $('resourceLocation').value=resourceLocation(state.selected);
   if(!$('dateNeeded').value)$('dateNeeded').value=new Date().toISOString().slice(0,10);
   const summary=$('assetRequestSummary');
   summary.replaceChildren(el('span','eyebrow','Selected inventory asset'),el('strong','',a.ResourceName||'Unnamed resource'),el('span','',`${a.NIMS_Category||'Unclassified'} · ${a.NIMS_Kind||'Unknown kind'} · ${a.TypeClass||'Unspecified'} · ${a.SiteName||'No site'} · ${a.Status||'Unknown'} · Available quantity ${a.Quantity??0}`));
@@ -71,6 +88,8 @@ function openRequest() {
 }
 function clearRequestPane() {
   state.selected=null;
+  state.selectionHighlight?.remove();
+  state.selectionHighlight=null;
   $('requestForm').reset();
   $('requestForm').hidden=true;
   $('requestEmptyState').hidden=false;
@@ -95,7 +114,7 @@ async function setupArcGIS() {
     const buildMap=async()=>{
       setStatus('Loading'); $('mapMessage').hidden=false; $('mapMessage').querySelector('h2').textContent='Operations Map'; $('mapMessage').querySelector('p').textContent='Loading secured ArcGIS content…';
       const map=new WebMap({portalItem:{id:cfg.webmapId}}); const view=new MapView({container:'mapView',map,ui:{components:['zoom','compass','attribution']}}); state.view=view; window.__esriView=view;window.__esriMap=map;window.__esriLayers={};window.__esriWidgets={};
-      try{await view.when();const widgets={home:new Home({view}),layers:new Expand({view,content:new LayerList({view}),group:'map-tools',expanded:false,icon:'layers',tooltip:'Layers'}),basemap:new Expand({view,content:new BasemapGallery({view}),group:'map-tools',expanded:false,icon:'basemap',tooltip:'Basemap'}),bookmarks:new Expand({view,content:new Bookmarks({view}),group:'map-tools',expanded:false,icon:'bookmark',tooltip:'Bookmarks'}),legend:new Expand({view,content:new Legend({view}),group:'map-tools',expanded:false,icon:'legend',tooltip:'Legend'})};view.ui.add(widgets.home,'top-left');view.ui.add([widgets.layers,widgets.basemap,widgets.bookmarks,widgets.legend],'top-right');window.__esriWidgets=widgets;$('mapMessage').hidden=true; const layers=map.allLayers.toArray(); for(const l of layers)window.__esriLayers[l.title]=l; const resource=layers.find(l=>l.title==='Resources')||layers[0]; const facilitiesLayer=layers.find(l=>l.title==='Facilities'); if(resource&&state.config.layerVisibility?.resources===false)resource.visible=false;if(facilitiesLayer&&state.config.layerVisibility?.facilities===false)facilitiesLayer.visible=false; if(resource){const q=resource.createQuery();q.where='1=1';q.outFields=['*'];q.returnGeometry=true;state.resources=(await resource.queryFeatures(q)).features;} const facilities=layers.find(l=>l.title==='Facilities'); $('facilityTotal').textContent=facilities?await facilities.queryFeatureCount():0; $('resourceTotal').textContent=state.resources.length;$('availableTotal').textContent=state.resources.filter(r=>attrs(r).Status==='Available').length; buildChecks('statusFilters','Status',unique('Status'));buildChecks('categoryFilters','NIMS_Category',unique('NIMS_Category'));buildChecks('typingFilters','NIMS_Kind',[...new Set([...unique('NIMS_Kind'),...unique('TypeClass')])]);renderResources();await loadRequests();setStatus('Operational');$('lastUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;}catch(e){$('mapMessage').hidden=false;$('mapMessage').querySelector('p').textContent=e.message;setStatus('Content unavailable',true);}
+      try{await view.when();const widgets={home:new Home({view}),layers:new Expand({view,content:new LayerList({view}),group:'map-tools',expanded:false,icon:'layers',tooltip:'Layers'}),basemap:new Expand({view,content:new BasemapGallery({view}),group:'map-tools',expanded:false,icon:'basemap',tooltip:'Basemap'}),bookmarks:new Expand({view,content:new Bookmarks({view}),group:'map-tools',expanded:false,icon:'bookmark',tooltip:'Bookmarks'}),legend:new Expand({view,content:new Legend({view}),group:'map-tools',expanded:false,icon:'legend',tooltip:'Legend'})};view.ui.add(widgets.home,'top-left');view.ui.add([widgets.layers,widgets.basemap,widgets.bookmarks,widgets.legend],'top-right');window.__esriWidgets=widgets;$('mapMessage').hidden=true; const layers=map.allLayers.toArray(); for(const l of layers)window.__esriLayers[l.title]=l; const resource=layers.find(l=>l.title==='Resources')||layers[0]; state.resourceLayer=resource; const facilitiesLayer=layers.find(l=>l.title==='Facilities'); if(resource&&state.config.layerVisibility?.resources===false)resource.visible=false;if(facilitiesLayer&&state.config.layerVisibility?.facilities===false)facilitiesLayer.visible=false; if(resource){const q=resource.createQuery();q.where='1=1';q.outFields=['*'];q.returnGeometry=true;state.resources=(await resource.queryFeatures(q)).features;view.on('click',async event=>{const hit=await view.hitTest(event,{include:[resource]});const selected=hit.results.find(result=>result.graphic?.layer===resource)?.graphic;if(selected){const oidField=resource.objectIdField;const match=state.resources.find(feature=>attrs(feature)[oidField]===attrs(selected)[oidField])||selected;selectResource(match);}});} const facilities=layers.find(l=>l.title==='Facilities'); $('facilityTotal').textContent=facilities?await facilities.queryFeatureCount():0; $('resourceTotal').textContent=state.resources.length;$('availableTotal').textContent=state.resources.filter(r=>attrs(r).Status==='Available').length; buildChecks('statusFilters','Status',unique('Status'));buildChecks('categoryFilters','NIMS_Category',unique('NIMS_Category'));buildChecks('typingFilters','NIMS_Kind',[...new Set([...unique('NIMS_Kind'),...unique('TypeClass')])]);renderResources();await loadRequests();setStatus('Operational');$('lastUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;}catch(e){$('mapMessage').hidden=false;$('mapMessage').querySelector('p').textContent=e.message;setStatus('Content unavailable',true);}
     };
     $('sessionButton').onclick=async()=>{
       if(state.user){IdentityManager.destroyCredentials();location.reload();return;}
@@ -113,8 +132,10 @@ async function setUser(credential, IdentityManager){const response=await fetch(`
 async function layerRequest(url, params){const body=new URLSearchParams({f:'json',...params});const response=await fetch(url,{method:'POST',body});const json=await response.json();if(json.error)throw new Error(json.error.message);return json;}
 async function loadRequests(){if(!state.user?.credential?.token){state.requests=[];renderRequests();return;}try{const result=await layerRequest(`${state.config.featureServiceUrl}/${state.config.layers.requests}/query`,{where:'1=1',outFields:'*',orderByFields:'OBJECTID DESC',returnGeometry:'false',token:state.user.credential.token});state.requests=result.features||[];$('lastUpdated').textContent=`Updated ${new Date().toLocaleTimeString()}`;}catch(e){console.warn('Request refresh failed',e);if(!state.requests.length)state.requests=[];}renderRequests();}
 async function submitRequest(event){event.preventDefault();if(!state.user)return toast('Sign in before submitting a request.','error');const submit=$('submitRequest');submit.disabled=true;$('requestError').hidden=true;const attributes=Object.fromEntries(new FormData(event.currentTarget));attributes.QuantityRequested=Number(attributes.QuantityRequested);attributes.DateNeeded=new Date(`${attributes.DateNeeded}T12:00:00`).getTime();
+  const location=$('resourceLocation').value.trim();
+  if(location&&location!=='Location not recorded'){const line=`Current resource location: ${location}`;attributes.Notes=[line,attributes.Notes].filter(Boolean).join('\n\n').slice(0,4000);}
   try{const token=state.user?.credential?.token; if(!token)throw new Error('A current ArcGIS credential is required.'); const table=`${state.config.featureServiceUrl}/${state.config.layers.requests}`;
-    const result=await createLinkedRequest({attributes,createRequest:async a=>{const added=await layerRequest(`${table}/addFeatures`,{features:JSON.stringify([{attributes:a}]),token});const oid=added.addResults?.[0]?.objectId;if(!oid)throw new Error('Feature creation was not acknowledged.');const read=await layerRequest(`${table}/query`,{objectIds:String(oid),outFields:'*',returnGeometry:'false',token});return read.features[0].attributes;},findJobsByRequestGlobalId:async()=>[],createJob:async()=>{throw new Error('Workflow job creation requires the deployment OAuth application to be registered and enabled. The request remains Failed for safe retry.');},verifyJob:async()=>{},linkRequest:async()=>{},verifyRequestLink:async()=>{}}); toast(`Request ${result.request.OBJECTID} linked to job ${result.jobId}`,'success');clearRequestPane();await loadRequests();}catch(e){$('requestError').textContent=e.message;$('requestError').hidden=false;toast(e.message,'error');}finally{submit.disabled=false;}}
+    const result=await createLinkedRequest({attributes,createRequest:async a=>{const added=await layerRequest(`${table}/addFeatures`,{features:JSON.stringify([{attributes:a}]),token});const oid=added.addResults?.[0]?.objectId;if(!oid)throw new Error('Feature creation was not acknowledged.');const read=await layerRequest(`${table}/query`,{objectIds:String(oid),outFields:'*',returnGeometry:'false',token});const created=read.features?.[0];if(!created)throw new Error('The submitted request could not be read back.');state.requests=[created,...state.requests.filter(r=>attrs(r).OBJECTID!==attrs(created).OBJECTID)];renderRequests();toast(`Request ${oid} submitted and added to the requests list.`,'success');return created.attributes;},findJobsByRequestGlobalId:async()=>[],createJob:async()=>{throw new Error('Workflow job creation requires the deployment OAuth application to be registered and enabled. The request remains Failed for safe retry.');},verifyJob:async()=>{},linkRequest:async()=>{},verifyRequestLink:async()=>{}}); toast(`Request ${result.request.OBJECTID} linked to job ${result.jobId}`,'success');clearRequestPane();await loadRequests();}catch(e){$('requestError').textContent=e.message;$('requestError').hidden=false;toast(e.message,'error');}finally{submit.disabled=false;}}
 
 async function init(){try{state.config=await loadConfig();applyPresentation(state.config);setupArcGIS();}catch(e){setStatus('Not configured',true);$('mapMessage').querySelector('p').textContent=e.message;}
   $('resourceSearch').addEventListener('input',renderResources);$('clearFilters').onclick=()=>{document.querySelectorAll('.check input').forEach(n=>n.checked=false);$('resourceSearch').value='';renderResources();};$('requestsButton').onclick=()=>toggleDrawer(true);$('closeDrawer').onclick=()=>toggleDrawer(false);$('drawerBackdrop').onclick=()=>toggleDrawer(false);$('cancelRequest').onclick=clearRequestPane;$('requestForm').addEventListener('submit',submitRequest);const notes=$('requestNotes');const sizeNotes=()=>{notes.style.height='auto';notes.style.height=`${Math.max(120,notes.scrollHeight)}px`;};notes.addEventListener('input',sizeNotes);sizeNotes();document.addEventListener('visibilitychange',()=>{if(!document.hidden&&state.user)loadRequests();});state.requestPoll=setInterval(()=>{if(!document.hidden&&state.user)loadRequests();},30000);renderRequests();}
