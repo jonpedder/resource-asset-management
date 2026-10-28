@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071824">
   <title>Operations Map | Resource &amp; Asset Management</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
-  <link rel="stylesheet" href="./styles/app.css?v=20261028-11">
+  <link rel="stylesheet" href="./styles/app.css?v=20261028-12">
   <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
@@ -16,16 +16,15 @@
       <span class="brand-mark" aria-hidden="true">EOC</span>
       <span class="brand-copy"><strong data-brand-name>Resource &amp; Asset Management</strong><span data-brand-subtitle>FEMA NIMS Common Operating Picture</span></span>
     </a>
-    <nav class="app-nav" aria-label="Primary navigation">
-      <a href="./index.html" aria-current="page">Operations Map</a>
-      <button class="btn btn-quiet" id="requestsButton" type="button">Requests <span class="count-badge" id="requestCount">0</span></button>
-      <a href="./approval.html" target="_self" id="approvalWorkspaceLink">Request Approval</a>
-      <a href="./settings.html">Settings &amp; Help</a>
+    <nav class="app-nav header-actions" aria-label="Primary navigation">
+      <button class="header-action" id="requestsButton" type="button">Requests <span class="count-badge" id="requestCount">0</span></button>
+      <a class="header-action header-action-primary" href="./approval.html" target="_self" id="approvalWorkspaceLink">Request Approval</a>
     </nav>
     <div class="session-area">
       <div class="user-chip"><span class="user-dot" id="sessionDot"></span><span id="sessionUser">Not signed in</span></div>
-      <button class="btn btn-quiet" id="sessionButton" type="button">Sign in</button>
+      <button class="header-action" id="sessionButton" type="button">Sign in</button>
     </div>
+    <a class="header-action header-icon" href="./settings.html" title="Settings and help" aria-label="Settings and help">⚙</a>
   </header>
   <div class="command-strip" role="status">
     <span class="operational-tag" id="systemStatus">Initializing</span>
