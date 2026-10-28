@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071824">
   <title>Operations Map | Resource &amp; Asset Management</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
-  <link rel="stylesheet" href="./styles/app.css?v=20261028-9">
+  <link rel="stylesheet" href="./styles/app.css?v=20261028-10">
   <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
@@ -56,9 +56,26 @@
     </section>
 
     <aside class="panel detail-panel" aria-labelledby="detailTitle">
-      <div class="panel-header"><h2 id="detailTitle">Resource Detail</h2></div>
+      <div class="panel-header"><h2 id="detailTitle">Resource Request</h2></div>
       <div class="panel-scroll" id="resourceDetail">
-        <div class="empty-state"><div class="empty-icon" aria-hidden="true">⌖</div><strong>Select a resource</strong><p>Choose an inventory item or map feature to review NIMS typing and initiate an ICS 213RR request.</p></div>
+        <div class="empty-state" id="requestEmptyState"><div class="empty-icon" aria-hidden="true">⌖</div><strong>Select a resource</strong><p>Choose an inventory item or map feature to open a prefilled ICS 213RR request in this pane.</p></div>
+        <form id="requestForm" class="pane-request-form" novalidate hidden>
+          <div id="assetRequestSummary" class="asset-request-summary" aria-live="polite"></div>
+          <div class="pane-request-fields">
+            <div><label class="required" for="requestTitle">Request title</label><input id="requestTitle" name="RequestTitle" type="text" maxlength="200" required></div>
+            <div><label class="required" for="requestedCategory">NIMS category</label><input id="requestedCategory" name="RequestedCategory" type="text" maxlength="100" required></div>
+            <div><label class="required" for="requestedKind">Kind</label><input id="requestedKind" name="RequestedKind" type="text" maxlength="100" required></div>
+            <div><label class="required" for="requestedType">Type</label><input id="requestedType" name="RequestedType" type="text" maxlength="50" required></div>
+            <div class="pane-form-row"><div><label class="required" for="quantityRequested">Quantity</label><input id="quantityRequested" name="QuantityRequested" type="number" min="1" step="1" required></div><div><label class="required" for="priority">Priority</label><select id="priority" name="Priority" required><option value="Routine">Routine</option><option value="Urgent">Urgent</option><option value="Immediate">Immediate</option></select></div></div>
+            <div><label class="required" for="requestor">Requestor</label><input id="requestor" name="Requestor" type="text" maxlength="150" required></div>
+            <div><label class="required" for="incidentName">Incident</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
+            <div><label class="required" for="dateNeeded">Date needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
+            <div><label for="requestNotes">Notes / justification</label><textarea id="requestNotes" class="auto-grow" name="Notes" maxlength="4000" rows="5" placeholder="Explain the operational need, intended use, delivery location, and any constraints."></textarea></div>
+            <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
+            <div id="requestError" class="form-error" role="alert" hidden></div>
+          </div>
+          <div class="request-form-footer"><button class="btn btn-quiet" id="cancelRequest" type="button">Clear</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit Request</button></div>
+        </form>
       </div>
     </aside>
   </main>
@@ -69,29 +86,6 @@
     <div class="drawer-content"><ul class="request-list" id="requestList"></ul></div>
   </aside>
 
-  <dialog class="modal asset-request-drawer" id="requestDialog" aria-labelledby="requestDialogTitle">
-    <form id="requestForm" novalidate>
-      <div class="modal-header"><div><h2 id="requestDialogTitle">Request Selected Asset</h2><p>Create an ICS 213RR request from the selected inventory item</p></div><button class="btn btn-icon btn-quiet" type="button" id="closeRequestDialog" aria-label="Close request form">×</button></div>
-      <div id="assetRequestSummary" class="asset-request-summary" aria-live="polite"></div>
-      <div class="modal-body">
-        <div class="form-grid">
-          <div class="full"><label class="required" for="requestTitle">Request title</label><input id="requestTitle" name="RequestTitle" type="text" maxlength="200" required></div>
-          <div><label class="required" for="requestedCategory">NIMS category</label><input id="requestedCategory" name="RequestedCategory" type="text" maxlength="100" required></div>
-          <div><label class="required" for="requestedKind">Kind</label><input id="requestedKind" name="RequestedKind" type="text" maxlength="100" required></div>
-          <div><label class="required" for="requestedType">Type</label><input id="requestedType" name="RequestedType" type="text" maxlength="50" required></div>
-          <div><label class="required" for="quantityRequested">Quantity</label><input id="quantityRequested" name="QuantityRequested" type="number" min="1" step="1" required></div>
-          <div><label class="required" for="priority">Priority</label><select id="priority" name="Priority" required><option value="Routine">Routine</option><option value="Urgent">Urgent</option><option value="Immediate">Immediate</option></select></div>
-          <div><label class="required" for="requestor">Requestor</label><input id="requestor" name="Requestor" type="text" maxlength="150" required></div>
-          <div><label class="required" for="incidentName">Incident</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
-          <div><label class="required" for="dateNeeded">Date needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
-          <div class="full"><label for="requestNotes">Notes / justification</label><textarea id="requestNotes" class="auto-grow" name="Notes" maxlength="4000" rows="5" placeholder="Explain the operational need, intended use, delivery location, and any constraints."></textarea></div>
-        </div>
-        <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
-        <div id="requestError" class="form-error" role="alert" hidden></div>
-      </div>
-      <div class="request-form-footer"><button class="btn btn-quiet" id="cancelRequest" type="button">Cancel</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit Asset Request</button></div>
-    </form>
-  </dialog>
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
   <script type="module" src="./src/app.js?v=20261028-8"></script>
 </body>
