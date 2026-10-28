@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { statusForStep } from '../src/workflow-state.js';
+import { statusForStep, nextActionForStep } from '../src/workflow-state.js';
 
 test('maps authoritative workflow steps to request statuses', () => {
   assert.equal(statusForStep('Request Submitted'), 'Submitted');
@@ -9,4 +9,10 @@ test('maps authoritative workflow steps to request statuses', () => {
   assert.equal(statusForStep('Ready to Return?'), 'Deployed');
   assert.equal(statusForStep('Resubmit Request?'), 'Denied');
   assert.equal(statusForStep('Unknown'), null);
+});
+
+test('describes the next required approval or operational action', () => {
+  assert.match(nextActionForStep('Approve Request?'), /approve or deny/i);
+  assert.match(nextActionForStep('Logistics Review'), /Logistics/i);
+  assert.equal(nextActionForStep('Unknown'), '');
 });
