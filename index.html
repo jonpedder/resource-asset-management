@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071824">
   <title>Operations Map | Resource &amp; Asset Management</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
-  <link rel="stylesheet" href="./styles/app.css?v=20261028-31">
+  <link rel="stylesheet" href="./styles/app.css?v=20261028-34">
   <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
@@ -58,7 +58,7 @@
         <div class="panel-scroll"><ul class="resource-list" id="resourceList" aria-live="polite"></ul></div>
       </section>
       <section id="facilitiesInventory" class="inventory-view" role="tabpanel" aria-labelledby="facilitiesTab" hidden>
-        <div class="panel-section"><div class="search-wrap"><label class="sr-only" for="facilitySearch">Search facilities</label><input id="facilitySearch" type="search" placeholder="Search facility, type, or location" autocomplete="off"></div></div>
+        <div class="panel-section"><div class="search-wrap"><label class="sr-only" for="facilitySearch">Search facilities</label><input id="facilitySearch" type="search" placeholder="Search facility, type, or location" autocomplete="off"></div><label class="facility-filter-label" for="facilityStatus">Facility status</label><select id="facilityStatus" class="facility-filter"><option value="">All facility statuses</option></select></div>
         <div class="panel-scroll"><ul class="resource-list" id="facilityList" aria-live="polite"></ul></div>
       </section>
     </aside>
