@@ -10,8 +10,11 @@ test('builds a directly downloadable branded help PDF with formatted topics', as
   assert.match(pdf,/^%PDF-1\.4/);
   assert.match(pdf,/HELP & HOW-TO/);
   assert.match(pdf,/BT 0\.957 0\.969 0\.976 rg \/F2 15 Tf 118 758 Td \(County Emergency Management\) Tj ET/);
+  assert.match(pdf,/IN THIS GUIDE/);
+  assert.ok(pdf.indexOf('IN THIS GUIDE')<pdf.indexOf('Use the Operations workspace'));
   assert.match(pdf,/Use the Operations workspace/);
   assert.match(pdf,/Resources and Facilities/);
+  assert.ok(Number(pdf.match(/\/Count (\d+)/)?.[1])>=2);
   assert.match(pdf,/Workflow Manager is authoritative/);
   assert.match(pdf,/%%EOF$/);
 });
