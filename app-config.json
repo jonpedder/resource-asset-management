@@ -27,7 +27,7 @@
   "layers": { "resources": 0, "facilities": 1, "requests": 2 },
   "branding": {
     "appName": "Resource & Asset Management",
-    "subtitle": "FEMA NIMS Common Operating Picture",
+    "subtitle": "FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager",
     "logoUrl": "",
     "colors": { "navy": "#003B5C", "background": "#071824", "panel": "#0C2231", "panelAlt": "#123247", "accent": "#F2A900", "text": "#F4F7F9", "muted": "#AFC3CF", "border": "#28495B" }
   }

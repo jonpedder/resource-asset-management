@@ -17,7 +17,7 @@
   },
   "branding": {
     "appName": "Resource & Asset Management",
-    "subtitle": "FEMA NIMS Common Operating Picture",
+    "subtitle": "FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager",
     "logoUrl": ""
   }
 }
