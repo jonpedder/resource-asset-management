@@ -37,11 +37,11 @@ function assertStepAction(result, action) {
 }
 
 export class WorkflowClient {
-  constructor({ baseUrl, getToken, getUsername = async () => '', fetchImpl = fetch, WebSocketImpl = globalThis.WebSocket }) {
+  constructor({ baseUrl, getToken, getUsername = async () => '', fetchImpl = globalThis.fetch, WebSocketImpl = globalThis.WebSocket }) {
     this.baseUrl = baseUrl.replace(/\/$/, '');
     this.getToken = getToken;
     this.getUsername = getUsername;
-    this.fetch = fetchImpl;
+    this.fetch = fetchImpl.bind(globalThis);
     this.WebSocketImpl = WebSocketImpl;
   }
 

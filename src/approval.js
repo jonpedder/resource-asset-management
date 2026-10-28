@@ -1,5 +1,5 @@
 import { loadConfig } from './config.js';
-import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js';
+import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261028-2';
 import { actionsForStep, mailtoForRequest, requestDetails } from './approval-utils.js';
 import { applyPresentation } from './presentation.js';
 import { statusForStep, nextActionForStep, responsibleForStep } from './workflow-state.js';
