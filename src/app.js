@@ -1,7 +1,7 @@
 import { loadConfig } from './config.js';
 import { createLinkedRequest } from './request-saga.js';
 import { applyPresentation } from './presentation.js';
-import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261028-3';
+import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261028-4';
 
 const $ = (id) => document.getElementById(id);
 const state = { config: null, view: null, resourceLayer: null, selectionHighlight: null, resources: [], requests: [], selected: null, user: null, requestPoll: null };

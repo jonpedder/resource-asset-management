@@ -50,6 +50,7 @@ export class WorkflowClient {
     if (!token) throw new Error('An authenticated ArcGIS user session is required.');
     const response = await this.fetch(`${this.baseUrl}/${String(path).replace(/^\//, '')}`, {
       method,
+      cache: 'no-store',
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
       body: body === undefined ? undefined : JSON.stringify(body)
     });
@@ -84,9 +85,9 @@ export class WorkflowClient {
 
   addComment(jobId, comment) { return this.call(`jobs/${encodeURIComponent(jobId)}/comments`, { method: 'POST', body: { comment: String(comment) } }); }
 
-  async getComments(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/comments`); return result.jobComments||result.comments||[]; }
+  async getComments(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/comments?_=${Date.now()}`); return result.jobComments||result.comments||[]; }
 
-  async getHistory(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/history`); return result.jobHistory||result.history||[]; }
+  async getHistory(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/history?_=${Date.now()}`); return result.jobHistory||result.history||[]; }
 
   assignStep(jobId, stepId, username) {
     return this.call(`jobs/${encodeURIComponent(jobId)}/${encodeURIComponent(stepId)}`, { method: 'POST', body: { assignedType: 'User', assignedTo: username } });
