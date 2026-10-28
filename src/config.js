@@ -12,6 +12,7 @@ function merge(base, overrides) {
     labels: { ...object(base.labels), ...object(overrides.labels) },
     statusColors: { ...object(base.statusColors), ...object(overrides.statusColors) },
     layerVisibility: { ...object(base.layerVisibility), ...object(overrides.layerVisibility) },
+    mapNavigation: { ...object(base.mapNavigation), ...object(overrides.mapNavigation) },
     workflow: { ...object(base.workflow), ...object(overrides.workflow) }
   };
 }
@@ -36,5 +37,7 @@ export function validateConfig(config) {
   const required = ['portalUrl', 'featureServiceUrl', 'webmapId', 'workflow'];
   for (const key of required) if (!config?.[key]) throw new Error(`Missing configuration value: ${key}`);
   if (!/^https:\/\//i.test(config.portalUrl) || !/^https:\/\//i.test(config.featureServiceUrl)) throw new Error('Portal and feature service URLs must use HTTPS.');
+  const selectionScale=Number(config.mapNavigation?.resourceSelectionScale??24000);
+  if (!Number.isFinite(selectionScale) || selectionScale < 100 || selectionScale > 100000000) throw new Error('Resource selection zoom scale must be between 100 and 100,000,000.');
   return config;
 }
