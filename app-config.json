@@ -1,6 +1,6 @@
 {
   "portalUrl": "https://publicsafety.maps.arcgis.com",
-  "oauthClientId": "",
+  "oauthClientId": "2eURPxapfMdaZiS7",
   "oauthAppItemId": "99b00cf8c51c48148e5c4c250eda9e0e",
   "featureServiceItemId": "6cca40eeed1d4fb39c0885f4ffd223f3",
   "featureServiceUrl": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer",

@@ -8,7 +8,7 @@
   "featureServiceUrl": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer",
   "webmapId": "1b712fcd28314b6b9f54fa17f98f78ae",
   "oauthAppItemId": "99b00cf8c51c48148e5c4c250eda9e0e",
-  "oauthClientId": "",
+  "oauthClientId": "2eURPxapfMdaZiS7",
   "oauthRedirectUrisRequested": [
     "https://jonpedder.github.io/resource-asset-management/",
     "https://jonpedder.github.io/resource-asset-management/approval.html",
