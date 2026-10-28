@@ -1,0 +1,17 @@
+const token = process.env.ARCCTL_TOKEN;
+if (!token) throw new Error('ARCCTL_TOKEN is required.');
+const portal = 'https://publicsafety.maps.arcgis.com';
+const clientId = '2eURPxapfMdaZiS7';
+const callback = 'https://jonpedder.github.io/resource-asset-management/oauth-callback.html';
+const infoResponse = await fetch(`${portal}/sharing/rest/oauth2/apps/${clientId}?f=json&token=${encodeURIComponent(token)}`);
+const info = await infoResponse.json();
+if (info.error) throw new Error(info.error.message);
+const redirectUris = [...new Set([...(info.redirect_uris || []), callback])];
+const body = new URLSearchParams({ f: 'json', token, redirect_uris: JSON.stringify(redirectUris) });
+const updateResponse = await fetch(`${portal}/sharing/rest/oauth2/apps/${clientId}/update`, { method: 'POST', body });
+const update = await updateResponse.json();
+if (!updateResponse.ok || update.error || !update.redirect_uris?.includes(callback)) throw new Error(update.error?.message || 'OAuth application update was not acknowledged.');
+const verifyResponse = await fetch(`${portal}/sharing/rest/oauth2/apps/${clientId}?f=json&token=${encodeURIComponent(token)}`);
+const verify = await verifyResponse.json();
+if (verify.error || !verify.redirect_uris?.includes(callback)) throw new Error('OAuth callback verification failed.');
+console.log(JSON.stringify({ success: true, clientId, callback, redirectUris: verify.redirect_uris }, null, 2));

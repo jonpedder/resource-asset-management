@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Completing ArcGIS sign-in</title></head>
+<body>
+<p>Completing ArcGIS sign-in…</p>
+<script>
+(function () {
+  if (!window.opener || window.opener.closed) {
+    document.body.textContent = 'The sign-in window is no longer connected to the application. Close this window and try again.';
+    return;
+  }
+  try {
+    window.opener.require(['esri/identity/IdentityManager'], function (IdentityManager) {
+      IdentityManager.setOAuthResponseHash(window.location.hash);
+      window.close();
+    });
+  } catch (error) {
+    document.body.textContent = 'ArcGIS sign-in could not be returned to the application. Close this window and try again.';
+  }
+})();
+</script>
+</body>
+</html>
