@@ -19,7 +19,7 @@
     <nav class="app-nav" aria-label="Primary navigation">
       <a href="./index.html" aria-current="page">Operations Map</a>
       <button class="btn btn-quiet" id="requestsButton" type="button">Requests <span class="count-badge" id="requestCount">0</span></button>
-      <a href="./approval.html">Request Approval</a>
+      <a href="./approval.html" target="_self" id="approvalWorkspaceLink">Request Approval</a>
       <a href="./settings.html">Settings</a>
     </nav>
     <div class="session-area">
@@ -83,7 +83,7 @@
           <div><label class="required" for="requestor">Requestor</label><input id="requestor" name="Requestor" type="text" maxlength="150" required></div>
           <div><label class="required" for="incidentName">Incident</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
           <div><label class="required" for="dateNeeded">Date needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
-          <div class="full"><label for="requestNotes">Mission notes / delivery instructions</label><textarea id="requestNotes" name="Notes" maxlength="4000"></textarea></div>
+          <div class="full"><label for="requestNotes">Notes / justification</label><textarea id="requestNotes" class="auto-grow" name="Notes" maxlength="4000" rows="5" placeholder="Explain the operational need, intended use, delivery location, and any constraints."></textarea></div>
         </div>
         <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
         <div id="requestError" class="form-error" role="alert" hidden></div>
@@ -92,6 +92,6 @@
     </form>
   </dialog>
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
-  <script type="module" src="./src/app.js?v=25a6831"></script>
+  <script type="module" src="./src/app.js?v=20261028-2"></script>
 </body>
 </html>
