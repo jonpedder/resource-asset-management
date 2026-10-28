@@ -14,6 +14,9 @@
     "jobTemplateId": "imdsj3sRTPulw67fPU37Qg",
     "approvalStepId": "rr-approve"
   },
+  "labels": { "inventoryHeading": "Resource Inventory", "filtersHeading": "Filters", "signOutButton": "Sign out" },
+  "statusColors": { "Available": "#36B37E", "Committed": "#3498DB", "En Route": "#F2C94C", "Out of Service": "#D9364F", "Demobilized": "#95A5A6" },
+  "layerVisibility": { "resources": true, "facilities": true },
   "groups": {
     "requestors": "0c9906b223af4b3bba0dfbcf86446f99",
     "logistics": "842a9a4bd307420895dca3380d4acaff",
@@ -25,6 +28,7 @@
   "branding": {
     "appName": "Resource & Asset Management",
     "subtitle": "FEMA NIMS Common Operating Picture",
-    "logoUrl": ""
+    "logoUrl": "",
+    "colors": { "navy": "#003B5C", "background": "#071824", "panel": "#0C2231", "panelAlt": "#123247", "accent": "#F2A900", "text": "#F4F7F9", "muted": "#AFC3CF", "border": "#28495B" }
   }
 }

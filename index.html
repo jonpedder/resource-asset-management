@@ -20,7 +20,7 @@
       <a href="./index.html" aria-current="page">Operations Map</a>
       <button class="btn btn-quiet" id="requestsButton" type="button">Requests <span class="count-badge" id="requestCount">0</span></button>
       <a href="./approval.html" target="_self" id="approvalWorkspaceLink">Request Approval</a>
-      <a href="./settings.html">Settings</a>
+      <a href="./settings.html">Settings &amp; Help</a>
     </nav>
     <div class="session-area">
       <div class="user-chip"><span class="user-dot" id="sessionDot"></span><span id="sessionUser">Not signed in</span></div>
@@ -38,7 +38,7 @@
 
   <main id="main" class="workspace">
     <aside class="panel inventory-panel" aria-labelledby="inventoryTitle">
-      <div class="panel-header"><h1 id="inventoryTitle">Resource Inventory</h1><span class="count-badge" id="visibleCount">0</span></div>
+      <div class="panel-header"><h1 id="inventoryTitle"><span id="resourceInventoryHeading">Resource Inventory</span></h1><span class="count-badge" id="visibleCount">0</span></div>
       <div class="panel-section">
         <div class="search-wrap"><label class="sr-only" for="resourceSearch">Search inventory</label><input id="resourceSearch" type="search" placeholder="Search resource, agency, or site" autocomplete="off"></div>
         <details class="filter-group" open><summary>Status</summary><div class="check-grid" id="statusFilters"></div></details>
@@ -92,6 +92,6 @@
     </form>
   </dialog>
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
-  <script type="module" src="./src/app.js?v=20261028-2"></script>
+  <script type="module" src="./src/app.js?v=20261028-3"></script>
 </body>
 </html>
