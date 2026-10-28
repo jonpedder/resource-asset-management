@@ -15,9 +15,6 @@
     "facilities": 1,
     "requests": 2
   },
-  "map": {
-    "quantityLabelMinScale": 150000
-  },
   "branding": {
     "appName": "Resource & Asset Management",
     "subtitle": "FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager",
