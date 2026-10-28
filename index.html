@@ -69,9 +69,10 @@
     <div class="drawer-content"><ul class="request-list" id="requestList"></ul></div>
   </aside>
 
-  <dialog class="modal" id="requestDialog" aria-labelledby="requestDialogTitle">
+  <dialog class="modal asset-request-drawer" id="requestDialog" aria-labelledby="requestDialogTitle">
     <form id="requestForm" novalidate>
-      <div class="modal-header"><div><h2 id="requestDialogTitle">ICS 213RR Resource Request</h2><p>Requests begin in Submitted status and are linked to one verified Workflow Manager job.</p></div><button class="btn btn-icon btn-quiet" type="button" id="closeRequestDialog" aria-label="Close request form">×</button></div>
+      <div class="modal-header"><div><h2 id="requestDialogTitle">Request Selected Asset</h2><p>Create an ICS 213RR request from the selected inventory item</p></div><button class="btn btn-icon btn-quiet" type="button" id="closeRequestDialog" aria-label="Close request form">×</button></div>
+      <div id="assetRequestSummary" class="asset-request-summary" aria-live="polite"></div>
       <div class="modal-body">
         <div class="form-grid">
           <div class="full"><label class="required" for="requestTitle">Request title</label><input id="requestTitle" name="RequestTitle" type="text" maxlength="200" required></div>
@@ -87,11 +88,11 @@
         </div>
         <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
         <div id="requestError" class="form-error" role="alert" hidden></div>
-        <div class="form-actions"><button class="btn btn-quiet" id="cancelRequest" type="button">Cancel</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit &amp; verify request</button></div>
       </div>
+      <div class="request-form-footer"><button class="btn btn-quiet" id="cancelRequest" type="button">Cancel</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit Asset Request</button></div>
     </form>
   </dialog>
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
-  <script type="module" src="./src/app.js?v=20261028-6"></script>
+  <script type="module" src="./src/app.js?v=20261028-7"></script>
 </body>
 </html>
