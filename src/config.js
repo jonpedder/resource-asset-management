@@ -7,7 +7,7 @@ export async function loadConfig(url = './app-config.json') {
 }
 
 export function validateConfig(config) {
-  const required = ['portalUrl', 'oauthClientId', 'featureServiceUrl', 'webmapId', 'workflow'];
+  const required = ['portalUrl', 'featureServiceUrl', 'webmapId', 'workflow'];
   for (const key of required) if (!config?.[key]) throw new Error(`Missing configuration value: ${key}`);
   return config;
 }

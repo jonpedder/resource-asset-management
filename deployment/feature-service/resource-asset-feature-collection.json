@@ -1,0 +1,88 @@
+{
+  "layers": [
+    {
+      "layerDefinition": {
+        "name": "Resources",
+        "geometryType": "esriGeometryPoint",
+        "objectIdField": "OBJECTID",
+        "globalIdField": "GlobalID",
+        "displayField": "ResourceName",
+        "fields": [
+          {"name":"OBJECTID","alias":"OBJECTID","type":"esriFieldTypeOID"},
+          {"name":"GlobalID","alias":"GlobalID","type":"esriFieldTypeGlobalID","length":38},
+          {"name":"ResourceName","alias":"Resource Name","type":"esriFieldTypeString","length":200},
+          {"name":"NIMS_Category","alias":"NIMS Category","type":"esriFieldTypeString","length":100},
+          {"name":"NIMS_Kind","alias":"NIMS Kind","type":"esriFieldTypeString","length":100},
+          {"name":"TypeClass","alias":"Type","type":"esriFieldTypeString","length":50},
+          {"name":"Quantity","alias":"Quantity","type":"esriFieldTypeInteger"},
+          {"name":"Status","alias":"Status","type":"esriFieldTypeString","length":30,"domain":{"type":"codedValue","name":"ResourceStatus","codedValues":[{"name":"Available","code":"Available"},{"name":"Committed","code":"Committed"},{"name":"En Route","code":"En Route"},{"name":"Out of Service","code":"Out of Service"},{"name":"Demobilized","code":"Demobilized"}]}},
+          {"name":"OwningAgency","alias":"Owning Agency","type":"esriFieldTypeString","length":150},
+          {"name":"SiteName","alias":"Site Name","type":"esriFieldTypeString","length":150}
+        ],
+        "capabilities":"Query,Create,Update,Delete,Editing",
+        "extent":{"xmin":-13884991,"ymin":2870341,"xmax":-7455066,"ymax":6338219,"spatialReference":{"wkid":102100,"latestWkid":3857}}
+      },
+      "featureSet": {"geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326},"features":[]}
+    },
+    {
+      "layerDefinition": {
+        "name": "Facilities",
+        "geometryType": "esriGeometryPoint",
+        "objectIdField": "OBJECTID",
+        "globalIdField": "GlobalID",
+        "displayField": "SiteName",
+        "fields": [
+          {"name":"OBJECTID","alias":"OBJECTID","type":"esriFieldTypeOID"},
+          {"name":"GlobalID","alias":"GlobalID","type":"esriFieldTypeGlobalID","length":38},
+          {"name":"SiteName","alias":"Site Name","type":"esriFieldTypeString","length":150},
+          {"name":"FacilityType","alias":"Facility Type","type":"esriFieldTypeString","length":80},
+          {"name":"Status","alias":"Status","type":"esriFieldTypeString","length":30},
+          {"name":"Capacity","alias":"Capacity","type":"esriFieldTypeInteger"},
+          {"name":"Jurisdiction","alias":"Jurisdiction","type":"esriFieldTypeString","length":150},
+          {"name":"Contact","alias":"Contact","type":"esriFieldTypeString","length":150},
+          {"name":"ContactPhone","alias":"Contact Phone","type":"esriFieldTypeString","length":40}
+        ],
+        "capabilities":"Query,Create,Update,Delete,Editing",
+        "extent":{"xmin":-13884991,"ymin":2870341,"xmax":-7455066,"ymax":6338219,"spatialReference":{"wkid":102100,"latestWkid":3857}}
+      },
+      "featureSet": {"geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326},"features":[]}
+    }
+  ],
+  "tables": [
+    {
+      "layerDefinition": {
+        "name":"ResourceRequests",
+        "objectIdField":"OBJECTID",
+        "globalIdField":"GlobalID",
+        "displayField":"RequestTitle",
+        "fields":[
+          {"name":"OBJECTID","alias":"OBJECTID","type":"esriFieldTypeOID"},
+          {"name":"GlobalID","alias":"GlobalID","type":"esriFieldTypeGlobalID","length":38},
+          {"name":"RequestTitle","alias":"Request Title","type":"esriFieldTypeString","length":200},
+          {"name":"RequestedCategory","alias":"Requested Category","type":"esriFieldTypeString","length":100},
+          {"name":"RequestedKind","alias":"Requested Kind","type":"esriFieldTypeString","length":100},
+          {"name":"RequestedType","alias":"Requested Type","type":"esriFieldTypeString","length":50},
+          {"name":"QuantityRequested","alias":"Quantity Requested","type":"esriFieldTypeInteger"},
+          {"name":"Priority","alias":"Priority","type":"esriFieldTypeString","length":30},
+          {"name":"Requestor","alias":"Requestor","type":"esriFieldTypeString","length":150},
+          {"name":"IncidentName","alias":"Incident Name","type":"esriFieldTypeString","length":150},
+          {"name":"DateNeeded","alias":"Date Needed","type":"esriFieldTypeDate"},
+          {"name":"RequestStatus","alias":"Request Status","type":"esriFieldTypeString","length":30},
+          {"name":"ResourceGlobalID","alias":"Resource GlobalID","type":"esriFieldTypeString","length":38},
+          {"name":"Notes","alias":"Notes","type":"esriFieldTypeString","length":4000},
+          {"name":"ApprovedBy","alias":"Approved By","type":"esriFieldTypeString","length":150},
+          {"name":"ApprovedDate","alias":"Approved Date","type":"esriFieldTypeDate"},
+          {"name":"ReturnedDate","alias":"Returned Date","type":"esriFieldTypeDate"},
+          {"name":"StatusBadge","alias":"Status Badge","type":"esriFieldTypeString","length":50},
+          {"name":"WFMJobId","alias":"Workflow Job ID","type":"esriFieldTypeString","length":100},
+          {"name":"DenialReason","alias":"Denial Reason","type":"esriFieldTypeString","length":4000},
+          {"name":"IntegrationState","alias":"Integration State","type":"esriFieldTypeString","length":30,"domain":{"type":"codedValue","name":"IntegrationState","codedValues":[{"name":"Pending","code":"Pending"},{"name":"Linked","code":"Linked"},{"name":"Failed","code":"Failed"},{"name":"ReconcileRequired","code":"ReconcileRequired"}]}},
+          {"name":"IntegrationError","alias":"Integration Error","type":"esriFieldTypeString","length":2000},
+          {"name":"LastWorkflowSync","alias":"Last Workflow Sync","type":"esriFieldTypeDate"}
+        ],
+        "capabilities":"Query,Create,Update,Delete,Editing"
+      },
+      "featureSet":{"features":[]}
+    }
+  ]
+}

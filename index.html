@@ -2,14 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Resource &amp; Asset Management</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#071824">
+  <title>Operations Map | Resource &amp; Asset Management</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
+  <link rel="stylesheet" href="./styles/app.css">
+  <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
-  <main>
-    <h1>Resource &amp; Asset Management</h1>
-    <p>Operations Map scaffold. ArcGIS content will be mounted after the new deployment is provisioned.</p>
-    <nav><a href="./approval.html">Request Approval</a></nav>
+  <a class="skip-link" href="#main">Skip to operations workspace</a>
+  <header class="app-header">
+    <a class="brand" href="./index.html" aria-label="Resource and Asset Management home">
+      <span class="brand-mark" aria-hidden="true">EOC</span>
+      <span class="brand-copy"><strong data-brand-name>Resource &amp; Asset Management</strong><span data-brand-subtitle>FEMA NIMS Common Operating Picture</span></span>
+    </a>
+    <nav class="app-nav" aria-label="Primary navigation">
+      <a href="./index.html" aria-current="page">Operations Map</a>
+      <button class="btn btn-quiet" id="requestsButton" type="button">Requests <span class="count-badge" id="requestCount">0</span></button>
+      <a href="./approval.html">Request Approval</a>
+      <a href="./settings.html">Settings</a>
+    </nav>
+    <div class="session-area">
+      <div class="user-chip"><span class="user-dot" id="sessionDot"></span><span id="sessionUser">Not signed in</span></div>
+      <button class="btn btn-quiet" id="sessionButton" type="button">Sign in</button>
+    </div>
+  </header>
+  <div class="command-strip" role="status">
+    <span class="operational-tag" id="systemStatus">Initializing</span>
+    <span><strong id="resourceTotal">0</strong> resources</span>
+    <span><strong id="availableTotal">0</strong> available</span>
+    <span class="hide-mobile"><strong id="facilityTotal">0</strong> facilities</span>
+    <span class="spacer"></span>
+    <span id="lastUpdated">Awaiting configuration</span>
+  </div>
+
+  <main id="main" class="workspace">
+    <aside class="panel inventory-panel" aria-labelledby="inventoryTitle">
+      <div class="panel-header"><h1 id="inventoryTitle">Resource Inventory</h1><span class="count-badge" id="visibleCount">0</span></div>
+      <div class="panel-section">
+        <div class="search-wrap"><label class="sr-only" for="resourceSearch">Search inventory</label><input id="resourceSearch" type="search" placeholder="Search resource, agency, or site" autocomplete="off"></div>
+        <details class="filter-group" open><summary>Status</summary><div class="check-grid" id="statusFilters"></div></details>
+        <details class="filter-group"><summary>NIMS category</summary><div class="check-grid" id="categoryFilters"></div></details>
+        <details class="filter-group"><summary>Kind and type</summary><div class="check-grid" id="typingFilters"></div></details>
+        <button class="btn btn-quiet" id="clearFilters" type="button">Clear filters</button>
+      </div>
+      <div class="panel-scroll"><ul class="resource-list" id="resourceList" aria-live="polite"></ul></div>
+    </aside>
+
+    <section class="map-shell" aria-label="Operational resource and facility map">
+      <div id="mapView"></div>
+      <div class="map-overlay"><span class="map-chip"><strong>Resources</strong> by operational status</span><span class="map-chip"><strong>Facilities</strong> by type</span></div>
+      <div class="map-message" id="mapMessage"><h2>Operations Map</h2><p>Loading deployment configuration and ArcGIS content…</p></div>
+    </section>
+
+    <aside class="panel detail-panel" aria-labelledby="detailTitle">
+      <div class="panel-header"><h2 id="detailTitle">Resource Detail</h2></div>
+      <div class="panel-scroll" id="resourceDetail">
+        <div class="empty-state"><div class="empty-icon" aria-hidden="true">⌖</div><strong>Select a resource</strong><p>Choose an inventory item or map feature to review NIMS typing and initiate an ICS 213RR request.</p></div>
+      </div>
+    </aside>
   </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="drawer" id="requestsDrawer" aria-labelledby="requestsTitle" aria-hidden="true">
+    <div class="drawer-header"><div><h2 id="requestsTitle">Resource Requests</h2><span class="field-help">Read model and workflow linkage status</span></div><button class="btn btn-icon btn-quiet" id="closeDrawer" type="button" aria-label="Close requests drawer">×</button></div>
+    <div class="drawer-content"><ul class="request-list" id="requestList"></ul></div>
+  </aside>
+
+  <dialog class="modal" id="requestDialog" aria-labelledby="requestDialogTitle">
+    <form id="requestForm" novalidate>
+      <div class="modal-header"><div><h2 id="requestDialogTitle">ICS 213RR Resource Request</h2><p>Requests begin in Submitted status and are linked to one verified Workflow Manager job.</p></div><button class="btn btn-icon btn-quiet" type="button" id="closeRequestDialog" aria-label="Close request form">×</button></div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="full"><label class="required" for="requestTitle">Request title</label><input id="requestTitle" name="RequestTitle" type="text" maxlength="200" required></div>
+          <div><label class="required" for="requestedCategory">NIMS category</label><input id="requestedCategory" name="RequestedCategory" type="text" maxlength="100" required></div>
+          <div><label class="required" for="requestedKind">Kind</label><input id="requestedKind" name="RequestedKind" type="text" maxlength="100" required></div>
+          <div><label class="required" for="requestedType">Type</label><input id="requestedType" name="RequestedType" type="text" maxlength="50" required></div>
+          <div><label class="required" for="quantityRequested">Quantity</label><input id="quantityRequested" name="QuantityRequested" type="number" min="1" step="1" required></div>
+          <div><label class="required" for="priority">Priority</label><select id="priority" name="Priority" required><option value="Routine">Routine</option><option value="Urgent">Urgent</option><option value="Immediate">Immediate</option></select></div>
+          <div><label class="required" for="requestor">Requestor</label><input id="requestor" name="Requestor" type="text" maxlength="150" required></div>
+          <div><label class="required" for="incidentName">Incident</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
+          <div><label class="required" for="dateNeeded">Date needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
+          <div class="full"><label for="requestNotes">Mission notes / delivery instructions</label><textarea id="requestNotes" name="Notes" maxlength="4000"></textarea></div>
+        </div>
+        <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
+        <div id="requestError" class="form-error" role="alert" hidden></div>
+        <div class="form-actions"><button class="btn btn-quiet" id="cancelRequest" type="button">Cancel</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit &amp; verify request</button></div>
+      </div>
+    </form>
+  </dialog>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="./src/app.js"></script>
 </body>
 </html>

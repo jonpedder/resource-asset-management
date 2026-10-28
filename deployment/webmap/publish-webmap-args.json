@@ -1,0 +1,54 @@
+{
+  "title": "Resource & Asset Management Operations Map 20261028",
+  "snippet": "Resources and facilities common operating picture for EOC operations.",
+  "tags": "EOC,NIMS,Resource Management,Facilities,Web Map",
+  "web_map_json": {
+    "version": "2.30",
+    "authoringApp": "ArcGISMapViewer",
+    "authoringAppVersion": "2026.3",
+    "operationalLayers": [
+      {
+        "id": "resources",
+        "title": "Resources",
+        "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer/0",
+        "layerType": "ArcGISFeatureLayer",
+        "visibility": true,
+        "opacity": 1,
+        "layerDefinition": {
+          "drawingInfo": {
+            "labelingInfo": [{"labelExpression":"[ResourceName]","labelPlacement":"esriServerPointLabelPlacementAboveRight","symbol":{"type":"esriTS","color":[240,245,248,255],"haloColor":[5,20,30,220],"haloSize":1,"font":{"family":"Arial","size":9}}}],
+            "renderer": {
+              "type": "uniqueValue",
+              "field1": "Status",
+              "defaultLabel": "Other",
+              "defaultSymbol": {"type":"esriSMS","style":"esriSMSCircle","color":[150,160,170,220],"size":9,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,180],"width":1}},
+              "uniqueValueInfos": [
+                {"value":"Available","label":"Available","symbol":{"type":"esriSMS","style":"esriSMSCircle","color":[74,210,149,230],"size":10,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,210],"width":1}}},
+                {"value":"Committed","label":"Committed","symbol":{"type":"esriSMS","style":"esriSMSCircle","color":[244,178,35,230],"size":10,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,210],"width":1}}},
+                {"value":"En Route","label":"En Route","symbol":{"type":"esriSMS","style":"esriSMSCircle","color":[78,184,231,230],"size":10,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,210],"width":1}}},
+                {"value":"Out of Service","label":"Out of Service","symbol":{"type":"esriSMS","style":"esriSMSX","color":[255,107,107,230],"size":11,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,210],"width":1}}},
+                {"value":"Demobilized","label":"Demobilized","symbol":{"type":"esriSMS","style":"esriSMSCircle","color":[130,140,150,220],"size":8,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,180],"width":1}}}
+              ],
+              "visualVariables": [{"type":"sizeInfo","field":"Quantity","minDataValue":1,"maxDataValue":20,"minSize":8,"maxSize":22}]
+            }
+          }
+        },
+        "popupInfo": {"title":"{ResourceName}","fieldInfos":[{"fieldName":"Status","label":"Status","visible":true},{"fieldName":"Quantity","label":"Quantity","visible":true},{"fieldName":"OwningAgency","label":"Owning Agency","visible":true},{"fieldName":"SiteName","label":"Site","visible":true},{"fieldName":"NIMS_Category","label":"NIMS Category","visible":true},{"fieldName":"NIMS_Kind","label":"NIMS Kind","visible":true},{"fieldName":"TypeClass","label":"Type","visible":true}]}
+      },
+      {
+        "id": "facilities",
+        "title": "Facilities",
+        "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer/1",
+        "layerType": "ArcGISFeatureLayer",
+        "visibility": true,
+        "opacity": 0.9,
+        "layerDefinition": {"drawingInfo":{"renderer":{"type":"uniqueValue","field1":"FacilityType","defaultLabel":"Facility","defaultSymbol":{"type":"esriSMS","style":"esriSMSDiamond","color":[181,139,255,220],"size":11,"outline":{"type":"esriSLS","style":"esriSLSSolid","color":[255,255,255,220],"width":1}},"uniqueValueInfos":[]},"labelingInfo":[{"labelExpression":"[SiteName]","labelPlacement":"esriServerPointLabelPlacementBelowRight","symbol":{"type":"esriTS","color":[220,210,255,255],"haloColor":[5,20,30,220],"haloSize":1,"font":{"family":"Arial","size":9}}}]}},
+        "popupInfo": {"title":"{SiteName}","fieldInfos":[{"fieldName":"FacilityType","label":"Facility Type","visible":true},{"fieldName":"Status","label":"Status","visible":true},{"fieldName":"Capacity","label":"Capacity","visible":true},{"fieldName":"Jurisdiction","label":"Jurisdiction","visible":true},{"fieldName":"Contact","label":"Contact","visible":true},{"fieldName":"ContactPhone","label":"Phone","visible":true}]}
+      }
+    ],
+    "baseMap": {"baseMapLayers":[{"id":"dark-gray-base","layerType":"ArcGISTiledMapServiceLayer","url":"https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer"},{"id":"dark-gray-reference","isReference":true,"layerType":"ArcGISTiledMapServiceLayer","url":"https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer"}],"title":"Dark Gray Canvas"},
+    "spatialReference": {"wkid":102100,"latestWkid":3857},
+    "initialState": {"viewpoint":{"targetGeometry":{"xmin":-13884991,"ymin":2870341,"xmax":-7455066,"ymax":6338219,"spatialReference":{"wkid":102100,"latestWkid":3857}}}},
+    "applicationProperties": {"viewing":{"search":{"enabled":true},"routing":{"enabled":false},"measure":{"enabled":true}}}
+  }
+}

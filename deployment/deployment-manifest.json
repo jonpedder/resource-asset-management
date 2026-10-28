@@ -1,0 +1,36 @@
+{
+  "deploymentName": "Resource & Asset Management",
+  "deployedAt": "2026-10-28",
+  "portalUrl": "https://publicsafety.maps.arcgis.com",
+  "owner": "JonPSO",
+  "sourceItemId": "0605704324cc4d55a75ac1df554c878f",
+  "featureServiceItemId": "6cca40eeed1d4fb39c0885f4ffd223f3",
+  "featureServiceUrl": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer",
+  "webmapId": "1b712fcd28314b6b9f54fa17f98f78ae",
+  "oauthAppItemId": "99b00cf8c51c48148e5c4c250eda9e0e",
+  "oauthClientId": "",
+  "oauthRedirectUrisRequested": [
+    "https://jonpedder.github.io/resource-asset-management/",
+    "https://jonpedder.github.io/resource-asset-management/approval.html",
+    "http://localhost:8000/"
+  ],
+  "workflowItemId": "404315b1c9cc460681310d32f4c348ec",
+  "workflowBaseUrl": "https://workflow.arcgis.com/SdBwj74JF24xKhpX/404315b1c9cc460681310d32f4c348ec",
+  "diagramId": "_HVUDRRqT0GERuSmdr5ZeQ",
+  "diagramVersion": 1,
+  "jobTemplateId": "imdsj3sRTPulw67fPU37Qg",
+  "groups": {
+    "requestors": "0c9906b223af4b3bba0dfbcf86446f99",
+    "logistics": "842a9a4bd307420895dca3380d4acaff",
+    "approvers": "bf9746803e79472492b3bdd0c57112fd",
+    "operations": "c0d401bf11b74800a7ecace0607caff7",
+    "administrators": "4a179e4c7a664fdc8c7d0696b1999788"
+  },
+  "sharing": "private plus workflow role groups",
+  "verification": {
+    "unitTests": "passed",
+    "workflowApprovedBranch": "passed through close; smoke job deleted",
+    "rolesReadBack": "passed",
+    "knownWarnings": ["One inaccessible companion item referenced by the Workflow Manager data manifest could not be shared.", "OAuth client registration requires portal UI completion; app currently uses IdentityManager portal sign-in without an explicit clientId."]
+  }
+}

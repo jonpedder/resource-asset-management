@@ -1,24 +1,59 @@
 {
-  "name": "EOC Resource Request Workflow v2",
-  "jobTemplate": "Resource Request",
-  "extendedPropertyTable": "resource_request",
-  "groups": [
-    "EOC — Requestors",
-    "EOC — Logistics Section",
-    "EOC — Approving Authority",
-    "EOC — Operations Section"
-  ],
-  "steps": [
-    "Request Submitted",
-    "Logistics Review",
-    "Approve Request?",
-    "Source / Commit Resource",
-    "Mobilize / Dispatch",
-    "Deploy / In Use",
-    "Ready to Return?",
-    "Demobilize",
-    "Return & Restock",
-    "Request Closed"
-  ],
-  "status": "TODO: convert to the validated provisioning schema before apply"
+  "$comment": "Resource & Asset Management clean deployment. Names are idempotency keys; Workflow Manager is authoritative.",
+  "workflowItem": {"title":"Resource & Asset Management Workflow 20261028","description":"EOC resource request, approval, mobilization, deployment, demobilization, return, and close workflow."},
+  "category": "Emergency Management",
+  "intake": {"type":"feature-service-webhook"},
+  "groups": {
+    "requestors":{"title":"EOC — Requestors 20261028","description":"Submit and view resource requests.","roles":["Manage Jobs - Basic"]},
+    "logistics":{"title":"EOC — Logistics Section 20261028","description":"Review, source, dispatch, and restock resources.","roles":["Manage Jobs - Basic","Manage Jobs - Advanced"]},
+    "approvers":{"title":"EOC — Approving Authority 20261028","description":"Approve or deny resource requests.","roles":["Manage Jobs - Basic"]},
+    "operations":{"title":"EOC — Operations Section 20261028","description":"Operate, demobilize, and return resources.","roles":["Manage Jobs - Basic"]},
+    "administrators":{"title":"EOC — Workflow Administrators 20261028","description":"Administer the resource-request workflow.","roles":["Manage Jobs - Basic","Manage Jobs - Advanced"]}
+  },
+  "lookups":{"priority":[{"lookupName":"Low","value":0},{"lookupName":"Medium","value":1},{"lookupName":"High","value":2},{"lookupName":"Critical","value":3}]},
+  "extendedPropertyTables":[{
+    "tableName":"resource_request","tableAlias":"Resource Request","relationshipType":"OneToOne",
+    "featureService":{"itemId":"6cca40eeed1d4fb39c0885f4ffd223f3","layerId":"2","featureServiceUniqueId":"globalid"},
+    "fields":[
+      {"propertyName":"globalid","propertyAlias":"Request GlobalID","dataType":"String","fieldLength":38,"visible":true,"editable":false},
+      {"propertyName":"request_title","propertyAlias":"Request Title","dataType":"String","fieldLength":200,"visible":true,"editable":false},
+      {"propertyName":"requested_category","propertyAlias":"Requested Category","dataType":"String","fieldLength":100,"visible":true,"editable":false},
+      {"propertyName":"requested_kind","propertyAlias":"Requested Kind","dataType":"String","fieldLength":100,"visible":true,"editable":false},
+      {"propertyName":"requested_type","propertyAlias":"Requested Type","dataType":"String","fieldLength":50,"visible":true,"editable":false},
+      {"propertyName":"quantity_requested","propertyAlias":"Quantity Requested","dataType":"Integer","visible":true,"editable":true},
+      {"propertyName":"priority","propertyAlias":"Priority","dataType":"String","fieldLength":30,"visible":true,"editable":true},
+      {"propertyName":"incident_name","propertyAlias":"Incident Name","dataType":"String","fieldLength":150,"visible":true,"editable":true},
+      {"propertyName":"request_status","propertyAlias":"Request Status","dataType":"String","fieldLength":30,"visible":true,"editable":false},
+      {"propertyName":"denial_reason","propertyAlias":"Denial Reason","dataType":"String","fieldLength":4000,"visible":true,"editable":true}
+    ]
+  }],
+  "shareItems":["6cca40eeed1d4fb39c0885f4ffd223f3","1b712fcd28314b6b9f54fa17f98f78ae"],
+  "diagram": {
+    "name":"EOC Resource Request / Approval v2 20261028","description":"Validated resource request lifecycle with Workflow Manager as authority.","initialStep":"rr-submitted",
+    "steps":[
+      {"key":"rr-submitted","name":"Request Submitted","kind":"startEnd","at":{"x":0,"y":0},"prompt":"A resource request has been submitted. Acknowledge and route it to Logistics."},
+      {"key":"rr-review","name":"Logistics Review","kind":"manual","at":{"x":200,"y":0},"group":"logistics","userRun":true,"prompt":"Validate NIMS typing, quantity, priority, incident, and inventory availability."},
+      {"key":"rr-approve","name":"Approve Request?","kind":"question","at":{"x":400,"y":0},"group":"approvers","question":"Approve this resource request? A decision note is required in the application.","responses":[{"key":"Approved","displayName":"Approved","value":1},{"key":"Denied","displayName":"Denied","value":0}]},
+      {"key":"rr-source","name":"Source / Commit Resource","kind":"manual","at":{"x":600,"y":-150},"group":"logistics","userRun":true,"prompt":"Select and commit the resource; record sourcing details."},
+      {"key":"rr-dispatch","name":"Mobilize / Dispatch","kind":"manual","at":{"x":800,"y":-150},"group":"logistics","userRun":true,"prompt":"Mobilize and dispatch the resource."},
+      {"key":"rr-deploy","name":"Deploy / In Use","kind":"manual","at":{"x":1000,"y":-150},"group":"operations","userRun":true,"prompt":"Confirm the resource is deployed and in use."},
+      {"key":"rr-ready-return","name":"Ready to Return?","kind":"question","at":{"x":1200,"y":-150},"group":"operations","question":"Is the resource ready to demobilize?","responses":[{"key":"Ready","value":1},{"key":"RemainDeployed","displayName":"Remain Deployed","value":0}]},
+      {"key":"rr-demobilize","name":"Demobilize","kind":"manual","at":{"x":1400,"y":-150},"group":"operations","userRun":true,"prompt":"Demobilize the resource and coordinate return."},
+      {"key":"rr-restock","name":"Return & Restock","kind":"manual","at":{"x":1600,"y":-150},"group":"logistics","userRun":true,"prompt":"Inspect, return, and restock the resource."},
+      {"key":"rr-denied","name":"Record Denial","kind":"manual","at":{"x":600,"y":150},"group":"approvers","userRun":true,"prompt":"Record the denial reason and notify the requestor."},
+      {"key":"rr-resubmit","name":"Resubmit Request?","kind":"question","at":{"x":800,"y":150},"group":"requestors","question":"Revise and resubmit this request?","responses":[{"key":"Resubmit","value":1},{"key":"Close","value":0}]},
+      {"key":"rr-closed","name":"Request Closed","kind":"startEnd","at":{"x":1800,"y":0},"prompt":"Acknowledge final closeout. The request and job are complete."}
+    ],
+    "paths":[
+      {"from":"rr-submitted","to":"rr-review"},{"from":"rr-review","to":"rr-approve"},
+      {"from":"rr-approve","to":"rr-source","answer":1},{"from":"rr-approve","to":"rr-denied","answer":0},
+      {"from":"rr-source","to":"rr-dispatch"},{"from":"rr-dispatch","to":"rr-deploy"},{"from":"rr-deploy","to":"rr-ready-return"},
+      {"from":"rr-ready-return","to":"rr-demobilize","answer":1},{"from":"rr-ready-return","to":"rr-deploy","answer":0,"ports":["TOP","BOTTOM"]},
+      {"from":"rr-demobilize","to":"rr-restock"},{"from":"rr-restock","to":"rr-closed"},
+      {"from":"rr-denied","to":"rr-resubmit"},{"from":"rr-resubmit","to":"rr-review","answer":1,"ports":["TOP","BOTTOM"]},{"from":"rr-resubmit","to":"rr-closed","answer":0}
+    ]
+  },
+  "jobTemplates":[{
+    "name":"Resource Request","diagram":"EOC Resource Request / Approval v2 20261028","description":"EOC resource request lifecycle.","category":"Emergency Management","defaultPriority":"High","defaultJobName":"RR_[index]","defaultJobDuration":14,"defaultAssignment":{"group":"logistics"},"extendedPropertyTables":["resource_request"],"shareWith":["requestors","logistics","approvers","operations","administrators"]
+  }]
 }

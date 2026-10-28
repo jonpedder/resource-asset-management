@@ -1,0 +1,474 @@
+{
+  "success": true,
+  "status_code": 200,
+  "data": {
+    "data": {
+      "applicationProperties": {
+        "viewing": {
+          "measure": {
+            "enabled": true
+          },
+          "routing": {
+            "enabled": false
+          },
+          "search": {
+            "enabled": true
+          }
+        }
+      },
+      "authoringApp": "ArcGISMapViewer",
+      "authoringAppVersion": "2026.3",
+      "baseMap": {
+        "baseMapLayers": [
+          {
+            "id": "dark-gray-base",
+            "layerType": "ArcGISTiledMapServiceLayer",
+            "url": "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+          },
+          {
+            "id": "dark-gray-reference",
+            "isReference": true,
+            "layerType": "ArcGISTiledMapServiceLayer",
+            "url": "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer"
+          }
+        ],
+        "title": "Dark Gray Canvas"
+      },
+      "initialState": {
+        "viewpoint": {
+          "targetGeometry": {
+            "spatialReference": {
+              "latestWkid": 3857,
+              "wkid": 102100
+            },
+            "xmax": -7455066,
+            "xmin": -13884991,
+            "ymax": 6338219,
+            "ymin": 2870341
+          }
+        }
+      },
+      "operationalLayers": [
+        {
+          "id": "resources",
+          "layerDefinition": {
+            "drawingInfo": {
+              "labelingInfo": [
+                {
+                  "labelExpression": "[ResourceName]",
+                  "labelPlacement": "esriServerPointLabelPlacementAboveRight",
+                  "symbol": {
+                    "color": [
+                      240,
+                      245,
+                      248,
+                      255
+                    ],
+                    "font": {
+                      "family": "Arial",
+                      "size": 9
+                    },
+                    "haloColor": [
+                      5,
+                      20,
+                      30,
+                      220
+                    ],
+                    "haloSize": 1,
+                    "type": "esriTS"
+                  }
+                }
+              ],
+              "renderer": {
+                "defaultLabel": "Other",
+                "defaultSymbol": {
+                  "color": [
+                    150,
+                    160,
+                    170,
+                    220
+                  ],
+                  "outline": {
+                    "color": [
+                      255,
+                      255,
+                      255,
+                      180
+                    ],
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS",
+                    "width": 1
+                  },
+                  "size": 9,
+                  "style": "esriSMSCircle",
+                  "type": "esriSMS"
+                },
+                "field1": "Status",
+                "type": "uniqueValue",
+                "uniqueValueInfos": [
+                  {
+                    "label": "Available",
+                    "symbol": {
+                      "color": [
+                        74,
+                        210,
+                        149,
+                        230
+                      ],
+                      "outline": {
+                        "color": [
+                          255,
+                          255,
+                          255,
+                          210
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 1
+                      },
+                      "size": 10,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS"
+                    },
+                    "value": "Available"
+                  },
+                  {
+                    "label": "Committed",
+                    "symbol": {
+                      "color": [
+                        244,
+                        178,
+                        35,
+                        230
+                      ],
+                      "outline": {
+                        "color": [
+                          255,
+                          255,
+                          255,
+                          210
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 1
+                      },
+                      "size": 10,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS"
+                    },
+                    "value": "Committed"
+                  },
+                  {
+                    "label": "En Route",
+                    "symbol": {
+                      "color": [
+                        78,
+                        184,
+                        231,
+                        230
+                      ],
+                      "outline": {
+                        "color": [
+                          255,
+                          255,
+                          255,
+                          210
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 1
+                      },
+                      "size": 10,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS"
+                    },
+                    "value": "En Route"
+                  },
+                  {
+                    "label": "Out of Service",
+                    "symbol": {
+                      "color": [
+                        255,
+                        107,
+                        107,
+                        230
+                      ],
+                      "outline": {
+                        "color": [
+                          255,
+                          255,
+                          255,
+                          210
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 1
+                      },
+                      "size": 11,
+                      "style": "esriSMSX",
+                      "type": "esriSMS"
+                    },
+                    "value": "Out of Service"
+                  },
+                  {
+                    "label": "Demobilized",
+                    "symbol": {
+                      "color": [
+                        130,
+                        140,
+                        150,
+                        220
+                      ],
+                      "outline": {
+                        "color": [
+                          255,
+                          255,
+                          255,
+                          180
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 1
+                      },
+                      "size": 8,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS"
+                    },
+                    "value": "Demobilized"
+                  }
+                ],
+                "visualVariables": [
+                  {
+                    "field": "Quantity",
+                    "maxDataValue": 20,
+                    "maxSize": 22,
+                    "minDataValue": 1,
+                    "minSize": 8,
+                    "type": "sizeInfo"
+                  }
+                ]
+              }
+            }
+          },
+          "layerType": "ArcGISFeatureLayer",
+          "opacity": 1,
+          "popupInfo": {
+            "fieldInfos": [
+              {
+                "fieldName": "Status",
+                "label": "Status",
+                "visible": true
+              },
+              {
+                "fieldName": "Quantity",
+                "label": "Quantity",
+                "visible": true
+              },
+              {
+                "fieldName": "OwningAgency",
+                "label": "Owning Agency",
+                "visible": true
+              },
+              {
+                "fieldName": "SiteName",
+                "label": "Site",
+                "visible": true
+              },
+              {
+                "fieldName": "NIMS_Category",
+                "label": "NIMS Category",
+                "visible": true
+              },
+              {
+                "fieldName": "NIMS_Kind",
+                "label": "NIMS Kind",
+                "visible": true
+              },
+              {
+                "fieldName": "TypeClass",
+                "label": "Type",
+                "visible": true
+              }
+            ],
+            "title": "{ResourceName}"
+          },
+          "title": "Resources",
+          "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer/0",
+          "visibility": true
+        },
+        {
+          "id": "facilities",
+          "layerDefinition": {
+            "drawingInfo": {
+              "labelingInfo": [
+                {
+                  "labelExpression": "[SiteName]",
+                  "labelPlacement": "esriServerPointLabelPlacementBelowRight",
+                  "symbol": {
+                    "color": [
+                      220,
+                      210,
+                      255,
+                      255
+                    ],
+                    "font": {
+                      "family": "Arial",
+                      "size": 9
+                    },
+                    "haloColor": [
+                      5,
+                      20,
+                      30,
+                      220
+                    ],
+                    "haloSize": 1,
+                    "type": "esriTS"
+                  }
+                }
+              ],
+              "renderer": {
+                "defaultLabel": "Facility",
+                "defaultSymbol": {
+                  "color": [
+                    181,
+                    139,
+                    255,
+                    220
+                  ],
+                  "outline": {
+                    "color": [
+                      255,
+                      255,
+                      255,
+                      220
+                    ],
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS",
+                    "width": 1
+                  },
+                  "size": 11,
+                  "style": "esriSMSDiamond",
+                  "type": "esriSMS"
+                },
+                "field1": "FacilityType",
+                "type": "uniqueValue",
+                "uniqueValueInfos": []
+              }
+            }
+          },
+          "layerType": "ArcGISFeatureLayer",
+          "opacity": 0.9,
+          "popupInfo": {
+            "fieldInfos": [
+              {
+                "fieldName": "FacilityType",
+                "label": "Facility Type",
+                "visible": true
+              },
+              {
+                "fieldName": "Status",
+                "label": "Status",
+                "visible": true
+              },
+              {
+                "fieldName": "Capacity",
+                "label": "Capacity",
+                "visible": true
+              },
+              {
+                "fieldName": "Jurisdiction",
+                "label": "Jurisdiction",
+                "visible": true
+              },
+              {
+                "fieldName": "Contact",
+                "label": "Contact",
+                "visible": true
+              },
+              {
+                "fieldName": "ContactPhone",
+                "label": "Phone",
+                "visible": true
+              }
+            ],
+            "title": "{SiteName}"
+          },
+          "title": "Facilities",
+          "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer/1",
+          "visibility": true
+        }
+      ],
+      "spatialReference": {
+        "latestWkid": 3857,
+        "wkid": 102100
+      },
+      "version": "2.30"
+    },
+    "item": {
+      "access": "shared",
+      "accessInformation": null,
+      "advancedSettings": null,
+      "apiToken1ExpirationDate": -1,
+      "apiToken2ExpirationDate": -1,
+      "appCategories": [],
+      "avgRating": 0,
+      "banner": null,
+      "categories": [],
+      "classification": null,
+      "commentsEnabled": true,
+      "contentOrigin": "self",
+      "created": 1793147883000,
+      "culture": "english",
+      "description": null,
+      "documentation": null,
+      "extent": [],
+      "groupDesignations": null,
+      "guid": null,
+      "id": "1b712fcd28314b6b9f54fa17f98f78ae",
+      "industries": [],
+      "isOrgItem": true,
+      "itemControl": "admin",
+      "languages": [],
+      "largeThumbnail": null,
+      "lastViewed": -1,
+      "licenseInfo": null,
+      "listed": false,
+      "modified": 1793147883000,
+      "name": null,
+      "numComments": 0,
+      "numRatings": 0,
+      "numViews": 0,
+      "orgId": "SdBwj74JF24xKhpX",
+      "owner": "JonPSO",
+      "ownerFolder": null,
+      "ownerId": "8d973377fffc4779a13433e9768f477e",
+      "properties": null,
+      "protected": false,
+      "proxyFilter": null,
+      "scoreCompleteness": 48,
+      "screenshots": [],
+      "size": 4541,
+      "snippet": "Resources and facilities common operating picture for EOC operations.",
+      "spatialReference": null,
+      "subInfo": 0,
+      "tags": [
+        "EOC",
+        "NIMS",
+        "Resource Management",
+        "Facilities",
+        "Web Map"
+      ],
+      "thumbnail": null,
+      "title": "Resource \u0026 Asset Management Operations Map 20261028",
+      "type": "Web Map",
+      "typeKeywords": [
+        "ArcGIS Online",
+        "Explorer Web Map",
+        "Map",
+        "Online Map",
+        "Web Map"
+      ],
+      "url": null
+    }
+  }
+}

@@ -1,4 +1,3 @@
-app-config.json
 .env
 .env.*
 !.env.example

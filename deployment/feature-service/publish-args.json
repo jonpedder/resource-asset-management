@@ -1,0 +1,17 @@
+{
+  "source_item_id": "0605704324cc4d55a75ac1df554c878f",
+  "file_type": "featureCollection",
+  "title": "Resource & Asset Management 20261028",
+  "tags": "EOC,NIMS,Resource Management,Facilities,Workflow Manager",
+  "snippet": "Operational resources, facilities, and resource requests for the Resource & Asset Management solution.",
+  "description": "New clean deployment for Resource & Asset Management. Workflow Manager is the workflow authority; ResourceRequests is the application read model.",
+  "publish_parameters": {
+    "name": "Resource_Asset_Management_20261028",
+    "serviceDescription": "Resource & Asset Management operational data",
+    "hasStaticData": false,
+    "maxRecordCount": 2000,
+    "supportedQueryFormats": "JSON",
+    "capabilities": "Query,Create,Update,Delete,Editing",
+    "allowGeometryUpdates": true
+  }
+}
