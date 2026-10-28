@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071824">
   <title>Operations Map | Resource &amp; Asset Management</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
-  <link rel="stylesheet" href="./styles/app.css?v=20261028-12">
+  <link rel="stylesheet" href="./styles/app.css?v=20261028-14">
   <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
@@ -59,27 +59,29 @@
       <div class="map-message" id="mapMessage"><h2>Operations Map</h2><p>Loading deployment configuration and ArcGIS content…</p></div>
     </section>
 
-    <aside class="panel detail-panel" aria-labelledby="detailTitle">
-      <div class="panel-header"><h2 id="detailTitle">Resource Request</h2></div>
+    <aside class="panel detail-panel request-pane" aria-labelledby="detailTitle">
+      <div class="panel-header request-pane-header"><div><h2 id="detailTitle">Request Selected Asset</h2><p>Create an ICS 213RR request from the selected inventory item</p></div><button class="request-pane-close" id="closeRequestPane" type="button" aria-label="Close request form" title="Close request form">×</button></div>
       <div class="panel-scroll" id="resourceDetail">
         <div class="empty-state" id="requestEmptyState"><div class="empty-icon" aria-hidden="true">⌖</div><strong>Select a resource</strong><p>Choose an inventory item or map feature to open a prefilled ICS 213RR request in this pane.</p></div>
         <form id="requestForm" class="pane-request-form" novalidate hidden>
           <div id="assetRequestSummary" class="asset-request-summary" aria-live="polite"></div>
           <div class="pane-request-fields">
-            <div><label class="required" for="requestTitle">Request title</label><input id="requestTitle" name="RequestTitle" type="text" maxlength="200" required></div>
-            <div><label class="required" for="requestedCategory">NIMS category</label><input id="requestedCategory" name="RequestedCategory" type="text" maxlength="100" required></div>
-            <div><label class="required" for="requestedKind">Kind</label><input id="requestedKind" name="RequestedKind" type="text" maxlength="100" required></div>
-            <div><label class="required" for="requestedType">Type</label><input id="requestedType" name="RequestedType" type="text" maxlength="50" required></div>
-            <div class="pane-form-row"><div><label class="required" for="quantityRequested">Quantity</label><input id="quantityRequested" name="QuantityRequested" type="number" min="1" step="1" required></div><div><label class="required" for="priority">Priority</label><select id="priority" name="Priority" required><option value="Routine">Routine</option><option value="Urgent">Urgent</option><option value="Immediate">Immediate</option></select></div></div>
+            <div><label class="required" for="requestTitle">Request Title</label><input id="requestTitle" name="RequestTitle" type="text" maxlength="200" required></div>
+            <div><label class="required" for="incidentName">Incident Name</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
             <div><label class="required" for="requestor">Requestor</label><input id="requestor" name="Requestor" type="text" maxlength="150" required></div>
-            <div><label class="required" for="incidentName">Incident</label><input id="incidentName" name="IncidentName" type="text" maxlength="150" required></div>
-            <div><label for="resourceLocation">Current resource location</label><input id="resourceLocation" type="text" readonly aria-describedby="resourceLocationHelp"><span class="field-help" id="resourceLocationHelp">Copied into the request notes on submission.</span></div>
-            <div><label class="required" for="dateNeeded">Date needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
-            <div><label for="requestNotes">Notes / justification</label><textarea id="requestNotes" class="auto-grow" name="Notes" maxlength="4000" rows="5" placeholder="Explain the operational need, intended use, delivery location, and any constraints."></textarea></div>
+            <div><label class="required" for="priority">Priority</label><select id="priority" name="Priority" required><option value="Routine">Routine</option><option value="Urgent">Urgent</option><option value="Immediate">Immediate</option></select></div>
+            <div><label class="required" for="requestedCategory">Requested Category</label><input id="requestedCategory" name="RequestedCategory" type="text" maxlength="100" required></div>
+            <div><label class="required" for="requestedKind">Requested Kind</label><input id="requestedKind" name="RequestedKind" type="text" maxlength="100" required></div>
+            <div><label class="required" for="requestedType">Requested Type</label><input id="requestedType" name="RequestedType" type="text" maxlength="50" required></div>
+            <div><label class="required" for="quantityRequested">Quantity Requested</label><input id="quantityRequested" name="QuantityRequested" type="number" min="1" step="1" required></div>
+            <div><label class="required" for="dateNeeded">Date Needed</label><input id="dateNeeded" name="DateNeeded" type="date" required></div>
+            <div><label for="requestStatusDisplay">Status</label><input id="requestStatusDisplay" type="text" value="Submitted" readonly></div>
+            <div><label for="resourceLocation">Current Resource Location</label><input id="resourceLocation" type="text" readonly aria-describedby="resourceLocationHelp"><span class="field-help" id="resourceLocationHelp">Copied into the request notes on submission.</span></div>
+            <div><label for="requestNotes">Notes / Justification</label><textarea id="requestNotes" class="auto-grow" name="Notes" maxlength="4000" rows="5" placeholder="Explain the operational need, intended use, delivery location, and any constraints."></textarea></div>
             <input id="resourceGlobalId" name="ResourceGlobalID" type="hidden">
             <div id="requestError" class="form-error" role="alert" hidden></div>
           </div>
-          <div class="request-form-footer"><button class="btn btn-quiet" id="cancelRequest" type="button">Clear</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit Request</button></div>
+          <div class="request-form-footer"><button class="btn btn-quiet" id="cancelRequest" type="button">Cancel</button><button class="btn btn-primary" id="submitRequest" type="submit">Submit Asset Request</button></div>
         </form>
       </div>
     </aside>
