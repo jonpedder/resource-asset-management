@@ -12,6 +12,7 @@ function merge(base, overrides) {
     labels: { ...object(base.labels), ...object(overrides.labels) },
     statusColors: { ...object(base.statusColors), ...object(overrides.statusColors) },
     layerVisibility: { ...object(base.layerVisibility), ...object(overrides.layerVisibility) },
+    map: { ...object(base.map), ...object(overrides.map) },
     workflow: { ...object(base.workflow), ...object(overrides.workflow) }
   };
 }
@@ -36,5 +37,7 @@ export function validateConfig(config) {
   const required = ['portalUrl', 'featureServiceUrl', 'webmapId', 'workflow'];
   for (const key of required) if (!config?.[key]) throw new Error(`Missing configuration value: ${key}`);
   if (!/^https:\/\//i.test(config.portalUrl) || !/^https:\/\//i.test(config.featureServiceUrl)) throw new Error('Portal and feature service URLs must use HTTPS.');
+  const labelMinScale = config.map?.quantityLabelMinScale;
+  if (labelMinScale != null && (!Number.isFinite(Number(labelMinScale)) || Number(labelMinScale) < 0)) throw new Error('Quantity label minimum scale must be zero or a positive number.');
   return config;
 }

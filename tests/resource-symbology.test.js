@@ -26,7 +26,8 @@ test('quantity labels appear beside symbols only at operational scales', () => {
   assert.match(label.labelExpressionInfo.expression, /Qty/);
   assert.equal(label.labelPlacement, 'above-right');
   assert.equal(label.minScale, 150000);
-  assert.equal(label.deconflictionStrategy, 'none');
+  assert.equal(label.deconflictionStrategy, 'static');
+  assert.equal(buildResourceQuantityLabels(75000)[0].minScale, 75000);
 });
 
 test('renderer remains valid when quantity or type is absent', () => {

@@ -58,13 +58,14 @@ export function buildResourceRenderer(features = []) {
   };
 }
 
-export function buildResourceQuantityLabels() {
+export function buildResourceQuantityLabels(minScale = 150000) {
+  const configuredScale = Number(minScale);
   return [{
     labelExpressionInfo: { expression: "'Qty ' + Text(DefaultValue($feature.Quantity, 0), '#,###')" },
     labelPlacement: 'above-right',
-    minScale: 150000,
+    minScale: Number.isFinite(configuredScale) && configuredScale >= 0 ? configuredScale : 150000,
     maxScale: 0,
-    deconflictionStrategy: 'none',
+    deconflictionStrategy: 'static',
     symbol: {
       type: 'text',
       color: [255, 255, 255, 1],

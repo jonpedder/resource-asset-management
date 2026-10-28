@@ -9,3 +9,9 @@ test('accepts secured HTTPS deployment configuration', () => {
 test('rejects insecure connection overrides', () => {
   assert.throws(() => validateConfig({ portalUrl:'http://example.com', featureServiceUrl:'https://example.com/FeatureServer', webmapId:'abc', workflow:{} }), /HTTPS/);
 });
+
+test('accepts a configurable quantity-label scale and rejects invalid values', () => {
+  const base={ portalUrl:'https://example.com', featureServiceUrl:'https://example.com/FeatureServer', webmapId:'abc', workflow:{} };
+  assert.doesNotThrow(() => validateConfig({ ...base, map:{ quantityLabelMinScale:75000 } }));
+  assert.throws(() => validateConfig({ ...base, map:{ quantityLabelMinScale:-1 } }), /minimum scale/);
+});
