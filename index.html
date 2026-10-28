@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071824">
   <title>Operations Map | Resource &amp; Asset Management</title>
   <link rel="stylesheet" href="https://js.arcgis.com/4.33/esri/themes/dark/main.css">
-  <link rel="stylesheet" href="./styles/app.css?v=20261028-29">
+  <link rel="stylesheet" href="./styles/app.css?v=20261028-30">
   <script src="https://js.arcgis.com/4.33/"></script>
 </head>
 <body>
@@ -37,20 +37,30 @@
 
   <main id="main" class="workspace">
     <aside class="panel inventory-panel" aria-labelledby="inventoryTitle">
-      <div class="panel-header"><h1 id="inventoryTitle"><span id="resourceInventoryHeading">Resource Inventory</span></h1><span class="count-badge" id="visibleCount">0</span></div>
-      <div class="panel-section">
-        <div class="search-wrap"><label class="sr-only" for="resourceSearch">Search inventory</label><input id="resourceSearch" type="search" placeholder="Search resource, agency, or site" autocomplete="off"></div>
-        <details class="inventory-filters">
-          <summary>Filters</summary>
-          <div class="inventory-filter-body">
-            <details class="filter-group" open><summary>Status</summary><div class="check-grid" id="statusFilters"></div></details>
-            <details class="filter-group"><summary>NIMS category</summary><div class="check-grid" id="categoryFilters"></div></details>
-            <details class="filter-group"><summary>Kind and type</summary><div class="check-grid" id="typingFilters"></div></details>
-            <button class="btn btn-quiet" id="clearFilters" type="button">Clear filters</button>
-          </div>
-        </details>
+      <div class="inventory-tabs" role="tablist" aria-label="Inventory type">
+        <button class="inventory-tab active" id="resourcesTab" type="button" role="tab" aria-selected="true" aria-controls="resourcesInventory">Resources <span class="count-badge" id="visibleCount">0</span></button>
+        <button class="inventory-tab" id="facilitiesTab" type="button" role="tab" aria-selected="false" aria-controls="facilitiesInventory">Facilities <span class="count-badge" id="visibleFacilityCount">0</span></button>
       </div>
-      <div class="panel-scroll"><ul class="resource-list" id="resourceList" aria-live="polite"></ul></div>
+      <h1 id="inventoryTitle" class="sr-only"><span id="resourceInventoryHeading">Resource Inventory</span></h1>
+      <section id="resourcesInventory" class="inventory-view" role="tabpanel" aria-labelledby="resourcesTab">
+        <div class="panel-section">
+          <div class="search-wrap"><label class="sr-only" for="resourceSearch">Search resources</label><input id="resourceSearch" type="search" placeholder="Search resource, agency, or site" autocomplete="off"></div>
+          <details class="inventory-filters">
+            <summary>Filters</summary>
+            <div class="inventory-filter-body">
+              <details class="filter-group" open><summary>Status</summary><div class="check-grid" id="statusFilters"></div></details>
+              <details class="filter-group"><summary>NIMS category</summary><div class="check-grid" id="categoryFilters"></div></details>
+              <details class="filter-group"><summary>Kind and type</summary><div class="check-grid" id="typingFilters"></div></details>
+              <button class="btn btn-quiet" id="clearFilters" type="button">Clear filters</button>
+            </div>
+          </details>
+        </div>
+        <div class="panel-scroll"><ul class="resource-list" id="resourceList" aria-live="polite"></ul></div>
+      </section>
+      <section id="facilitiesInventory" class="inventory-view" role="tabpanel" aria-labelledby="facilitiesTab" hidden>
+        <div class="panel-section"><div class="search-wrap"><label class="sr-only" for="facilitySearch">Search facilities</label><input id="facilitySearch" type="search" placeholder="Search facility, type, or location" autocomplete="off"></div></div>
+        <div class="panel-scroll"><ul class="resource-list" id="facilityList" aria-live="polite"></ul></div>
+      </section>
     </aside>
 
     <section class="map-shell" aria-label="Operational resource and facility map">
@@ -94,6 +104,6 @@
   </aside>
 
   <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
-  <script type="module" src="./src/app.js?v=20261028-25"></script>
+  <script type="module" src="./src/app.js?v=20261028-26"></script>
 </body>
 </html>
