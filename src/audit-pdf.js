@@ -138,14 +138,25 @@ function normalizeBranding(input = {}) {
 export async function loadPdfLogo(url) {
   if (!url || typeof document === 'undefined') return null;
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`Agency logo could not be loaded (${response.status}).`);
-  const source = await response.blob();
-  const bitmap = await createImageBitmap(source);
-  const maximum = 500; const scale = Math.min(1, maximum / Math.max(bitmap.width, bitmap.height));
-  const canvas = document.createElement('canvas'); canvas.width = Math.max(1, Math.round(bitmap.width * scale)); canvas.height = Math.max(1, Math.round(bitmap.height * scale));
-  const context = canvas.getContext('2d'); context.fillStyle = '#ffffff'; context.fillRect(0, 0, canvas.width, canvas.height); context.drawImage(bitmap, 0, 0, canvas.width, canvas.height); bitmap.close?.();
-  const jpeg = await new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Agency logo could not be converted for the PDF.')), 'image/jpeg', .9));
-  return { bytes: new Uint8Array(await jpeg.arrayBuffer()), width: canvas.width, height: canvas.height };
+  if (!response.ok) throw new Error(`PDF image could not be loaded (${response.status}).`);
+  const source = await response.blob(); let drawable; let objectUrl;
+  try {
+    if (source.type.includes('svg') || typeof createImageBitmap !== 'function') {
+      objectUrl=URL.createObjectURL(source); const image=new Image(); image.decoding='async'; image.src=objectUrl;
+      await image.decode(); drawable=image;
+    } else {
+      try { drawable=await createImageBitmap(source); }
+      catch { objectUrl=URL.createObjectURL(source); const image=new Image(); image.decoding='async'; image.src=objectUrl; await image.decode(); drawable=image; }
+    }
+    const sourceWidth=drawable.width||drawable.naturalWidth; const sourceHeight=drawable.height||drawable.naturalHeight;
+    if(!sourceWidth||!sourceHeight)throw new Error('The PDF image has no readable dimensions.');
+    const maximum = 1200; const scale = Math.min(1, maximum / Math.max(sourceWidth, sourceHeight));
+    const canvas = document.createElement('canvas'); canvas.width = Math.max(1, Math.round(sourceWidth * scale)); canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+    const context = canvas.getContext('2d'); if(!context)throw new Error('The PDF image canvas is unavailable.'); context.fillStyle = '#ffffff'; context.fillRect(0, 0, canvas.width, canvas.height); context.drawImage(drawable, 0, 0, canvas.width, canvas.height);
+    const jpeg = await new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('The PDF image could not be converted.')), 'image/jpeg', .9));
+    return { bytes: new Uint8Array(await jpeg.arrayBuffer()), width: canvas.width, height: canvas.height };
+  } catch(error) { throw new Error(`The PDF image could not be decoded: ${error.message}`); }
+  finally { drawable?.close?.(); if(objectUrl)URL.revokeObjectURL(objectUrl); }
 }
 
 function buildPdf(lines, brandingInput, reportTitle) {
