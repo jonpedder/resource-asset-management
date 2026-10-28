@@ -32,6 +32,25 @@ export function statusForStep(stepName) {
   return STEP_STATUS[stepName] || null;
 }
 
+export const STEP_RESPONSIBLE = Object.freeze({
+  'Request Submitted': 'Logistics',
+  'Logistics Review': 'Logistics',
+  'Approve Request?': 'Approving Authority',
+  'Source / Commit Resource': 'Logistics',
+  'Mobilize / Dispatch': 'Logistics',
+  'Deploy / In Use': 'Operations',
+  'Ready to Return?': 'Operations',
+  'Demobilize': 'Operations',
+  'Return & Restock': 'Logistics',
+  'Record Denial': 'Approving Authority',
+  'Resubmit Request?': 'Requestor',
+  'Request Closed': 'Workflow Administrator'
+});
+
 export function nextActionForStep(stepName) {
   return STEP_NEXT_ACTION[stepName] || '';
+}
+
+export function responsibleForStep(stepName) {
+  return STEP_RESPONSIBLE[stepName] || '';
 }
