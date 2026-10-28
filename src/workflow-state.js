@@ -82,6 +82,18 @@ export function nextActionForStep(stepName) {
   return STEP_NEXT_ACTION[stepName] || '';
 }
 
+export const PERSONA_DESCRIPTIONS = Object.freeze({
+  'Logistics': 'Validates requests, sources and commits resources, coordinates dispatch, and manages return and restocking.',
+  'Approving Authority': 'Reviews operational need and formally approves or denies the resource request.',
+  'Operations': 'Confirms deployment, determines readiness to return, and coordinates demobilization.',
+  'Requestor': 'Submits the operational need and decides whether a denied request should be revised and resubmitted.',
+  'Workflow Administrator': 'Acknowledges final closeout and maintains workflow completion and audit integrity.'
+});
+
 export function responsibleForStep(stepName) {
   return STEP_RESPONSIBLE[stepName] || '';
+}
+
+export function personaDescription(persona) {
+  return PERSONA_DESCRIPTIONS[persona] || 'No persona description is available for this workflow stage.';
 }
