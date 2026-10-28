@@ -1,0 +1,4289 @@
+{
+  "success": true,
+  "status_code": 200,
+  "data": {
+    "data": {
+      "authoringApp": "ArcGISMapViewer",
+      "authoringAppVersion": "2026.2",
+      "baseMap": {
+        "baseMapLayers": [
+          {
+            "id": "dark_gray_base",
+            "layerType": "ArcGISTiledMapServiceLayer",
+            "opacity": 1,
+            "title": "World Dark Gray Base",
+            "url": "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer",
+            "visibility": true
+          },
+          {
+            "id": "dark_gray_reference",
+            "isReference": true,
+            "layerType": "ArcGISTiledMapServiceLayer",
+            "opacity": 1,
+            "title": "World Dark Gray Reference",
+            "url": "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer",
+            "visibility": true
+          }
+        ],
+        "title": "Dark Gray Canvas"
+      },
+      "initialState": {
+        "viewpoint": {
+          "targetGeometry": {
+            "spatialReference": {
+              "latestWkid": 3857,
+              "wkid": 102100
+            },
+            "xmax": -12555180.727267977,
+            "xmin": -14005649.776007097,
+            "ymax": 5083672.825831882,
+            "ymin": 3864349.3506270745
+          }
+        }
+      },
+      "operationalLayers": [
+        {
+          "id": "eoc_resources",
+          "layerDefinition": {
+            "drawingInfo": {
+              "renderer": {
+                "defaultLabel": "Other",
+                "defaultSymbol": {
+                  "angle": 0,
+                  "color": [
+                    127,
+                    140,
+                    141,
+                    255
+                  ],
+                  "outline": {
+                    "color": [
+                      8,
+                      22,
+                      32,
+                      230
+                    ],
+                    "style": "esriSLSSolid",
+                    "type": "esriSLS",
+                    "width": 0.75
+                  },
+                  "size": 8,
+                  "style": "esriSMSCircle",
+                  "type": "esriSMS",
+                  "xoffset": 0,
+                  "yoffset": 0
+                },
+                "field1": "Status",
+                "type": "uniqueValue",
+                "uniqueValueGroups": [
+                  {
+                    "classes": [
+                      {
+                        "label": "Available",
+                        "symbol": {
+                          "angle": 0,
+                          "color": [
+                            46,
+                            204,
+                            113,
+                            255
+                          ],
+                          "outline": {
+                            "color": [
+                              8,
+                              22,
+                              32,
+                              230
+                            ],
+                            "style": "esriSLSSolid",
+                            "type": "esriSLS",
+                            "width": 0.75
+                          },
+                          "size": 8,
+                          "style": "esriSMSCircle",
+                          "type": "esriSMS",
+                          "xoffset": 0,
+                          "yoffset": 0
+                        },
+                        "values": [
+                          [
+                            "Available"
+                          ]
+                        ]
+                      },
+                      {
+                        "label": "Committed",
+                        "symbol": {
+                          "angle": 0,
+                          "color": [
+                            52,
+                            152,
+                            219,
+                            255
+                          ],
+                          "outline": {
+                            "color": [
+                              8,
+                              22,
+                              32,
+                              230
+                            ],
+                            "style": "esriSLSSolid",
+                            "type": "esriSLS",
+                            "width": 0.75
+                          },
+                          "size": 8,
+                          "style": "esriSMSCircle",
+                          "type": "esriSMS",
+                          "xoffset": 0,
+                          "yoffset": 0
+                        },
+                        "values": [
+                          [
+                            "Committed"
+                          ]
+                        ]
+                      },
+                      {
+                        "label": "En Route",
+                        "symbol": {
+                          "angle": 0,
+                          "color": [
+                            241,
+                            196,
+                            15,
+                            255
+                          ],
+                          "outline": {
+                            "color": [
+                              8,
+                              22,
+                              32,
+                              230
+                            ],
+                            "style": "esriSLSSolid",
+                            "type": "esriSLS",
+                            "width": 0.75
+                          },
+                          "size": 8,
+                          "style": "esriSMSCircle",
+                          "type": "esriSMS",
+                          "xoffset": 0,
+                          "yoffset": 0
+                        },
+                        "values": [
+                          [
+                            "En Route"
+                          ]
+                        ]
+                      },
+                      {
+                        "label": "Out of Service",
+                        "symbol": {
+                          "angle": 0,
+                          "color": [
+                            231,
+                            76,
+                            60,
+                            255
+                          ],
+                          "outline": {
+                            "color": [
+                              8,
+                              22,
+                              32,
+                              230
+                            ],
+                            "style": "esriSLSSolid",
+                            "type": "esriSLS",
+                            "width": 0.75
+                          },
+                          "size": 8,
+                          "style": "esriSMSCircle",
+                          "type": "esriSMS",
+                          "xoffset": 0,
+                          "yoffset": 0
+                        },
+                        "values": [
+                          [
+                            "Out of Service"
+                          ]
+                        ]
+                      },
+                      {
+                        "label": "Demobilized",
+                        "symbol": {
+                          "angle": 0,
+                          "color": [
+                            149,
+                            165,
+                            166,
+                            255
+                          ],
+                          "outline": {
+                            "color": [
+                              8,
+                              22,
+                              32,
+                              230
+                            ],
+                            "style": "esriSLSSolid",
+                            "type": "esriSLS",
+                            "width": 0.75
+                          },
+                          "size": 8,
+                          "style": "esriSMSCircle",
+                          "type": "esriSMS",
+                          "xoffset": 0,
+                          "yoffset": 0
+                        },
+                        "values": [
+                          [
+                            "Demobilized"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "uniqueValueInfos": [
+                  {
+                    "label": "Available",
+                    "symbol": {
+                      "angle": 0,
+                      "color": [
+                        46,
+                        204,
+                        113,
+                        255
+                      ],
+                      "outline": {
+                        "color": [
+                          8,
+                          22,
+                          32,
+                          230
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 0.75
+                      },
+                      "size": 8,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS",
+                      "xoffset": 0,
+                      "yoffset": 0
+                    },
+                    "value": "Available"
+                  },
+                  {
+                    "label": "Committed",
+                    "symbol": {
+                      "angle": 0,
+                      "color": [
+                        52,
+                        152,
+                        219,
+                        255
+                      ],
+                      "outline": {
+                        "color": [
+                          8,
+                          22,
+                          32,
+                          230
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 0.75
+                      },
+                      "size": 8,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS",
+                      "xoffset": 0,
+                      "yoffset": 0
+                    },
+                    "value": "Committed"
+                  },
+                  {
+                    "label": "En Route",
+                    "symbol": {
+                      "angle": 0,
+                      "color": [
+                        241,
+                        196,
+                        15,
+                        255
+                      ],
+                      "outline": {
+                        "color": [
+                          8,
+                          22,
+                          32,
+                          230
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 0.75
+                      },
+                      "size": 8,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS",
+                      "xoffset": 0,
+                      "yoffset": 0
+                    },
+                    "value": "En Route"
+                  },
+                  {
+                    "label": "Out of Service",
+                    "symbol": {
+                      "angle": 0,
+                      "color": [
+                        231,
+                        76,
+                        60,
+                        255
+                      ],
+                      "outline": {
+                        "color": [
+                          8,
+                          22,
+                          32,
+                          230
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 0.75
+                      },
+                      "size": 8,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS",
+                      "xoffset": 0,
+                      "yoffset": 0
+                    },
+                    "value": "Out of Service"
+                  },
+                  {
+                    "label": "Demobilized",
+                    "symbol": {
+                      "angle": 0,
+                      "color": [
+                        149,
+                        165,
+                        166,
+                        255
+                      ],
+                      "outline": {
+                        "color": [
+                          8,
+                          22,
+                          32,
+                          230
+                        ],
+                        "style": "esriSLSSolid",
+                        "type": "esriSLS",
+                        "width": 0.75
+                      },
+                      "size": 8,
+                      "style": "esriSMSCircle",
+                      "type": "esriSMS",
+                      "xoffset": 0,
+                      "yoffset": 0
+                    },
+                    "value": "Demobilized"
+                  }
+                ],
+                "visualVariables": [
+                  {
+                    "field": "Quantity",
+                    "maxDataValue": 100,
+                    "maxSize": 48,
+                    "minDataValue": 1,
+                    "minSize": 8,
+                    "type": "sizeInfo"
+                  }
+                ]
+              }
+            },
+            "fieldConfigurations": [
+              {
+                "alias": "Category",
+                "name": "NIMS_Category"
+              },
+              {
+                "alias": "Kind",
+                "name": "NIMS_Kind"
+              },
+              {
+                "alias": "Type",
+                "name": "TypeClass"
+              },
+              {
+                "fieldFormat": {
+                  "maximumFractionDigits": 0,
+                  "type": "number",
+                  "useGrouping": "always"
+                },
+                "name": "Quantity"
+              },
+              {
+                "alias": "Site",
+                "name": "SiteName"
+              }
+            ]
+          },
+          "layerType": "ArcGISFeatureLayer",
+          "opacity": 1,
+          "popupInfo": {
+            "fieldInfos": [
+              {
+                "fieldName": "ResourceName",
+                "isEditable": true,
+                "label": "Resource Name",
+                "visible": true
+              },
+              {
+                "fieldName": "NIMS_Category",
+                "isEditable": true,
+                "label": "Category",
+                "visible": true
+              },
+              {
+                "fieldName": "NIMS_Kind",
+                "isEditable": true,
+                "label": "Kind",
+                "visible": true
+              },
+              {
+                "fieldName": "TypeClass",
+                "isEditable": true,
+                "label": "Type",
+                "visible": true
+              },
+              {
+                "fieldName": "Quantity",
+                "isEditable": true,
+                "label": "Quantity",
+                "visible": true
+              },
+              {
+                "fieldName": "Status",
+                "isEditable": true,
+                "label": "Status",
+                "visible": true
+              },
+              {
+                "fieldName": "OwningAgency",
+                "isEditable": true,
+                "label": "Owning Agency",
+                "visible": true
+              },
+              {
+                "fieldName": "SiteName",
+                "isEditable": true,
+                "label": "Site",
+                "visible": true
+              }
+            ],
+            "popupElements": [
+              {
+                "type": "fields"
+              }
+            ],
+            "title": "{ResourceName}"
+          },
+          "title": "Resources",
+          "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/EOC_Resource_Inventory/FeatureServer/0",
+          "visibility": true
+        },
+        {
+          "id": "1a17e8c24ca-layer-5",
+          "itemId": "ff11eb5b930b4fabba15c47feb130de4",
+          "layerType": "ArcGISMapServiceLayer",
+          "layers": [
+            {
+              "id": 0
+            },
+            {
+              "id": 1
+            },
+            {
+              "id": 2,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 49
+            },
+            {
+              "id": 3,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 50
+            },
+            {
+              "id": 4,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 51
+            },
+            {
+              "id": 5
+            },
+            {
+              "id": 6
+            },
+            {
+              "id": 106
+            },
+            {
+              "id": 7
+            },
+            {
+              "id": 107
+            },
+            {
+              "id": 8
+            },
+            {
+              "id": 9
+            },
+            {
+              "id": 10,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 52
+            },
+            {
+              "id": 11,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 53
+            },
+            {
+              "id": 12,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 54
+            },
+            {
+              "id": 13
+            },
+            {
+              "id": 14
+            },
+            {
+              "id": 114
+            },
+            {
+              "id": 15
+            },
+            {
+              "id": 115
+            },
+            {
+              "id": 16
+            },
+            {
+              "id": 17
+            },
+            {
+              "id": 18,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 55
+            },
+            {
+              "id": 19,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 56
+            },
+            {
+              "id": 20,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 57
+            },
+            {
+              "id": 21
+            },
+            {
+              "id": 22
+            },
+            {
+              "id": 122
+            },
+            {
+              "id": 23
+            },
+            {
+              "id": 123
+            },
+            {
+              "id": 24
+            },
+            {
+              "id": 25
+            },
+            {
+              "id": 26,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 58
+            },
+            {
+              "id": 27,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 59
+            },
+            {
+              "id": 28,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 60
+            },
+            {
+              "id": 29
+            },
+            {
+              "id": 30
+            },
+            {
+              "id": 130
+            },
+            {
+              "id": 31
+            },
+            {
+              "id": 131
+            },
+            {
+              "id": 40
+            },
+            {
+              "id": 45
+            },
+            {
+              "id": 46,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 61
+            },
+            {
+              "id": 47,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 62
+            },
+            {
+              "id": 48,
+              "popupInfo": {
+                "description": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "objectid",
+                    "isEditable": false,
+                    "label": "ObjectID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "severity",
+                    "isEditable": false,
+                    "label": "Severity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "incidenttype",
+                    "isEditable": false,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "location",
+                    "isEditable": false,
+                    "label": "Location",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "description",
+                    "isEditable": false,
+                    "label": "Description",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "fulldescription",
+                    "isEditable": false,
+                    "label": "Details",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "start_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "end_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "lastupdated_localtime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "start_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Started",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "end_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Expected to End",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "lastupdated_utctime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": false,
+                    "label": "Last Updated",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "shape",
+                    "isEditable": false,
+                    "label": "Shape",
+                    "tooltip": "",
+                    "visible": false
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv\u003e\u003cb\u003e{location}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cb\u003e{fulldescription}\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003eStarted: {start_utctime}\u003c/div\u003e\u003cdiv\u003eExpected to end: {end_utctime}\u003c/div\u003e\u003cdiv\u003e\u003cbr /\u003e\u003c/div\u003e\u003cdiv\u003e\u003ci\u003eLast updated: {lastupdated_utctime}\u003c/i\u003e\u003c/div\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{incidenttype}"
+              }
+            },
+            {
+              "id": 63
+            },
+            {
+              "id": 41
+            },
+            {
+              "id": 42
+            },
+            {
+              "id": 142
+            },
+            {
+              "id": 43
+            },
+            {
+              "id": 143
+            },
+            {
+              "id": 32
+            },
+            {
+              "id": 33
+            },
+            {
+              "id": 34
+            },
+            {
+              "id": 134
+            },
+            {
+              "id": 35
+            },
+            {
+              "id": 135
+            },
+            {
+              "id": 36
+            },
+            {
+              "id": 37
+            },
+            {
+              "id": 38
+            },
+            {
+              "id": 138
+            },
+            {
+              "id": 39
+            },
+            {
+              "id": 139
+            },
+            {
+              "id": 44
+            }
+          ],
+          "title": "World Traffic Service",
+          "url": "https://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer",
+          "visibility": false
+        },
+        {
+          "id": "1a17e8c633d-layer-6",
+          "layerType": "GroupLayer",
+          "layers": [
+            {
+              "id": "1a17e8c6b20-layer-7",
+              "itemId": "e109e8fd9c5a495c813b5cbaee9c7d9b",
+              "layerDefinition": {
+                "fieldConfigurations": [
+                  {
+                    "fieldFormat": {
+                      "dateStyle": "short",
+                      "hour12": "always",
+                      "timeStyle": "short",
+                      "type": "date-time"
+                    },
+                    "name": "INCIDENT_DATETIME"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "MAGNITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LATITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LONGITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "dateStyle": "short",
+                      "hour12": "always",
+                      "timeStyle": "short",
+                      "type": "date-time"
+                    },
+                    "name": "ISSUANCE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "FATALITIES"
+                  },
+                  {
+                    "fieldFormat": {
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "INJURIES"
+                  },
+                  {
+                    "fieldFormat": {
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "HOURS_OLD"
+                  }
+                ]
+              },
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003eOn \u003cb\u003e{INCIDENT_DATETIME}\u003c/b\u003e, {INCIDENT_TYPE} was reported \u003c/span\u003ein \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e\u003cspan style='font-family: Verdana, sans-serif; font-size: 9pt;'\u003e: {COMMENTS}.\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e \u003c/span\u003e\u003cspan style='font-size: 12pt; font-family: '\u003e\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003c/p\u003e",
+                "expressionInfos": [],
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "Object ID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "INCIDENT_DATETIME",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Incident Date/Time",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "INCIDENT_TYPE",
+                    "isEditable": true,
+                    "label": "Incident Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "MAGNITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Magnitude in Size, Intensity, or Speed",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "MEASUREMENT",
+                    "isEditable": true,
+                    "label": "Magnitude Measurement Type",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LOCATION",
+                    "isEditable": true,
+                    "label": "Incident Location or City",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COUNTY",
+                    "isEditable": true,
+                    "label": "Storm County",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "STATE",
+                    "isEditable": true,
+                    "label": "Storm State",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LATITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Latitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LONGITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Longitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COMMENTS",
+                    "isEditable": true,
+                    "label": "Remarks",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "SOURCE",
+                    "isEditable": true,
+                    "label": "Reported By",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "OFFICE",
+                    "isEditable": true,
+                    "label": "Weather Office",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ISSUANCE",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Report Created On",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FATALITIES",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Reported Fatalities",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "INJURIES",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Reported Injuries",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FIPS",
+                    "isEditable": true,
+                    "label": "State/County Code",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "INCIDENT_CODE",
+                    "isEditable": true,
+                    "label": "Incident Code",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "HOURS_OLD",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Incident Age in Hours",
+                    "tooltip": "",
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003eOn \u003cb\u003e{INCIDENT_DATETIME}\u003c/b\u003e, {INCIDENT_TYPE} was reported \u003c/span\u003ein \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e\u003cspan style='font-family: Verdana, sans-serif; font-size: 9pt;'\u003e: {COMMENTS}.\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e \u003c/span\u003e\u003cspan style='font-size: 12pt; font-family: '\u003e\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003c/p\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "{INCIDENT_TYPE}: {LOCATION}"
+              },
+              "title": "NOAA ALL Storm Reports (past week)",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/NOAA_storm_reports_v1/FeatureServer/4"
+            },
+            {
+              "id": "1a17e8c6b21-layer-8",
+              "itemId": "e109e8fd9c5a495c813b5cbaee9c7d9b",
+              "layerDefinition": {
+                "fieldConfigurations": [
+                  {
+                    "fieldFormat": {
+                      "dateStyle": "short",
+                      "hour12": "always",
+                      "timeStyle": "short",
+                      "type": "date-time"
+                    },
+                    "name": "UTC_DATETIME"
+                  },
+                  {
+                    "fieldFormat": {
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "F_SCALE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LATITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LONGITUDE"
+                  }
+                ]
+              },
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "\u003cp style='margin-bottom: 0.0001pt;'\u003eOn \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, a tornado was reported in \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e: {COMMENTS}.\u003cbr /\u003e \u003cbr /\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003cbr /\u003e\u003c/p\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "Object ID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "UTC_DATETIME",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Report Date \u0026 Time",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "F_SCALE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Tornado Intensity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LOCATION",
+                    "isEditable": true,
+                    "label": "Storm Location",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COUNTY",
+                    "isEditable": true,
+                    "label": "Storm County",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "STATE",
+                    "isEditable": true,
+                    "label": "Storm State",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LATITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Latitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LONGITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Longitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COMMENTS",
+                    "isEditable": true,
+                    "label": "Report Comments",
+                    "tooltip": "",
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cp style='margin-bottom: 0.0001pt;'\u003eOn \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, a tornado was reported in \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e: {COMMENTS}.\u003cbr /\u003e \u003cbr /\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003cbr /\u003e\u003c/p\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "Tornado Report: {LOCATION}"
+              },
+              "title": "NOAA TORNADO Storm Reports (past week)",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/NOAA_storm_reports_v1/FeatureServer/3"
+            },
+            {
+              "id": "1a17e8c6b22-layer-9",
+              "itemId": "e109e8fd9c5a495c813b5cbaee9c7d9b",
+              "layerDefinition": {
+                "fieldConfigurations": [
+                  {
+                    "fieldFormat": {
+                      "dateStyle": "short",
+                      "hour12": "always",
+                      "timeStyle": "short",
+                      "type": "date-time"
+                    },
+                    "name": "UTC_DATETIME"
+                  },
+                  {
+                    "fieldFormat": {
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "SPEED"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LATITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LONGITUDE"
+                  }
+                ]
+              },
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003eOn \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, high winds were reported \u003c/span\u003ein \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e\u003cspan style='font-family: Verdana, sans-serif; font-size: 9pt;'\u003e: {COMMENTS}.\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 12pt; font-family: '\u003e\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003c/p\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "Object ID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "UTC_DATETIME",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Report Date \u0026 Time",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "SPEED",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Wind Speed",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LOCATION",
+                    "isEditable": true,
+                    "label": "Storm Location",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COUNTY",
+                    "isEditable": true,
+                    "label": "Storm County",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "STATE",
+                    "isEditable": true,
+                    "label": "Storm State",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LATITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Latitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LONGITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Longitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COMMENTS",
+                    "isEditable": true,
+                    "label": "Report Comments",
+                    "tooltip": "",
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003eOn \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, high winds were reported \u003c/span\u003ein \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e\u003cspan style='font-family: Verdana, sans-serif; font-size: 9pt;'\u003e: {COMMENTS}.\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 12pt; font-family: '\u003e\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003c/p\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "Wind Storm: {LOCATION}"
+              },
+              "title": "NOAA WIND Storm Reports (24 hours)",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/NOAA_storm_reports_v1/FeatureServer/2"
+            },
+            {
+              "id": "1a17e8c6b23-layer-10",
+              "itemId": "e109e8fd9c5a495c813b5cbaee9c7d9b",
+              "layerDefinition": {
+                "fieldConfigurations": [
+                  {
+                    "fieldFormat": {
+                      "dateStyle": "short",
+                      "hour12": "always",
+                      "timeStyle": "short",
+                      "type": "date-time"
+                    },
+                    "name": "UTC_DATETIME"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "HAIL_SIZE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LATITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LONGITUDE"
+                  }
+                ]
+              },
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003eOn \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, hail was reported \u003c/span\u003ein \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e\u003cspan style='font-family: Verdana, sans-serif; font-size: 9pt;'\u003e: {COMMENTS}.\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e \u003c/span\u003e\u003cspan style='font-size: 12pt; font-family: '\u003e\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003c/p\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "Object ID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "UTC_DATETIME",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Report Date \u0026 Time",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "HAIL_SIZE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Hail Size",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LOCATION",
+                    "isEditable": true,
+                    "label": "Storm Location",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COUNTY",
+                    "isEditable": true,
+                    "label": "Storm County",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "STATE",
+                    "isEditable": true,
+                    "label": "Storm State",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LATITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Latitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LONGITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Longitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COMMENTS",
+                    "isEditable": true,
+                    "label": "Report Comments",
+                    "tooltip": "",
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003eOn \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, hail was reported \u003c/span\u003ein \u003cb\u003e{COUNTY} COUNTY, {STATE}\u003c/b\u003e\u003cspan style='font-family: Verdana, sans-serif; font-size: 9pt;'\u003e: {COMMENTS}.\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e \u003c/span\u003e\u003cspan style='font-size: 12pt; font-family: '\u003e\u003c/span\u003e\u003c/p\u003e\u003cp style='margin-bottom: 0.0001pt;'\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e\u003c/p\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "Hail Storm: {LOCATION}"
+              },
+              "title": "NOAA HAIL Storm Reports (24 hours)",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/NOAA_storm_reports_v1/FeatureServer/0"
+            },
+            {
+              "id": "1a17e8c6b23-layer-11",
+              "itemId": "e109e8fd9c5a495c813b5cbaee9c7d9b",
+              "layerDefinition": {
+                "fieldConfigurations": [
+                  {
+                    "fieldFormat": {
+                      "dateStyle": "short",
+                      "hour12": "always",
+                      "timeStyle": "short",
+                      "type": "date-time"
+                    },
+                    "name": "UTC_DATETIME"
+                  },
+                  {
+                    "fieldFormat": {
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "F_SCALE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LATITUDE"
+                  },
+                  {
+                    "fieldFormat": {
+                      "minimumFractionDigits": 2,
+                      "type": "number",
+                      "useGrouping": "always"
+                    },
+                    "name": "LONGITUDE"
+                  }
+                ]
+              },
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "On \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, a tornado was reported in \u003cb\u003e{COUNTY} COUNTY\u003c/b\u003e\u003cb\u003e, {STATE}\u003c/b\u003e: {COMMENTS}.\u003cbr /\u003e \u003cbr /\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e",
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "Object ID",
+                    "tooltip": "",
+                    "visible": false
+                  },
+                  {
+                    "fieldName": "UTC_DATETIME",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Report Date \u0026 Time",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "F_SCALE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Tornado Intensity",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LOCATION",
+                    "isEditable": true,
+                    "label": "Storm Location",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COUNTY",
+                    "isEditable": true,
+                    "label": "Storm County",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "STATE",
+                    "isEditable": true,
+                    "label": "Storm State",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LATITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Latitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LONGITUDE",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Geographic Longitude",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "COMMENTS",
+                    "isEditable": true,
+                    "label": "Report Comments",
+                    "tooltip": "",
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "On \u003cb\u003e{UTC_DATETIME}\u003c/b\u003e, a tornado was reported in \u003cb\u003e{COUNTY} COUNTY\u003c/b\u003e\u003cb\u003e, {STATE}\u003c/b\u003e: {COMMENTS}.\u003cbr /\u003e \u003cbr /\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eData Source is the \u003c/span\u003e\u003c/i\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif;'\u003e\u003ca href='https://www.weather.gov/' target='_blank' rel='nofollow ugc noopener noreferrer'\u003eNational Weather Service\u003c/a\u003e \u003c/span\u003e\u003ci\u003e\u003cspan style='font-size: 9pt; font-family: Verdana, sans-serif; color: gray;'\u003eprovided by NOAA\u003c/span\u003e\u003c/i\u003e",
+                    "type": "text"
+                  },
+                  {
+                    "displayType": "auto",
+                    "type": "attachments"
+                  }
+                ],
+                "showAttachments": true,
+                "title": "Tornado Report: {LOCATION}"
+              },
+              "title": "NOAA TORNADO Storm Reports (24 hours)",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/NOAA_storm_reports_v1/FeatureServer/1"
+            }
+          ],
+          "title": "USA Storm Reports",
+          "visibility": false
+        },
+        {
+          "id": "1a17e8cca2c-layer-12",
+          "layerType": "GroupLayer",
+          "layers": [
+            {
+              "id": "1a17e8ccde0-layer-13",
+              "itemId": "d957997ccee7408287a963600a77f61f",
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cb\u003e\u003cfont size='4'\u003e\u003cspan style='text-align: center;'\u003e{expression/expr0} \u003c/span\u003eINCIDENT\u003c/font\u003e\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont size='3'\u003eType: {FeatureCategory}\u003cfont style=''\u003e\u003cb\u003e \u003c/b\u003e\u003c/font\u003e\u003c/font\u003e\u003c/div\u003e\u003c/div\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont size='3'\u003eAcres Burned: \u003c/font\u003e\u003cspan style='text-align: center;'\u003e\u003cfont size='3'\u003e{expression/expr1}\u003c/font\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv style='text-align: left;'\u003e\u003ci\u003e\u003cfont size='2'\u003eCurrent as of {DateCurrent}\u003c/font\u003e\u003c/i\u003e\u003c/div\u003e\u003c/div\u003e",
+                "expressionInfos": [
+                  {
+                    "expression": "Upper($feature.IncidentName)",
+                    "name": "expr0",
+                    "returnType": "string",
+                    "title": "Uppercase Name"
+                  },
+                  {
+                    "expression": "var GISAcres = ! IsEmpty($feature.GISAcres)\r\n\r\nIf (GISAcres) Return text($feature[\"GISAcres\"],'#,###.##') \r\nReturn \"Not Available\"\r\n",
+                    "name": "expr1",
+                    "returnType": "string",
+                    "title": "Acreage"
+                  }
+                ],
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "OBJECTID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IncidentName",
+                    "isEditable": true,
+                    "label": "Incident Name",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FeatureCategory",
+                    "isEditable": true,
+                    "label": "Feature Category",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "MapMethod",
+                    "isEditable": true,
+                    "label": "Map Method",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "Comments",
+                    "isEditable": true,
+                    "label": "Comments",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "GISAcres",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Calculated Acres",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "Label",
+                    "isEditable": true,
+                    "label": "Label",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "CreateDate",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Create Date",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "DateCurrent",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Date Current",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "PolygonDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Polygon Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ComplexName",
+                    "isEditable": true,
+                    "label": "Complex Name",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ComplexID",
+                    "isEditable": true,
+                    "label": "Complex ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "GACC",
+                    "isEditable": true,
+                    "label": "Geographic Area Coordination Center",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IMTName",
+                    "isEditable": true,
+                    "label": "IMT Name",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "UnitID",
+                    "isEditable": true,
+                    "label": "Unit ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "LocalIncidentID",
+                    "isEditable": true,
+                    "label": "Local Incident ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IRWINID",
+                    "isEditable": true,
+                    "label": "IRWIN ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "GeometryID",
+                    "isEditable": true,
+                    "label": "Geometry ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "GlobalID",
+                    "isEditable": true,
+                    "label": "Global ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "CurrentDateAge",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Days Since Current Date",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "CreateDateAge",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Days Since Create Date",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IncidentTypeCategory",
+                    "isEditable": true,
+                    "label": "IncidentTypeCategory",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "Shape__Area",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": false,
+                    "label": "Shape__Area",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "Shape__Length",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": false,
+                    "label": "Shape__Length",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "expression/expr0",
+                    "isEditable": true,
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "expression/expr1",
+                    "isEditable": true,
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cb\u003e\u003cfont size='4'\u003e\u003cspan style='text-align: center;'\u003e{expression/expr0} \u003c/span\u003eINCIDENT\u003c/font\u003e\u003c/b\u003e\u003c/div\u003e\u003cdiv\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont size='3'\u003eType: {FeatureCategory}\u003cfont style=''\u003e\u003cb\u003e \u003c/b\u003e\u003c/font\u003e\u003c/font\u003e\u003c/div\u003e\u003c/div\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont size='3'\u003eAcres Burned: \u003c/font\u003e\u003cspan style='text-align: center;'\u003e\u003cfont size='3'\u003e{expression/expr1}\u003c/font\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv style='text-align: left;'\u003e\u003ci\u003e\u003cfont size='2'\u003eCurrent as of {DateCurrent}\u003c/font\u003e\u003c/i\u003e\u003c/div\u003e\u003c/div\u003e",
+                    "type": "text"
+                  }
+                ],
+                "title": ""
+              },
+              "title": "Current Perimeters",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USA_Wildfires_v1/FeatureServer/1"
+            },
+            {
+              "id": "1a17e8ccde1-layer-14",
+              "itemId": "d957997ccee7408287a963600a77f61f",
+              "layerType": "ArcGISFeatureLayer",
+              "popupInfo": {
+                "description": "\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cb\u003e\u003cfont size='4'\u003e{expression/expr2} \u003c/font\u003e\u003c/b\u003e\u003cb\u003e\u003cfont size='4'\u003eINCIDENT\u003c/font\u003e\u003c/b\u003e\u003c/div\u003e\u003cfont style='text-transform: uppercase;'\u003e\u003cspan style='font-size: medium; text-transform: none;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont style='font-size: 14px; text-transform: uppercase;'\u003e\u003cspan style='font-size: medium; text-transform: none;'\u003eType: \u003c/span\u003e\u003c/font\u003e{expression/expr3} \u003c/div\u003e\u003c/span\u003e\u003c/font\u003e\u003c/div\u003e\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont size='3'\u003eArea Acres Burned: {expression/expr0}\u003c/font\u003e\u003c/div\u003e\u003cfont size='3'\u003e\u003cdiv style='text-align: left;'\u003ePercent Contained: {expression/expr1}\u003c/div\u003e\u003c/font\u003e\u003cfont size='3'\u003e\u003cdiv style='text-align: left;'\u003eDiscovered: {FireDiscoveryDateTime}\u003c/div\u003e\u003c/font\u003e\u003c/div\u003e\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont style='font-size: small; font-style: italic;'\u003eCurrent as of \u003c/font\u003e\u003ci\u003e{ModifiedOnDateTime}\u003c/i\u003e\u003c/div\u003e\u003cfont size='2'\u003e\u003ci\u003e \u003c/i\u003e\u003c/font\u003e\u003c/div\u003e\u003c/div\u003e\u003c/div\u003e\u003c/div\u003e",
+                "expressionInfos": [
+                  {
+                    "expression": "var DailyAcres = ! IsEmpty($feature.DailyAcres)\r\nvar DiscoveryAcres = ! IsEmpty($feature.DiscoveryAcres)\r\n\r\nIf (DailyAcres) Return text($feature[\"DailyAcres\"],'#,###.##') \r\nIf (DiscoveryAcres) Return text($feature[\"DiscoveryAcres\"],'#,###.##') \r\nReturn \"Not Available\"\r\n",
+                    "name": "expr0",
+                    "returnType": "string",
+                    "title": "Daily/Discovery Acres"
+                  },
+                  {
+                    "expression": "var PerCont = ! IsEmpty($feature.PercentContained)\n\nIf (PerCont) Return text($feature.PercentContained + \"%\") \nReturn \"Not Available\"",
+                    "name": "expr1",
+                    "returnType": "string",
+                    "title": "Percent Contained Exp"
+                  },
+                  {
+                    "expression": "Upper($feature.IncidentName)",
+                    "name": "expr2",
+                    "returnType": "string",
+                    "title": "Uppercase Name"
+                  },
+                  {
+                    "expression": "var Type = $feature.IncidentTypeCategory\n\nWhen (Type == 'RX', \"RX - Prescribed Fire\",\nType == 'WF', \"WF - Wildfire\",\nType == 'IC', \"IC - Incident Complex\",\n\"\")",
+                    "name": "expr3",
+                    "returnType": "string",
+                    "title": "WF RX Defined"
+                  }
+                ],
+                "fieldInfos": [
+                  {
+                    "fieldName": "OBJECTID",
+                    "isEditable": false,
+                    "label": "OBJECTID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IncidentName",
+                    "isEditable": true,
+                    "label": "Incident Name",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IncidentTypeCategory",
+                    "isEditable": true,
+                    "label": "Incident Type Category",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "UniqueFireIdentifier",
+                    "isEditable": true,
+                    "label": "Unique Fire Identifier",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "DailyAcres",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Daily Acres",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "CalculatedAcres",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Calculated Acres",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "PercentContained",
+                    "format": {
+                      "digitSeparator": false,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Percent Contained",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ICS209ReportDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "ICS209 Report Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FireDiscoveryDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Fire Discovery Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "DiscoveryAcres",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Discovery Acres",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "POOCounty",
+                    "isEditable": true,
+                    "label": "Point of Orgin County",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "POOState",
+                    "isEditable": true,
+                    "label": "Point of Orgin State",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FireCause",
+                    "isEditable": true,
+                    "label": "Cause",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FireCauseGeneral",
+                    "isEditable": true,
+                    "label": "Cause General",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "GACC",
+                    "isEditable": true,
+                    "label": "Geographic Area Coordination Center",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "TotalIncidentPersonnel",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Total Incident Personnel",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IncidentManagementOrganization",
+                    "isEditable": true,
+                    "label": "Incident Mgmt Organization",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FireMgmtComplexity",
+                    "isEditable": true,
+                    "label": "Mgmt Complexity",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ResidencesDestroyed",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Residences Destroyed",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "OtherStructuresDestroyed",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Other Structures Destroyed",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "Injuries",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Injuries",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "Fatalities",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Fatalities",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "PredominantFuelGroup",
+                    "isEditable": true,
+                    "label": "Predominant Fuel Group",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "PredominantFuelModel",
+                    "isEditable": true,
+                    "label": "Predominant Fuel Model",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "PrimaryFuelModel",
+                    "isEditable": true,
+                    "label": "Primary Fuel Model",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ContainmentDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Containment Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ControlDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Control Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FinalAcres",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 2
+                    },
+                    "isEditable": true,
+                    "label": "Final Acres",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IsValid",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Is Valid",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FireOutDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Fire Out Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ModifiedOnDateTime",
+                    "format": {
+                      "dateFormat": "shortDateShortTime",
+                      "digitSeparator": false
+                    },
+                    "isEditable": true,
+                    "label": "Modified On Date Time",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IncidentTypeKind",
+                    "isEditable": true,
+                    "label": "Incident Type Kind",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "IrwinID",
+                    "isEditable": true,
+                    "label": "IRWIN ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "GlobalID",
+                    "isEditable": true,
+                    "label": "Global ID",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "ModifiedOnAge",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Days Since Modified On Date",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "FireDiscoveryAge",
+                    "format": {
+                      "digitSeparator": true,
+                      "places": 0
+                    },
+                    "isEditable": true,
+                    "label": "Days Since Fire Discovery Date",
+                    "tooltip": "",
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "expression/expr0",
+                    "isEditable": true,
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "expression/expr1",
+                    "isEditable": true,
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "expression/expr2",
+                    "isEditable": true,
+                    "visible": true
+                  },
+                  {
+                    "fieldName": "expression/expr3",
+                    "isEditable": true,
+                    "visible": true
+                  }
+                ],
+                "popupElements": [
+                  {
+                    "text": "\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cb\u003e\u003cfont size='4'\u003e{expression/expr2} \u003c/font\u003e\u003c/b\u003e\u003cb\u003e\u003cfont size='4'\u003eINCIDENT\u003c/font\u003e\u003c/b\u003e\u003c/div\u003e\u003cfont style='text-transform: uppercase;'\u003e\u003cspan style='font-size: medium; text-transform: none;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont style='font-size: 14px; text-transform: uppercase;'\u003e\u003cspan style='font-size: medium; text-transform: none;'\u003eType: \u003c/span\u003e\u003c/font\u003e{expression/expr3} \u003c/div\u003e\u003c/span\u003e\u003c/font\u003e\u003c/div\u003e\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont size='3'\u003eArea Acres Burned: {expression/expr0}\u003c/font\u003e\u003c/div\u003e\u003cfont size='3'\u003e\u003cdiv style='text-align: left;'\u003ePercent Contained: {expression/expr1}\u003c/div\u003e\u003c/font\u003e\u003cfont size='3'\u003e\u003cdiv style='text-align: left;'\u003eDiscovered: {FireDiscoveryDateTime}\u003c/div\u003e\u003c/font\u003e\u003c/div\u003e\u003cdiv style='text-align: center;'\u003e\u003cdiv style='text-align: left;'\u003e\u003cfont style='font-size: small; font-style: italic;'\u003eCurrent as of \u003c/font\u003e\u003ci\u003e{ModifiedOnDateTime}\u003c/i\u003e\u003c/div\u003e\u003cfont size='2'\u003e\u003ci\u003e \u003c/i\u003e\u003c/font\u003e\u003c/div\u003e\u003c/div\u003e\u003c/div\u003e\u003c/div\u003e",
+                    "type": "text"
+                  }
+                ],
+                "title": ""
+              },
+              "title": "Current Incidents",
+              "url": "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USA_Wildfires_v1/FeatureServer/0"
+            }
+          ],
+          "title": "USA Current Wildfires",
+          "visibility": false
+        },
+        {
+          "id": "eoc_facilities",
+          "layerDefinition": {
+            "fieldConfigurations": [
+              {
+                "fieldFormat": {
+                  "maximumFractionDigits": 0,
+                  "type": "number",
+                  "useGrouping": "always"
+                },
+                "name": "Capacity"
+              },
+              {
+                "alias": "Contact",
+                "name": "Contact"
+              }
+            ]
+          },
+          "layerType": "ArcGISFeatureLayer",
+          "opacity": 1,
+          "popupInfo": {
+            "fieldInfos": [
+              {
+                "fieldName": "SiteName",
+                "isEditable": true,
+                "label": "Site Name",
+                "visible": true
+              },
+              {
+                "fieldName": "FacilityType",
+                "isEditable": true,
+                "label": "Facility Type",
+                "visible": true
+              },
+              {
+                "fieldName": "Status",
+                "isEditable": true,
+                "label": "Status",
+                "visible": true
+              },
+              {
+                "fieldName": "Capacity",
+                "isEditable": true,
+                "label": "Capacity",
+                "visible": true
+              },
+              {
+                "fieldName": "Jurisdiction",
+                "isEditable": true,
+                "label": "Jurisdiction",
+                "visible": true
+              },
+              {
+                "fieldName": "Contact",
+                "isEditable": true,
+                "label": "Contact",
+                "visible": true
+              },
+              {
+                "fieldName": "ContactPhone",
+                "isEditable": true,
+                "label": "Contact Phone",
+                "visible": true
+              }
+            ],
+            "popupElements": [
+              {
+                "type": "fields"
+              }
+            ],
+            "title": "{SiteName}"
+          },
+          "title": "Facilities",
+          "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/EOC_Resource_Inventory/FeatureServer/1",
+          "visibility": true
+        }
+      ],
+      "spatialReference": {
+        "latestWkid": 3857,
+        "wkid": 102100
+      },
+      "tables": [
+        {
+          "id": "resource_requests",
+          "title": "ResourceRequests",
+          "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/EOC_Resource_Inventory/FeatureServer/2"
+        }
+      ],
+      "timeZone": "system",
+      "version": "2.37"
+    },
+    "item": {
+      "access": "org",
+      "accessInformation": "",
+      "advancedSettings": null,
+      "apiToken1ExpirationDate": -1,
+      "apiToken2ExpirationDate": -1,
+      "appCategories": [],
+      "avgRating": 0,
+      "banner": null,
+      "categories": [],
+      "classification": null,
+      "commentsEnabled": true,
+      "contentOrigin": "self",
+      "created": 1793124238000,
+      "culture": "english",
+      "description": "Web map used by the EOC Resource \u0026 Asset Management application. Includes resource inventory, facilities, and the ResourceRequests table.",
+      "documentation": null,
+      "extent": [
+        [
+          -125.81489257812328,
+          32.76648301821833
+        ],
+        [
+          -112.78510742187672,
+          41.48182635456812
+        ]
+      ],
+      "groupDesignations": null,
+      "guid": null,
+      "id": "08061ee8f80447ed8ba9d2f6e3ced832",
+      "industries": [],
+      "isOrgItem": true,
+      "itemControl": "admin",
+      "languages": [],
+      "largeThumbnail": null,
+      "lastViewed": 1793149200000,
+      "licenseInfo": "",
+      "listed": false,
+      "modified": 1793124625000,
+      "name": null,
+      "numComments": 0,
+      "numRatings": 0,
+      "numViews": 30,
+      "orgId": "SdBwj74JF24xKhpX",
+      "owner": "JonPSO",
+      "ownerFolder": null,
+      "ownerId": "8d973377fffc4779a13433e9768f477e",
+      "properties": null,
+      "protected": false,
+      "proxyFilter": null,
+      "scoreCompleteness": 76,
+      "screenshots": [],
+      "size": 74095,
+      "snippet": "Operational web map for EOC resources, facilities, and ICS 213RR requests.",
+      "spatialReference": "",
+      "subInfo": 0,
+      "tags": [
+        "EOC",
+        "NIMS",
+        "Emergency Management",
+        "Resource Tracking",
+        "ICS 213RR"
+      ],
+      "thumbnail": "thumbnail/ago_downloaded.png",
+      "title": "EOC Resource \u0026 Asset Management",
+      "type": "Web Map",
+      "typeKeywords": [
+        "ArcGIS API for JavaScript",
+        "ArcGIS Online",
+        "Collector",
+        "Data Editing",
+        "Explorer Web Map",
+        "Map",
+        "Online Map",
+        "Web Map"
+      ],
+      "url": ""
+    }
+  }
+}

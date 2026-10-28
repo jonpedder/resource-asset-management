@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-10-28T01:04:25.681Z",
+  "source": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/EOC_Resource_Inventory/FeatureServer",
+  "target": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer",
+  "results": [
+    {
+      "label": "Resources",
+      "sourceCount": 1000,
+      "existingCount": 1000,
+      "added": 0,
+      "finalCount": 1000
+    },
+    {
+      "label": "Facilities",
+      "sourceCount": 12,
+      "existingCount": 12,
+      "added": 0,
+      "finalCount": 12
+    }
+  ],
+  "requests": {
+    "sourceCount": 33,
+    "targetCount": 0,
+    "migrated": false,
+    "reason": "Historical requests are excluded because each request must be transactionally linked to exactly one new Workflow Manager job."
+  }
+}

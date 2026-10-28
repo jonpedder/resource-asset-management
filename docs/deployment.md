@@ -17,6 +17,12 @@ Serve the repository over HTTP, for example `npx http-server . -p 8000`, then op
 
 The `.github/workflows/pages.yml` workflow tests and deploys `main`. Complete the OAuth registration in the ArcGIS portal and set `oauthClientId` in `app-config.json` if an explicit OAuth application is required. Redirect origins are listed in the deployment manifest.
 
+## Operational data migration
+
+`deployment/feature-service/migrate-operational-data.mjs` idempotently copies Resources and Facilities from the legacy `EOC_Resource_Inventory` service. It reads `ARCCTL_TOKEN` at runtime and never stores or logs it. The migration report is under `deployment/verify/data-migration-report.json`.
+
+Historical ResourceRequests are inventoried but deliberately not copied. A request is valid only when transactionally linked to exactly one job in the new Workflow Manager item; importing the 33 legacy rows without their legacy jobs would create orphaned requests. The target ResourceRequests table was created and added to the Web Map for new saga-created requests.
+
 ## Verification
 
 Run `npm test`. For Workflow Manager, run `wf-discover.mjs` and a disposable `wf-job.mjs` smoke job. Never retry unknown job creation: query by `resource_request.globalid` first.

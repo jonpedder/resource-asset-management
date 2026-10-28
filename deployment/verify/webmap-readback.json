@@ -402,6 +402,13 @@
         "latestWkid": 3857,
         "wkid": 102100
       },
+      "tables": [
+        {
+          "id": "resource_requests",
+          "title": "ResourceRequests",
+          "url": "https://services6.arcgis.com/SdBwj74JF24xKhpX/arcgis/rest/services/Resource_Asset_Management_20261028/FeatureServer/2"
+        }
+      ],
       "version": "2.30"
     },
     "item": {
@@ -430,14 +437,14 @@
       "itemControl": "admin",
       "languages": [],
       "largeThumbnail": null,
-      "lastViewed": -1,
+      "lastViewed": 1793145600000,
       "licenseInfo": null,
       "listed": false,
-      "modified": 1793147883000,
+      "modified": 1793149490000,
       "name": null,
       "numComments": 0,
       "numRatings": 0,
-      "numViews": 0,
+      "numViews": 1,
       "orgId": "SdBwj74JF24xKhpX",
       "owner": "JonPSO",
       "ownerFolder": null,
@@ -447,7 +454,7 @@
       "proxyFilter": null,
       "scoreCompleteness": 48,
       "screenshots": [],
-      "size": 4541,
+      "size": 4732,
       "snippet": "Resources and facilities common operating picture for EOC operations.",
       "spatialReference": null,
       "subInfo": 0,
