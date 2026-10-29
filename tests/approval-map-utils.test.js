@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { movementPath, requestMapFilters } from '../src/approval-map-utils.js';
 
 test('builds request and resource filters for the selected request', () => {
-  assert.deepEqual(requestMapFilters({ GlobalID: "{REQ}'", ResourceGlobalID: '{RES}' }), {
-    request: "RequestGlobalID='{REQ}'''",
+  assert.deepEqual(requestMapFilters({ GlobalID: "{REQ}'", ResourceGlobalID: '{RES}', WFMJobId: "JOB'1" }), {
+    request: "(RequestGlobalID='{REQ}''' OR WFMJobId='JOB''1')",
     resource: "GlobalID='{RES}'"
   });
 });

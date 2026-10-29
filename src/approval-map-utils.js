@@ -5,8 +5,10 @@ export function escapeSql(value) {
 export function requestMapFilters(requestAttributes = {}) {
   const requestId = escapeSql(requestAttributes.GlobalID);
   const resourceId = escapeSql(requestAttributes.ResourceGlobalID);
+  const jobId = escapeSql(requestAttributes.WFMJobId);
+  const movementClauses = [requestId && `RequestGlobalID='${requestId}'`, jobId && `WFMJobId='${jobId}'`].filter(Boolean);
   return {
-    request: requestId ? `RequestGlobalID='${requestId}'` : '1=0',
+    request: movementClauses.length ? `(${movementClauses.join(' OR ')})` : '1=0',
     resource: resourceId ? `GlobalID='${resourceId}'` : '1=0'
   };
 }
