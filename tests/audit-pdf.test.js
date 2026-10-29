@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildAuditPdf, buildRequestPdf } from '../src/audit-pdf.js';
+import { buildAuditPdf, buildRequestPdf, buildResourceReportPdf } from '../src/audit-pdf.js';
 
 test('builds a downloadable PDF containing request and audit text', async () => {
   const blob = buildAuditPdf(
@@ -43,6 +43,18 @@ test('applies app branding and embeds an agency logo', async () => {
   assert.match(pdf, /\/Subtype \/Image/);
   assert.match(pdf, /\/Logo Do/);
   assert.match(pdf, /0\.067 0\.133 0\.200 rg/);
+});
+
+test('builds a mapped resource report with hub, kind, and NIMS typing totals', async () => {
+  const hubs=[{name:'Texas Regional Staging Area',total:84,kinds:{Aircraft:5,Equipment:22,Facilities:3,Personnel:15,Supplies:5,Teams:34},types:{'Type I':10,'Type II':29,'Type III':28,'Type IV':9,NA:8}}];
+  const mapImage={bytes:new Uint8Array([0xff,0xd8,0xff,0xd9]),width:2,height:1};
+  const pdf=await buildResourceReportPdf(hubs,new Date('2026-10-29T18:00:00Z'),{mapImage}).text();
+  assert.match(pdf,/RESOURCE REPORT/);
+  assert.match(pdf,/STAGING AREAS AND RESOURCE COUNTS/);
+  assert.match(pdf,/RESOURCE TOTALS BY KIND FOR EACH HUB/);
+  assert.match(pdf,/NIMS TYPING TOTALS FOR EACH HUB/);
+  assert.match(pdf,/Texas Regional Staging Area \| 84/);
+  assert.match(pdf,/\/MapImage Do/);
 });
 
 test('builds a directly downloadable branded request PDF', async () => {

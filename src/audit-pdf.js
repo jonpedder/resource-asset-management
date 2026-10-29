@@ -60,6 +60,21 @@ function textCommand(value, x, y, size, font, fill) {
   return `BT ${color(fill)} rg /${font} ${size} Tf ${x} ${y} Td (${escapePdf(value)}) Tj ET`;
 }
 
+function resourceReportLines(hubs, generatedAt, hasMap = false) {
+  const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 14, gap: 24 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const total = hubs.reduce((sum, hub) => sum + Number(hub.total || 0), 0);
+  lines.push({ kind: 'meta', text: `Regional staging areas: ${hubs.length}`, size: 9, gap: 13 }, { kind: 'meta', text: `Resources assigned to hubs: ${total}`, size: 9, gap: 13 }, { kind: 'meta', text: `Generated: ${generatedAt.toLocaleString()}`, size: 9, gap: 13 });
+  const addSection = (title, headings, rows) => {
+    lines.push({ kind: 'section', text: title, size: 12, gap: 28 });
+    lines.push({ kind: 'event-heading', text: headings, size: 8, gap: 15 });
+    for (const row of rows) lines.push({ kind: 'report-row', text: row, size: 8, gap: 13 });
+  };
+  addSection('STAGING AREAS AND RESOURCE COUNTS', 'Staging area | Total', hubs.map(hub => `${hub.name} | ${hub.total}`));
+  addSection('RESOURCE TOTALS BY KIND FOR EACH HUB', 'Staging area | Aircraft | Equipment | Facilities | Personnel | Supplies | Teams | Total', hubs.map(hub => `${hub.name} | ${hub.kinds.Aircraft || 0} | ${hub.kinds.Equipment || 0} | ${hub.kinds.Facilities || 0} | ${hub.kinds.Personnel || 0} | ${hub.kinds.Supplies || 0} | ${hub.kinds.Teams || 0} | ${hub.total}`));
+  addSection('NIMS TYPING TOTALS FOR EACH HUB', 'Staging area | Type I | Type II | Type III | Type IV | NA | Total', hubs.map(hub => `${hub.name} | ${hub.types['Type I'] || 0} | ${hub.types['Type II'] || 0} | ${hub.types['Type III'] || 0} | ${hub.types['Type IV'] || 0} | ${hub.types.NA || 0} | ${hub.total}`));
+  return lines;
+}
+
 function requestReportLines(request, generatedAt, approver) {
   const fields = [
     ['Request title', request.RequestTitle], ['Incident', request.IncidentName], ['Requestor', request.Requestor],
@@ -197,4 +212,9 @@ export function buildAuditPdf(request = {}, entries = [], generatedAt = new Date
 
 export function buildRequestPdf(request = {}, generatedAt = new Date(), brandingInput = {}, approver = '') {
   return buildPdf(requestReportLines(request, generatedAt, approver), brandingInput, 'RESOURCE REQUEST REPORT');
+}
+
+export function buildResourceReportPdf(hubs = [], generatedAt = new Date(), brandingInput = {}) {
+  const hasMap = Boolean(brandingInput.mapImage?.bytes?.length);
+  return buildPdf(resourceReportLines(hubs, generatedAt, hasMap), brandingInput, 'RESOURCE REPORT');
 }
