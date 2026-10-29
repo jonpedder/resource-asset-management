@@ -3,7 +3,7 @@ import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow
 import { actionsForStep, mailtoForRequest } from './approval-utils.js';
 import { applyPresentation } from './presentation.js';
 import { statusForStep, nextActionForStep, responsibleForStep, personaDescription, timelineForStep } from './workflow-state.js';
-import { buildAuditPdf, loadPdfLogo } from './audit-pdf.js?v=20261029-7';
+import { buildAuditPdf, loadPdfLogo } from './audit-pdf.js?v=20261029-8';
 import { FeatureServiceClient } from './feature-service-client.js?v=20261029-2';
 import { executeMovementSaga } from './movement-saga.js?v=20261029-3';
 import { requiresMovementLocation, validateMovementLocation } from './resource-movement.js?v=20261029-1';

@@ -108,6 +108,26 @@ function resourceSummaryLines(hubs, generatedAt, hasMap = false) {
   return lines;
 }
 
+function resourceLocationSummaryLines(hubs, generatedAt, hasMap = false) {
+  const lines = [{ kind: 'request-title', text: 'Resource Summary by Location', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const locations = new Map();
+  for (const hub of hubs) for (const resource of hub.resources || []) {
+    const name=resource.location||hub.name||'Not recorded';
+    const row=locations.get(name)||{name,total:0,available:0,kinds:{},types:{}};
+    row.total++; if(resource.availability==='Available')row.available++;
+    row.kinds[resource.kind||'Unspecified']=(row.kinds[resource.kind||'Unspecified']||0)+1;
+    row.types[resource.nimsType||'NA']=(row.types[resource.nimsType||'NA']||0)+1;
+    locations.set(name,row);
+  }
+  const rows=[...locations.values()].sort((a,b)=>a.name.localeCompare(b.name));
+  const addGrid=(title,columns,data)=>{lines.push({kind:'spacer',text:'',gap:20},{kind:'section',text:title,size:13,gap:36},{kind:'report-grid',cells:columns,header:true,size:10,gap:21});for(const row of data)lines.push({kind:'report-grid',cells:row,size:10,gap:20});};
+  addGrid('LOCATION SUMMARY',['Location','Total','Available'],rows.map(row=>[row.name,row.total,row.available]));
+  addGrid('RESOURCE KINDS BY LOCATION',['Location','Resource kind','Number'],rows.flatMap(row=>Object.entries(row.kinds).sort(([a],[b])=>a.localeCompare(b)).map(([label,count])=>[row.name,label,count])));
+  addGrid('NIMS TYPES BY LOCATION',['Location','NIMS type','Number'],rows.flatMap(row=>Object.entries(row.types).sort(([a],[b])=>a.localeCompare(b)).map(([label,count])=>[row.name,label,count])));
+  addGrid('REPORT INFORMATION',['Measure','Value'],[['Locations represented',rows.length],['Resource records',rows.reduce((sum,row)=>sum+row.total,0)],['Generated',generatedAt.toLocaleString()]]);
+  return lines;
+}
+
 function requestReportLines(request, generatedAt, approver) {
   const fields = [
     ['Request title', request.RequestTitle], ['Incident', request.IncidentName], ['Requestor', request.Requestor],
@@ -263,4 +283,9 @@ export function buildResourceReportPdf(hubs = [], generatedAt = new Date(), bran
 export function buildResourceSummaryPdf(hubs = [], generatedAt = new Date(), brandingInput = {}) {
   const hasMap = Boolean(brandingInput.mapImage?.bytes?.length);
   return buildPdf(resourceSummaryLines(hubs, generatedAt, hasMap), brandingInput, 'RESOURCE SUMMARY');
+}
+
+export function buildResourceLocationSummaryPdf(hubs = [], generatedAt = new Date(), brandingInput = {}) {
+  const hasMap = Boolean(brandingInput.mapImage?.bytes?.length);
+  return buildPdf(resourceLocationSummaryLines(hubs, generatedAt, hasMap), brandingInput, 'RESOURCE SUMMARY BY LOCATION');
 }
