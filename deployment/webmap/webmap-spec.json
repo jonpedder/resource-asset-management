@@ -2,5 +2,9 @@
   "title": "EOC Resource & Asset Management v2",
   "basemap": "dark-gray-vector",
   "operationalLayers": ["Resources", "Facilities"],
+  "labelScales": {
+    "Resources": { "minScale": 250000, "description": "Show resource labels at 1:250,000 and closer" },
+    "Facilities": { "minScale": 1500000, "description": "Show staging-area labels at 1:1,500,000 and closer" }
+  },
   "status": "TODO: resolve new feature-service item and layer URLs during deployment"
 }
