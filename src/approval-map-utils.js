@@ -24,19 +24,34 @@ export function movementPath(feature = {}) {
   const toX = coordinate(attributes.ToX ?? feature.geometry?.x);
   const toY = coordinate(attributes.ToY ?? feature.geometry?.y);
   if (![fromX, fromY, toX, toY].every(Number.isFinite)) return null;
+  const dx = toX - fromX;
+  const dy = toY - fromY;
+  const distance = Math.hypot(dx, dy);
+  const bend = distance * 0.18;
+  const controlX = (fromX + toX) / 2 - (distance ? dy / distance * bend : 0);
+  const controlY = (fromY + toY) / 2 + (distance ? dx / distance * bend : 0);
+  const vertices = Array.from({ length: 25 }, (_, index) => {
+    const t = index / 24;
+    const inverse = 1 - t;
+    return [
+      inverse * inverse * fromX + 2 * inverse * t * controlX + t * t * toX,
+      inverse * inverse * fromY + 2 * inverse * t * controlY + t * t * toY
+    ];
+  });
   return {
-    paths: [[[fromX, fromY], [toX, toY]]],
+    paths: [vertices],
     spatialReference: { wkid: Number(attributes.ToWKID || attributes.FromWKID || feature.geometry?.spatialReference?.wkid || 4326) }
   };
 }
 
 export function movementMidpoint(path) {
-  const [source, destination] = path?.paths?.[0] || [];
-  if (!source || !destination) return null;
+  const vertices = path?.paths?.[0] || [];
+  const midpoint = vertices[Math.floor(vertices.length / 2)];
+  if (!midpoint) return null;
   return {
     type: 'point',
-    x: (Number(source[0]) + Number(destination[0])) / 2,
-    y: (Number(source[1]) + Number(destination[1])) / 2,
+    x: Number(midpoint[0]),
+    y: Number(midpoint[1]),
     spatialReference: path.spatialReference
   };
 }
