@@ -40,6 +40,20 @@ test('completeStep never retries an advanced step when durable comment saving fa
   assert.equal(sends, 1);
 });
 
+test('completeStep verifies job movement before retrying a failed websocket acknowledgement', async () => {
+  const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
+  let sends = 0;
+  let actions = 0;
+  client.jobAction = async () => { actions++; return { success: true, stepResponses: [{ status: 'Success' }] }; };
+  client.sendStepInformation = async () => { sends++; throw new Error('notification connection failed'); };
+  client.getJob = async () => ({ currentSteps: [{ stepId: 'next-step' }] });
+  client.addComment = async () => ({ success: true });
+  const result = await client.completeStep('job-1', 'question-step', 1, 'Ready to return');
+  assert.deepEqual(result, [{ stepId: 'next-step' }]);
+  assert.equal(sends, 1);
+  assert.equal(actions, 1);
+});
+
 test('finishStep runs and finishes an automatic workflow step, then verifies movement', async () => {
   const calls = [];
   const client = new WorkflowClient({

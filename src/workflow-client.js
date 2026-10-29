@@ -140,9 +140,15 @@ export class WorkflowClient {
     try {
       currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
     } catch (firstError) {
-      await this.jobAction(jobId, 'Stop', stepId).catch(() => undefined);
-      await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run'));
-      currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const job = await this.getJob(jobId).catch(() => null);
+      const verifiedSteps = job?.currentSteps || [];
+      if (job && !verifiedSteps.some(step => step.stepId === stepId)) currentSteps = verifiedSteps;
+      else {
+        await this.jobAction(jobId, 'Stop', stepId).catch(() => undefined);
+        await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run'));
+        currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
+      }
     }
     if (note && persistComment) {
       try { await this.addComment(jobId, note); }
