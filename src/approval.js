@@ -5,7 +5,7 @@ import { applyPresentation } from './presentation.js';
 import { statusForStep, nextActionForStep, responsibleForStep, personaDescription, timelineForStep } from './workflow-state.js';
 import { buildAuditPdf, buildRequestPdf, loadPdfLogo } from './audit-pdf.js?v=20261028-2';
 import { FeatureServiceClient } from './feature-service-client.js?v=20261029-2';
-import { executeMovementSaga } from './movement-saga.js?v=20261029-1';
+import { executeMovementSaga } from './movement-saga.js?v=20261029-2';
 import { requiresMovementLocation, validateMovementLocation } from './resource-movement.js?v=20261029-1';
 
 const $=id=>document.getElementById(id);const state={config:null,rows:[],selected:null,persona:'All Personas',credential:null,user:null,IdentityManager:null,workflow:null,featureClient:null,locator:null,geocodeUrl:'',liveJob:null,liveStep:null,linkedResource:null,facilities:[],locationLoadId:0,auditEntries:[],auditLoadId:0,auditJobId:''};const t=v=>v==null?'':String(v);const el=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=t(value);return n;};

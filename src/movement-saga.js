@@ -21,14 +21,24 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
   if (!rule) throw new Error(`The ${step.stepName} step does not define a geometry movement.`);
   const resource = await client.oneByGlobalId(layers.resources, request.attributes.ResourceGlobalID, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
   const before = structuredClone(resource);
-  const movement = buildMovement({ movementGlobalId, request, resource, step, location, username, now: now() });
+  const idempotencyKey = `${request.attributes.WFMJobId}:${step.stepId}:${request.attributes.ResourceGlobalID}:${rule.type}`;
+  const escapedKey = idempotencyKey.replace(/'/g, "''");
+  const priorRows = await client.query(layers.movements, { where: `IdempotencyKey='${escapedKey}'`, outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
+  if (priorRows.length > 1) throw new Error('Multiple movement audit records share this workflow action. Reconciliation is required.');
+  const prior = priorRows[0];
+  const priorState = prior?.attributes?.MovementState;
+  if (priorState === 'Confirmed') throw new Error('This resource movement is already confirmed. Refresh the workflow queue.');
+  if (priorState === 'Applied' || priorState === 'ReconcileRequired') throw new Error(`The previous ${rule.type.toLowerCase()} attempt is ${priorState}. Reconciliation is required before retrying.`);
+  const effectiveMovementGlobalId = prior?.attributes?.GlobalID || movementGlobalId;
+  const movement = buildMovement({ movementGlobalId: effectiveMovementGlobalId, request, resource, step, location, username, now: now() });
   const resourceEdit = buildResourceUpdate(resource, movement, step.stepName);
   const requestEdit = requestUpdate(request, movement, 'Applied');
+  const movementEdit = prior ? { updates: [movement] } : { adds: [movement] };
 
   await client.applyServiceEdits([
     { id: layers.resources, updates: [resourceEdit] },
     { id: layers.requests, updates: [requestEdit] },
-    { id: layers.movements, adds: [movement] }
+    { id: layers.movements, ...movementEdit }
   ]);
 
   const edited = await client.oneByGlobalId(layers.resources, request.attributes.ResourceGlobalID, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
@@ -43,7 +53,7 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
       const message = `Workflow failed after the GIS edit and the resource changed again: ${workflowError.message}`;
       await client.applyServiceEdits([
         { id: layers.requests, updates: [requestUpdate(request, movement, 'ReconcileRequired', message)] },
-        { id: layers.movements, updates: [{ attributes: { GlobalID: movementGlobalId, MovementState: 'ReconcileRequired', IntegrationError: message } }] }
+        { id: layers.movements, updates: [{ attributes: { GlobalID: effectiveMovementGlobalId, MovementState: 'ReconcileRequired', IntegrationError: message } }] }
       ]);
       const error = new Error(message); error.reconcileRequired = true; throw error;
     }
@@ -51,7 +61,7 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
     await client.applyServiceEdits([
       { id: layers.resources, updates: [rollback] },
       { id: layers.requests, updates: [requestUpdate(request, movement, 'Reverted', workflowError.message)] },
-      { id: layers.movements, updates: [{ attributes: { GlobalID: movementGlobalId, MovementState: 'Reverted', IntegrationError: workflowError.message } }] }
+      { id: layers.movements, updates: [{ attributes: { GlobalID: effectiveMovementGlobalId, MovementState: 'Reverted', IntegrationError: workflowError.message } }] }
     ]);
     throw workflowError;
   }
@@ -60,9 +70,9 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
   try {
     await client.applyServiceEdits([
       { id: layers.requests, updates: [requestUpdate(request, movement, 'Confirmed', '', rule.type === 'Return' ? confirmedAt : undefined)] },
-      { id: layers.movements, updates: [{ attributes: { GlobalID: movementGlobalId, MovementState: 'Confirmed', ConfirmedDate: confirmedAt } }] }
+      { id: layers.movements, updates: [{ attributes: { GlobalID: effectiveMovementGlobalId, MovementState: 'Confirmed', ConfirmedDate: confirmedAt } }] }
     ]);
-    await workflow.addComment(request.attributes.WFMJobId, `${note}\nMovement ${movementGlobalId}: ${movement.attributes.FromSiteName || 'previous location'} → ${movement.attributes.ToSiteName}${movement.attributes.DeploymentAddress ? ` (${movement.attributes.DeploymentAddress})` : ''}.`);
+    await workflow.addComment(request.attributes.WFMJobId, `${note}\nMovement ${effectiveMovementGlobalId}: ${movement.attributes.FromSiteName || 'previous location'} → ${movement.attributes.ToSiteName}${movement.attributes.DeploymentAddress ? ` (${movement.attributes.DeploymentAddress})` : ''}.`);
   } catch (error) {
     const message = `Workflow advanced and resource moved, but movement confirmation needs reconciliation: ${error.message}`;
     await client.applyServiceEdits([{ id: layers.requests, updates: [requestUpdate(request, movement, 'ReconcileRequired', message)] }]).catch(() => undefined);

@@ -7,6 +7,7 @@ function fixture({ failWorkflow = false } = {}) {
   let resource={ attributes:{ OBJECTID:1, GlobalID:'{RES}', Status:'En Route', SiteName:'Staging', LocationVersion:0 }, geometry:{x:1,y:2,spatialReference:{wkid:4326}} };
   const client={
     async oneByGlobalId(){ calls.push('read'); return structuredClone(resource); },
+    async query(){ calls.push('movement-query'); return []; },
     async applyServiceEdits(edits){ calls.push(edits); const update=edits.find(e=>e.id===0)?.updates?.[0]; if(update) resource={attributes:{...resource.attributes,...update.attributes},geometry:update.geometry||resource.geometry}; }
   };
   const workflow={
@@ -20,8 +21,9 @@ test('moves GIS atomically before workflow and confirms the movement', async()=>
   const f=fixture();
   await executeMovementSaga({...f,layers:{resources:0,requests:2,movements:3},note:'Arrived',username:'op',now:()=>100,movementGlobalId:'{MOVE}'});
   assert.equal(f.calls[0],'read');
-  assert.equal(f.calls[1][0].id,0);
-  assert.equal(f.calls[3],'workflow');
+  assert.equal(f.calls[1],'movement-query');
+  assert.equal(f.calls[2][0].id,0);
+  assert.equal(f.calls[4],'workflow');
   assert.equal(f.calls.at(-1),'comment');
 });
 

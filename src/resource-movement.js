@@ -70,7 +70,7 @@ export function buildResourceUpdate(resource, movement, stepName) {
   const rule = movementForStep(stepName);
   const before = resource.attributes || {};
   const m = movement.attributes;
-  const deployHome = rule.type === 'Deploy' && !before.HomeX && !before.HomeY;
+  const deployHome = rule.type === 'Deploy' && (before.HomeX === null || before.HomeX === undefined || before.HomeX === '') && (before.HomeY === null || before.HomeY === undefined || before.HomeY === '');
   return {
     geometry: movement.geometry,
     attributes: {
