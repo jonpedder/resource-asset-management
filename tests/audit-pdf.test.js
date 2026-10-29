@@ -16,6 +16,13 @@ test('builds a downloadable PDF containing request and audit text', async () => 
   assert.match(pdf, /%%EOF$/);
 });
 
+test('embeds a movement map at the top of the audit report', async () => {
+  const mapImage={bytes:new Uint8Array([0xff,0xd8,0xff,0xd9]),width:2,height:1};
+  const pdf=await buildAuditPdf({RequestTitle:'Mapped Audit'},[{title:'Moved'}],new Date(),{mapImage}).text();
+  assert.match(pdf,/\/MapImage \d+ 0 R/);
+  assert.match(pdf,/\/MapImage Do/);
+});
+
 test('paginates long audit histories', async () => {
   const entries = Array.from({ length: 90 }, (_, index) => ({ user: 'operator', title: `Workflow event ${index + 1}`, detail: 'Completed workflow processing step.' }));
   const pdf = await buildAuditPdf({ RequestTitle: 'Long Audit' }, entries).text();

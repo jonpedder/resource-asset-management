@@ -21,7 +21,7 @@ function wrap(value, width = 88) {
   return lines;
 }
 
-function auditReportLines(request, entries, generatedAt) {
+function auditReportLines(request, entries, generatedAt, hasMap = false) {
   const equipment = [request.RequestedKind, request.RequestedType].filter(Boolean).join(' / ') || '-';
   const metadata = [
     ['Workflow Job', request.WFMJobId || '-'], ['Request GlobalID', request.GlobalID || '-'],
@@ -31,7 +31,7 @@ function auditReportLines(request, entries, generatedAt) {
     ['Date needed', request.DateNeeded ? new Date(request.DateNeeded).toLocaleString() : '-'],
     ['Generated', generatedAt.toLocaleString()]
   ];
-  const lines = [{ kind: 'request-title', text: request.RequestTitle || 'Resource Request', size: 14, gap: 24 }];
+  const lines = [{ kind: 'request-title', text: request.RequestTitle || 'Resource Request', size: 14, gap: 24 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
   for (const [label, value] of metadata) for (const [index, part] of wrap(`${label}: ${value}`, 82).entries()) lines.push({ kind: index ? 'meta-continuation' : 'meta', text: part, size: 9, gap: 13 });
   lines.push({ kind: 'section', text: 'AUDIT EVENTS', size: 12, gap: 28 });
   entries.forEach((entry, index) => {
@@ -80,7 +80,7 @@ function requestReportLines(request, generatedAt, approver) {
   return lines;
 }
 
-function pageCommands(page, pageNumber, pageCount, branding, hasLogo, reportTitle = 'WORKFLOW AUDIT HISTORY') {
+function pageCommands(page, pageNumber, pageCount, branding, hasLogo, hasMap, reportTitle = 'WORKFLOW AUDIT HISTORY') {
   const colors = branding.colors;
   const logoOffset = hasLogo ? 82 : 0;
   const commands = [
@@ -106,6 +106,9 @@ function pageCommands(page, pageNumber, pageCount, branding, hasLogo, reportTitl
     if (line.kind === 'request-title') {
       commands.push(`${color(colors.panelAlt)} rg 36 ${(line.y - 7).toFixed(2)} 540 24 re f`);
       commands.push(textCommand(line.text, 44, line.y, line.size, 'F2', colors.text));
+    } else if (line.kind === 'map' && hasMap) {
+      commands.push(`${color(colors.border)} RG 1 w 36 ${(line.y - 226).toFixed(2)} 540 220 re S`);
+      commands.push(`q 540 0 0 220 36 ${(line.y - 226).toFixed(2)} cm /MapImage Do Q`);
     } else if (line.kind === 'section') {
       commands.push(`${color(colors.accent)} rg 36 ${(line.y - 7).toFixed(2)} 540 22 re f`);
       commands.push(textCommand(line.text, 44, line.y, line.size, 'F2', colors.background));
@@ -127,6 +130,7 @@ function normalizeBranding(input = {}) {
     appName: ascii(input.appName || 'Resource & Asset Management').slice(0, 60),
     subtitle: ascii(input.subtitle || 'FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager').slice(0, 100),
     logo: input.logo,
+    mapImage: input.mapImage,
     colors: {
       navy: validHex(source.navy, '#003B5C'), background: validHex(source.background, '#071824'),
       panelAlt: validHex(source.panelAlt, '#123247'), accent: validHex(source.accent, '#F2A900'),
@@ -162,18 +166,18 @@ export async function loadPdfLogo(url) {
 function buildPdf(lines, brandingInput, reportTitle) {
   const branding = normalizeBranding(brandingInput); const pages = paginate(lines);
   const hasLogo = Boolean(branding.logo?.bytes?.length && branding.logo.width && branding.logo.height);
+  const hasMap = Boolean(branding.mapImage?.bytes?.length && branding.mapImage.width && branding.mapImage.height);
   const objects = [null, '<< /Type /Catalog /Pages 2 0 R >>', null, '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>', '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>'];
-  let nextId = 5; let logoId = null;
-  if (hasLogo) {
-    logoId = nextId++;
-    const hex = [...branding.logo.bytes].map(byte => byte.toString(16).padStart(2, '0')).join('').toUpperCase();
-    objects[logoId] = `<< /Type /XObject /Subtype /Image /Width ${branding.logo.width} /Height ${branding.logo.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter [/ASCIIHexDecode /DCTDecode] /Length ${hex.length + 1} >>\nstream\n${hex}>\nendstream`;
-  }
+  let nextId = 5; let logoId = null; let mapId = null;
+  const addImage = image => { const id=nextId++; const hex=[...image.bytes].map(byte=>byte.toString(16).padStart(2,'0')).join('').toUpperCase(); objects[id]=`<< /Type /XObject /Subtype /Image /Width ${image.width} /Height ${image.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter [/ASCIIHexDecode /DCTDecode] /Length ${hex.length + 1} >>\nstream\n${hex}>\nendstream`; return id; };
+  if (hasLogo) logoId=addImage(branding.logo);
+  if (hasMap) mapId=addImage(branding.mapImage);
   const kids = [];
   pages.forEach((page, index) => {
     const pageId = nextId++; const contentId = nextId++; kids.push(`${pageId} 0 R`);
-    const commands = pageCommands(page, index + 1, pages.length, branding, hasLogo, reportTitle);
-    const xObject = hasLogo ? ` /XObject << /Logo ${logoId} 0 R >>` : '';
+    const commands = pageCommands(page, index + 1, pages.length, branding, hasLogo, hasMap, reportTitle);
+    const imageRefs=[hasLogo&&`/Logo ${logoId} 0 R`,hasMap&&`/MapImage ${mapId} 0 R`].filter(Boolean).join(' ');
+    const xObject = imageRefs ? ` /XObject << ${imageRefs} >>` : '';
     objects[pageId] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R >>${xObject} >> /Contents ${contentId} 0 R >>`;
     objects[contentId] = `<< /Length ${commands.length} >>\nstream\n${commands}\nendstream`;
   });
@@ -187,7 +191,8 @@ function buildPdf(lines, brandingInput, reportTitle) {
 }
 
 export function buildAuditPdf(request = {}, entries = [], generatedAt = new Date(), brandingInput = {}) {
-  return buildPdf(auditReportLines(request, entries, generatedAt), brandingInput, 'WORKFLOW AUDIT HISTORY');
+  const hasMap=Boolean(brandingInput.mapImage?.bytes?.length);
+  return buildPdf(auditReportLines(request, entries, generatedAt, hasMap), brandingInput, 'WORKFLOW AUDIT HISTORY');
 }
 
 export function buildRequestPdf(request = {}, generatedAt = new Date(), brandingInput = {}, approver = '') {
