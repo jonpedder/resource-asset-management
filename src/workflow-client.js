@@ -45,29 +45,19 @@ export class WorkflowClient {
     this.WebSocketImpl = WebSocketImpl;
   }
 
-  async call(path, { method = 'GET', body, timeoutMs = 30000 } = {}) {
+  async call(path, { method = 'GET', body } = {}) {
     const token = await this.getToken();
     if (!token) throw new Error('An authenticated ArcGIS user session is required.');
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const response = await this.fetch(`${this.baseUrl}/${String(path).replace(/^\//, '')}`, {
-        method,
-        cache: 'no-store',
-        signal: controller.signal,
-        headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
-        body: body === undefined ? undefined : JSON.stringify(body)
-      });
-      const contentType = response.headers.get('content-type') || '';
-      const result = contentType.includes('json') ? await response.json() : { message: await response.text() };
-      if (!response.ok || result.error) throw new Error(result.error?.message || result.message || `Workflow Manager request failed (${response.status}).`);
-      return result;
-    } catch (error) {
-      if (error?.name === 'AbortError') throw new Error('Workflow Manager did not respond within 30 seconds. The request was not confirmed; check the Request Queue before trying again.');
-      throw error;
-    } finally {
-      clearTimeout(timer);
-    }
+    const response = await this.fetch(`${this.baseUrl}/${String(path).replace(/^\//, '')}`, {
+      method,
+      cache: 'no-store',
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
+      body: body === undefined ? undefined : JSON.stringify(body)
+    });
+    const contentType = response.headers.get('content-type') || '';
+    const result = contentType.includes('json') ? await response.json() : { message: await response.text() };
+    if (!response.ok || result.error) throw new Error(result.error?.message || result.message || `Workflow Manager request failed (${response.status}).`);
+    return result;
   }
 
   getJob(jobId) { return this.call(`jobs/${encodeURIComponent(jobId)}?extProps=true`); }
