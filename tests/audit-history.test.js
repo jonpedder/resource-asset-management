@@ -17,6 +17,13 @@ test('uses a safe identity fallback when identity fields and date are missing', 
   assert.equal(auditEntryIdentity(entries[0], () => 'unexpected date'), 'Identity: Workflow Manager');
 });
 
+test('matches Workflow Manager comments using lastModified metadata', () => {
+  const history = [{ date: '2026-10-29T22:35:15Z', username: 'JonPSO', action: 'Started', stepId: 'rr-email-ready' }];
+  const comments = [{ lastModified: '2026-10-29T22:35:14Z', lastModifiedBy: 'JonPSO', comment: 'Notification approved.' }];
+  const entries = normalizeAuditEntries(history, comments);
+  assert.equal(entries[0].comment, 'Notification approved.');
+});
+
 test('keeps comments one-to-one with audit entries', () => {
   const history = [
     { date: '2026-10-28T02:20:00Z', username: 'Pedder', action: 'Completed', stepId: 'one', stepName: 'First action' },

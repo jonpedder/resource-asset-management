@@ -132,19 +132,19 @@ export class WorkflowClient {
     });
   }
 
-  async completeStep(jobId, stepId, response, note) {
+  async completeStep(jobId, stepId, response, note, { persistComment = true } = {}) {
     const username = await this.getUsername();
     if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
     await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run')).catch(() => undefined);
     try {
       const currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
-      if (note) await this.addComment(jobId, note);
+      if (note && persistComment) await this.addComment(jobId, note);
       return currentSteps;
     } catch (firstError) {
       await this.jobAction(jobId, 'Stop', stepId).catch(() => undefined);
       await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run'));
       const currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
-      if (note) await this.addComment(jobId, note);
+      if (note && persistComment) await this.addComment(jobId, note);
       return currentSteps;
     }
   }

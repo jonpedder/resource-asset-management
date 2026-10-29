@@ -1,14 +1,14 @@
 import { loadConfig } from './config.js';
-import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261028-4';
+import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261029-5';
 import { actionsForStep, mailtoForRequest } from './approval-utils.js';
 import { applyPresentation } from './presentation.js';
 import { statusForStep, nextActionForStep, responsibleForStep, personaDescription, timelineForStep } from './workflow-state.js';
 import { buildAuditPdf, loadPdfLogo } from './audit-pdf.js?v=20261029-8';
 import { FeatureServiceClient } from './feature-service-client.js?v=20261029-2';
-import { executeMovementSaga } from './movement-saga.js?v=20261029-3';
+import { executeMovementSaga } from './movement-saga.js?v=20261029-4';
 import { requiresMovementLocation, validateMovementLocation } from './resource-movement.js?v=20261029-1';
 import { fallbackMovement, movementMidpoint, movementPath, requestMapFilters } from './approval-map-utils.js?v=20261029-4';
-import { auditEntryHeading, auditEntryIdentity, normalizeAuditEntries } from './audit-history.js?v=20261029-3';
+import { auditEntryHeading, auditEntryIdentity, normalizeAuditEntries } from './audit-history.js?v=20261029-4';
 
 const $=id=>document.getElementById(id);const state={config:null,rows:[],selected:null,persona:'All Personas',credential:null,user:null,IdentityManager:null,workflow:null,featureClient:null,locator:null,geocodeUrl:'',liveJob:null,liveStep:null,linkedResource:null,facilities:[],locationLoadId:0,auditEntries:[],auditLoadId:0,auditJobId:'',mapView:null,mapResourceLayer:null,mapMovementLayer:null,mapRouteLayer:null,mapMarkerLayer:null,mapLoadId:0,Graphic:null,ensureMap:null};const t=v=>v==null?'':String(v);const el=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=t(value);return n;};
 function ensureSettingsCog(){const session=document.querySelector('.session-area');if(!session)return;let link=document.querySelector('a[href*="settings.html"]');if(!link){link=document.createElement('a');link.href='./settings.html';}link.className='header-action header-icon';link.title='Settings and Help';link.setAttribute('aria-label','Settings and Help');link.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.07-.94l2.03-1.58-1.92-3.32-2.39.96a7.1 7.1 0 0 0-1.62-.94L14.87 3h-3.84l-.36 3.18c-.58.24-1.12.55-1.62.94l-2.39-.96-1.92 3.32 2.03 1.58c-.05.31-.07.64-.07.94s.02.63.07.94l-2.03 1.58 1.92 3.32 2.39-.96c.5.39 1.04.7 1.62.94l.36 3.18h3.84l.36-3.18c.58-.24 1.12-.55 1.62-.94l2.39.96 1.92-3.32-2.02-1.58ZM12.95 15.5A3.5 3.5 0 1 1 12.95 8a3.5 3.5 0 0 1 0 7.5Z"/></svg>';session.append(link);}

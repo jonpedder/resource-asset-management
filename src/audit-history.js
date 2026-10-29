@@ -49,8 +49,8 @@ export function normalizeAuditEntries(history = [], comments = [], responsibleFo
   const entries = actionEntries(history, responsibleForStep);
   const available = new Set(entries);
   const orderedComments = comments.map((item, index) => ({
-    date: item.date || item.createdDate || item.creationDate,
-    user: item.username || item.createdBy || item.userName || 'Workflow Manager',
+    date: item.lastModified || item.date || item.createdDate || item.creationDate,
+    user: item.lastModifiedBy || item.username || item.createdBy || item.userName || 'Workflow Manager',
     comment: text(item.comment || item.text || item.message),
     _order: index
   })).filter(item => item.comment).sort((a, b) => dateValue(a.date) - dateValue(b.date) || a._order - b._order);
