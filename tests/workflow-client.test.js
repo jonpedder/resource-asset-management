@@ -23,6 +23,23 @@ test('WorkflowClient binds fetch to globalThis before invoking it', async () => 
   }
 });
 
+test('completeStep never retries an advanced step when durable comment saving fails', async () => {
+  const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
+  let sends = 0;
+  client.jobAction = async () => ({ success: true, stepResponses: [{ status: 'Success' }] });
+  client.sendStepInformation = async () => { sends++; return [{ stepId: 'next-step' }]; };
+  client.addComment = async () => { throw new Error('comment endpoint unavailable'); };
+  const originalWarn = console.warn;
+  console.warn = () => undefined;
+  try {
+    const result = await client.completeStep('job-1', 'step-1', null, 'Decision note');
+    assert.deepEqual(result, [{ stepId: 'next-step' }]);
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.equal(sends, 1);
+});
+
 test('finishStep runs and finishes an automatic workflow step, then verifies movement', async () => {
   const calls = [];
   const client = new WorkflowClient({
