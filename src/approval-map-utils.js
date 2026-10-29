@@ -30,3 +30,14 @@ export function movementPath(feature = {}) {
     spatialReference: { wkid: Number(attributes.ToWKID || attributes.FromWKID || feature.geometry?.spatialReference?.wkid || 4326) }
   };
 }
+
+export function movementMidpoint(path) {
+  const [source, destination] = path?.paths?.[0] || [];
+  if (!source || !destination) return null;
+  return {
+    type: 'point',
+    x: (Number(source[0]) + Number(destination[0])) / 2,
+    y: (Number(source[1]) + Number(destination[1])) / 2,
+    spatialReference: path.spatialReference
+  };
+}
