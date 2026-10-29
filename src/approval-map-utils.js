@@ -44,6 +44,29 @@ export function movementPath(feature = {}) {
   };
 }
 
+export function fallbackMovement(requestAttributes = {}, resource = {}) {
+  const a = resource.attributes || {};
+  const geometry = resource.geometry || {};
+  const fromX = coordinate(a.HomeX);
+  const fromY = coordinate(a.HomeY);
+  const toX = coordinate(geometry.x);
+  const toY = coordinate(geometry.y);
+  if (![fromX, fromY, toX, toY].every(Number.isFinite) || (fromX === toX && fromY === toY)) return null;
+  return {
+    geometry: { x: toX, y: toY, spatialReference: geometry.spatialReference || { wkid: 4326 } },
+    attributes: {
+      RequestGlobalID: requestAttributes.GlobalID,
+      WFMJobId: requestAttributes.WFMJobId,
+      MovementType: 'Current request',
+      MovementState: requestAttributes.RequestStatus || requestAttributes.StatusBadge || 'Current',
+      FromSiteName: a.HomeSiteName || 'Origin',
+      ToSiteName: a.SiteName || 'Current location',
+      FromX: fromX, FromY: fromY, FromWKID: a.HomeWKID || 4326,
+      ToX: toX, ToY: toY, ToWKID: geometry.spatialReference?.wkid || 4326
+    }
+  };
+}
+
 export function movementMidpoint(path) {
   const vertices = path?.paths?.[0] || [];
   const midpoint = vertices[Math.floor(vertices.length / 2)];

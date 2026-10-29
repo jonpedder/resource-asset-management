@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { movementMidpoint, movementPath, requestMapFilters } from '../src/approval-map-utils.js';
+import { fallbackMovement, movementMidpoint, movementPath, requestMapFilters } from '../src/approval-map-utils.js';
 
 test('builds request and resource filters for the selected request', () => {
   assert.deepEqual(requestMapFilters({ GlobalID: "{REQ}'", ResourceGlobalID: '{RES}', WFMJobId: "JOB'1" }), {
@@ -18,6 +18,13 @@ test('builds an origin-to-destination movement path', () => {
   assert.equal(geometry.paths[0].length, 25);
   assert.notEqual(geometry.paths[0][12][0], -115.5);
   assert.equal(geometry.spatialReference.wkid, 4326);
+});
+
+test('builds a fallback request movement from home to current resource location', () => {
+  const movement=fallbackMovement({GlobalID:'{REQ}',RequestStatus:'Deployed'},{attributes:{HomeX:-116,HomeY:43,HomeSiteName:'Warehouse',SiteName:'Incident'},geometry:{x:-115,y:44,spatialReference:{wkid:4326}}});
+  assert.equal(movement.attributes.MovementState,'Deployed');
+  assert.equal(movement.attributes.FromSiteName,'Warehouse');
+  assert.equal(movement.attributes.ToSiteName,'Incident');
 });
 
 test('calculates a label point at the movement line midpoint', () => {
