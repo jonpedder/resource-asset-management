@@ -4,7 +4,7 @@ import { actionsForStep, mailtoForRequest } from './approval-utils.js';
 import { applyPresentation } from './presentation.js';
 import { statusForStep, nextActionForStep, responsibleForStep, personaDescription, timelineForStep } from './workflow-state.js';
 import { buildAuditPdf, buildRequestPdf, loadPdfLogo } from './audit-pdf.js?v=20261028-2';
-import { FeatureServiceClient } from './feature-service-client.js?v=20261029-1';
+import { FeatureServiceClient } from './feature-service-client.js?v=20261029-2';
 import { executeMovementSaga } from './movement-saga.js?v=20261029-1';
 import { requiresMovementLocation, validateMovementLocation } from './resource-movement.js?v=20261029-1';
 
