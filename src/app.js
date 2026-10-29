@@ -8,6 +8,7 @@ const $ = (id) => document.getElementById(id);
 const state = { config: null, view: null, resourceLayer: null, facilityLayer: null, selectionHighlight: null, resources: [], facilities: [], requests: [], selected: null, selectedFacility: null, user: null, requestPoll: null };
 const text = (v) => v == null ? '' : String(v);
 const statusClass = (v) => `status-${text(v).toLowerCase().replace(/[^a-z0-9]+/g, '') || 'neutral'}`;
+const FACILITY_STATUSES = Object.freeze(['Open','Standby','Limited Operations','Full','Evacuating','Closed','Out of Service']);
 
 function el(tag, className, value) {
   const node = document.createElement(tag);
@@ -50,7 +51,7 @@ function renderResources() {
 }
 function facilityValue(a, names, fallback = '') { for (const name of names) if (text(a[name]).trim()) return text(a[name]).trim(); return fallback; }
 function facilityStatus(a){return facilityValue(a,['Status','OperationalStatus']);}
-function populateFacilityStatuses(){const current=$('facilityStatus').value;const values=[...new Set(state.facilities.map(feature=>facilityStatus(attrs(feature))).filter(Boolean))].sort();$('facilityStatus').replaceChildren(new Option('All facility statuses',''),...values.map(value=>new Option(value,value)));$('facilityStatus').value=values.includes(current)?current:'';}
+function populateFacilityStatuses(){const current=$('facilityStatus').value;const observed=state.facilities.map(feature=>facilityStatus(attrs(feature))).filter(Boolean).sort();const values=[...new Set([...FACILITY_STATUSES,...observed])];$('facilityStatus').replaceChildren(new Option('All facility statuses',''),...values.map(value=>new Option(value,value)));$('facilityStatus').value=values.includes(current)?current:'';}
 function filteredFacilities() {
   const q=$('facilitySearch').value.trim().toLowerCase(); const status=$('facilityStatus').value;
   return state.facilities.filter(feature=>{const a=attrs(feature);return(!q||Object.values(a).join(' ').toLowerCase().includes(q))&&(!status||facilityStatus(a)===status);});
