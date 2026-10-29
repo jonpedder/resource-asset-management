@@ -82,7 +82,7 @@ function requestReportLines(request, generatedAt, approver) {
 
 function pageCommands(page, pageNumber, pageCount, branding, hasLogo, hasMap, reportTitle = 'WORKFLOW AUDIT HISTORY') {
   const colors = branding.colors;
-  const logoOffset = hasLogo ? 82 : 0;
+  const logoOffset = 82;
   const commands = [
     `${color(colors.navy)} rg 0 700 612 92 re f`,
     `${color(colors.accent)} rg 0 695 612 5 re f`,

@@ -12,6 +12,7 @@ test('builds a downloadable PDF containing request and audit text', async () => 
   const pdf = await blob.text();
   assert.match(pdf, /^%PDF-1\.4/);
   assert.match(pdf, /Generator Request/);
+  assert.match(pdf, /\/F2 15 Tf 118 758 Td \(Resource & Asset Management\)/);
   assert.match(pdf, /Asset deployed/);
   assert.match(pdf, /%%EOF$/);
 });
