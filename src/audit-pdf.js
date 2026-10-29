@@ -61,17 +61,18 @@ function textCommand(value, x, y, size, font, fill) {
 }
 
 function resourceReportLines(hubs, generatedAt, hasMap = false) {
-  const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 14, gap: 24 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
   const total = hubs.reduce((sum, hub) => sum + Number(hub.total || 0), 0);
-  lines.push({ kind: 'meta', text: `Regional staging areas: ${hubs.length}`, size: 9, gap: 13 }, { kind: 'meta', text: `Resources assigned to hubs: ${total}`, size: 9, gap: 13 }, { kind: 'meta', text: `Generated: ${generatedAt.toLocaleString()}`, size: 9, gap: 13 });
+  lines.push({ kind: 'meta', text: `Regional staging areas: ${hubs.length}`, size: 11, gap: 16 }, { kind: 'meta', text: `Resources assigned to staging areas: ${total}`, size: 11, gap: 16 }, { kind: 'meta', text: `Generated: ${generatedAt.toLocaleString()}`, size: 11, gap: 16 });
   const addSection = (title, headings, rows) => {
-    lines.push({ kind: 'spacer', text: '', gap: 18 }, { kind: 'section', text: title, size: 12, gap: 34 });
-    for (const part of wrap(headings, 104)) lines.push({ kind: 'event-heading', text: part, size: 7, gap: 14 });
-    for (const row of rows) for (const part of wrap(row, 104)) lines.push({ kind: 'report-row', text: part, size: 7, gap: 12 });
+    lines.push({ kind: 'spacer', text: '', gap: 20 }, { kind: 'section', text: title, size: 13, gap: 36 });
+    for (const part of wrap(headings, 82)) lines.push({ kind: 'event-heading', text: part, size: 10, gap: 17 });
+    for (const row of rows) for (const part of wrap(row, 82)) lines.push({ kind: 'report-row', text: part, size: 10, gap: 16 });
   };
-  addSection('STAGING AREAS AND RESOURCE COUNTS', 'Staging area | Total', hubs.map(hub => `${hub.name} | ${hub.total}`));
-  addSection('RESOURCE TOTALS BY KIND FOR EACH HUB', 'Staging area | Aircraft | Equipment | Facilities | Personnel | Supplies | Teams | Total', hubs.map(hub => `${hub.name} | ${hub.kinds.Aircraft || 0} | ${hub.kinds.Equipment || 0} | ${hub.kinds.Facilities || 0} | ${hub.kinds.Personnel || 0} | ${hub.kinds.Supplies || 0} | ${hub.kinds.Teams || 0} | ${hub.total}`));
-  addSection('NIMS TYPING TOTALS FOR EACH HUB', 'Staging area | Type I | Type II | Type III | Type IV | NA | Total', hubs.map(hub => `${hub.name} | ${hub.types['Type I'] || 0} | ${hub.types['Type II'] || 0} | ${hub.types['Type III'] || 0} | ${hub.types['Type IV'] || 0} | ${hub.types.NA || 0} | ${hub.total}`));
+  const countRows = key => hubs.flatMap(hub => Object.entries(hub[key] || {}).sort(([a],[b]) => a.localeCompare(b)).map(([label,count]) => `${hub.name} | ${label} | ${count}`));
+  addSection('RESOURCES BY STAGING AREA', 'Staging area | Number of resources', hubs.map(hub => `${hub.name} | ${hub.total}`));
+  addSection('RESOURCES BY STAGING AREA AND KIND', 'Staging area | Resource kind | Number of resources', countRows('kinds'));
+  addSection('RESOURCES BY STAGING AREA AND NIMS TYPE', 'Staging area | NIMS type | Number of resources', countRows('types'));
   return lines;
 }
 

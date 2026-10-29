@@ -50,10 +50,14 @@ test('builds a mapped resource report with hub, kind, and NIMS typing totals', a
   const mapImage={bytes:new Uint8Array([0xff,0xd8,0xff,0xd9]),width:2,height:1};
   const pdf=await buildResourceReportPdf(hubs,new Date('2026-10-29T18:00:00Z'),{mapImage}).text();
   assert.match(pdf,/RESOURCE REPORT/);
-  assert.match(pdf,/STAGING AREAS AND RESOURCE COUNTS/);
-  assert.match(pdf,/RESOURCE TOTALS BY KIND FOR EACH HUB/);
-  assert.match(pdf,/NIMS TYPING TOTALS FOR EACH HUB/);
+  assert.match(pdf,/RESOURCES BY STAGING AREA/);
+  assert.match(pdf,/RESOURCES BY STAGING AREA AND KIND/);
+  assert.match(pdf,/RESOURCES BY STAGING AREA AND NIMS TYPE/);
+  assert.match(pdf,/Staging area \| Resource kind \| Number of resources/);
   assert.match(pdf,/Texas Regional Staging Area \| 84/);
+  assert.match(pdf,/Texas Regional Staging Area \| Equipment \| 22/);
+  assert.match(pdf,/Texas Regional Staging Area \| Type II \| 29/);
+  assert.match(pdf,/\/F1 10 Tf/);
   assert.match(pdf,/\/MapImage Do/);
 });
 
