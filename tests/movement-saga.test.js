@@ -2,12 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { executeMovementSaga } from '../src/movement-saga.js';
 
-function fixture({ failWorkflow = false } = {}) {
+function fixture({ failWorkflow = false, priorMovement = null } = {}) {
   const calls=[];
   let resource={ attributes:{ OBJECTID:1, GlobalID:'{RES}', Status:'En Route', SiteName:'Staging', LocationVersion:0 }, geometry:{x:1,y:2,spatialReference:{wkid:4326}} };
+  if(priorMovement)resource={attributes:{...resource.attributes,Status:'Deployed',SiteName:priorMovement.attributes.ToSiteName,LocationVersion:1},geometry:structuredClone(priorMovement.geometry)};
   const client={
     async oneByGlobalId(){ calls.push('read'); return structuredClone(resource); },
-    async query(){ calls.push('movement-query'); return []; },
+    async query(){ calls.push('movement-query'); return priorMovement?[structuredClone(priorMovement)]:[]; },
     async applyServiceEdits(edits){ calls.push(edits); const update=edits.find(e=>e.id===0)?.updates?.[0]; if(update) resource={attributes:{...resource.attributes,...update.attributes},geometry:update.geometry||resource.geometry}; }
   };
   const workflow={
@@ -33,4 +34,14 @@ test('compensates the GIS move when workflow completion fails', async()=>{
   const rollback=f.calls.find(call=>Array.isArray(call)&&call.some(e=>e.updates?.[0]?.attributes?.MovementState==='Reverted'));
   assert.ok(rollback);
   assert.equal(rollback.find(e=>e.id===0).updates[0].geometry.x,1);
+});
+
+test('resumes an applied movement without moving the resource twice', async()=>{
+  const priorMovement={attributes:{GlobalID:'{MOVE}',IdempotencyKey:'JOB:S1:{RES}:Deploy',MovementType:'Deploy',MovementState:'Applied',FromSiteName:'Staging',ToSiteName:'Base',DeploymentAddress:'100 Main',ToX:3,ToY:4,ToWKID:4326},geometry:{x:3,y:4,spatialReference:{wkid:4326}}};
+  const f=fixture({priorMovement});
+  await executeMovementSaga({...f,layers:{resources:0,requests:2,movements:3},note:'Retry',username:'op',now:()=>100,movementGlobalId:'{OTHER}'});
+  const firstEdit=f.calls.find(call=>Array.isArray(call));
+  assert.equal(firstEdit.some(edit=>edit.id===0),false);
+  assert.equal(f.calls.filter(call=>call==='workflow').length,1);
+  assert.equal(f.calls.at(-1),'comment');
 });

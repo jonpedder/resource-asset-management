@@ -28,26 +28,47 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
   const prior = priorRows[0];
   const priorState = prior?.attributes?.MovementState;
   if (priorState === 'Confirmed') throw new Error('This resource movement is already confirmed. Refresh the workflow queue.');
-  if (priorState === 'Applied' || priorState === 'ReconcileRequired') throw new Error(`The previous ${rule.type.toLowerCase()} attempt is ${priorState}. Reconciliation is required before retrying.`);
+  if (priorState === 'ReconcileRequired') throw new Error(`The previous ${rule.type.toLowerCase()} attempt requires reconciliation before retrying.`);
   const effectiveMovementGlobalId = prior?.attributes?.GlobalID || movementGlobalId;
-  const movement = buildMovement({ movementGlobalId: effectiveMovementGlobalId, request, resource, step, location, username, now: now() });
-  const resourceEdit = buildResourceUpdate(resource, movement, step.stepName);
-  const requestEdit = requestUpdate(request, movement, 'Applied');
-  const movementEdit = prior ? { updates: [movement] } : { adds: [movement] };
-
-  await client.applyServiceEdits([
-    { id: layers.resources, updates: [resourceEdit] },
-    { id: layers.requests, updates: [requestEdit] },
-    { id: layers.movements, ...movementEdit }
-  ]);
-
-  const edited = await client.oneByGlobalId(layers.resources, request.attributes.ResourceGlobalID, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
-  if (Number(edited.attributes.LocationVersion) !== Number(resourceEdit.attributes.LocationVersion)) throw new Error('Resource location read-back verification failed.');
+  const resumed = priorState === 'Applied';
+  let movement, resourceEdit, edited;
+  if (resumed) {
+    const expectedX=Number(prior.attributes.ToX),expectedY=Number(prior.attributes.ToY);
+    const actualX=Number(resource.geometry?.x),actualY=Number(resource.geometry?.y);
+    if (![expectedX,expectedY,actualX,actualY].every(Number.isFinite)||Math.abs(expectedX-actualX)>1e-6||Math.abs(expectedY-actualY)>1e-6) {
+      const message=`The previous ${rule.type.toLowerCase()} GIS edit is Applied, but the resource no longer matches its destination. Reconciliation is required.`;
+      await client.applyServiceEdits([
+        { id: layers.requests, updates: [requestUpdate(request, prior, 'ReconcileRequired', message)] },
+        { id: layers.movements, updates: [{ attributes: { GlobalID: effectiveMovementGlobalId, MovementState: 'ReconcileRequired', IntegrationError: message } }] }
+      ]);
+      const error=new Error(message);error.reconcileRequired=true;throw error;
+    }
+    movement=prior;edited=resource;
+  } else {
+    movement = buildMovement({ movementGlobalId: effectiveMovementGlobalId, request, resource, step, location, username, now: now() });
+    resourceEdit = buildResourceUpdate(resource, movement, step.stepName);
+    const requestEdit = requestUpdate(request, movement, 'Applied');
+    const movementEdit = prior ? { updates: [movement] } : { adds: [movement] };
+    await client.applyServiceEdits([
+      { id: layers.resources, updates: [resourceEdit] },
+      { id: layers.requests, updates: [requestEdit] },
+      { id: layers.movements, ...movementEdit }
+    ]);
+    edited = await client.oneByGlobalId(layers.resources, request.attributes.ResourceGlobalID, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
+    if (Number(edited.attributes.LocationVersion) !== Number(resourceEdit.attributes.LocationVersion)) throw new Error('Resource location read-back verification failed.');
+  }
 
   try {
     if (action.mode === 'finish') await workflow.finishStep(request.attributes.WFMJobId, step.stepId);
     else await workflow.completeStep(request.attributes.WFMJobId, step.stepId, action.response, note);
   } catch (workflowError) {
+    if (resumed) {
+      await client.applyServiceEdits([
+        { id: layers.requests, updates: [requestUpdate(request, movement, 'Applied', workflowError.message)] },
+        { id: layers.movements, updates: [{ attributes: { GlobalID: effectiveMovementGlobalId, MovementState: 'Applied', IntegrationError: workflowError.message } }] }
+      ]).catch(() => undefined);
+      throw workflowError;
+    }
     const current = await client.oneByGlobalId(layers.resources, request.attributes.ResourceGlobalID, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
     if (Number(current.attributes.LocationVersion) !== Number(resourceEdit.attributes.LocationVersion)) {
       const message = `Workflow failed after the GIS edit and the resource changed again: ${workflowError.message}`;
