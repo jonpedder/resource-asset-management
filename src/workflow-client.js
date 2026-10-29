@@ -136,6 +136,7 @@ export class WorkflowClient {
     const username = await this.getUsername();
     if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
     await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run')).catch(() => undefined);
+    await new Promise(resolve => setTimeout(resolve, 350));
     let currentSteps;
     try {
       currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
@@ -146,7 +147,9 @@ export class WorkflowClient {
       if (job && !verifiedSteps.some(step => step.stepId === stepId)) currentSteps = verifiedSteps;
       else {
         await this.jobAction(jobId, 'Stop', stepId).catch(() => undefined);
+        await new Promise(resolve => setTimeout(resolve, 350));
         await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run'));
+        await new Promise(resolve => setTimeout(resolve, 350));
         currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
       }
     }
