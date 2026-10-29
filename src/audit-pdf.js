@@ -63,16 +63,33 @@ function textCommand(value, x, y, size, font, fill) {
 function resourceReportLines(hubs, generatedAt, hasMap = false) {
   const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
   const total = hubs.reduce((sum, hub) => sum + Number(hub.total || 0), 0);
-  lines.push({ kind: 'meta', text: `Regional staging areas: ${hubs.length}`, size: 11, gap: 16 }, { kind: 'meta', text: `Resources assigned to staging areas: ${total}`, size: 11, gap: 16 }, { kind: 'meta', text: `Generated: ${generatedAt.toLocaleString()}`, size: 11, gap: 16 });
-  const addSection = (title, headings, rows) => {
-    lines.push({ kind: 'spacer', text: '', gap: 20 }, { kind: 'section', text: title, size: 13, gap: 36 });
-    for (const part of wrap(headings, 82)) lines.push({ kind: 'event-heading', text: part, size: 10, gap: 17 });
-    for (const row of rows) for (const part of wrap(row, 82)) lines.push({ kind: 'report-row', text: part, size: 10, gap: 16 });
+  const available = hubs.reduce((sum, hub) => sum + (hub.resources || []).filter(resource => resource.availability === 'Available').length, 0);
+  const addGrid = (title, columns, rows) => {
+    lines.push({ kind: 'spacer', text: '', gap: 20 }, { kind: 'section', text: title, size: 13, gap: 36 }, { kind: 'report-grid', cells: columns, header: true, size: 10, gap: 21 });
+    for (const row of rows) lines.push({ kind: 'report-grid', cells: row, size: 10, gap: 20 });
   };
-  const countRows = key => hubs.flatMap(hub => Object.entries(hub[key] || {}).sort(([a],[b]) => a.localeCompare(b)).map(([label,count]) => `${hub.name} | ${label} | ${count}`));
-  addSection('RESOURCES BY STAGING AREA', 'Staging area | Number of resources', hubs.map(hub => `${hub.name} | ${hub.total}`));
-  addSection('RESOURCES BY STAGING AREA AND KIND', 'Staging area | Resource kind | Number of resources', countRows('kinds'));
-  addSection('RESOURCES BY STAGING AREA AND NIMS TYPE', 'Staging area | NIMS type | Number of resources', countRows('types'));
+  addGrid('REPORT SUMMARY', ['Measure','Value'], [['Regional staging areas',hubs.length],['Resource records assigned to staging areas',total],['Currently available to deploy',available],['Generated',generatedAt.toLocaleString()]]);
+  addGrid('RESOURCES BY STAGING AREA', ['Staging area','Number of resources'], hubs.map(hub => [hub.name,hub.total]));
+  addGrid('RESOURCES BY STAGING AREA AND KIND', ['Staging area','Resource kind','Number'], hubs.flatMap(hub => Object.entries(hub.kinds || {}).sort(([a],[b]) => a.localeCompare(b)).map(([label,count]) => [hub.name,label,count])));
+  addGrid('RESOURCES BY STAGING AREA AND NIMS TYPE', ['Staging area','NIMS type','Number'], hubs.flatMap(hub => Object.entries(hub.types || {}).sort(([a],[b]) => a.localeCompare(b)).map(([label,count]) => [hub.name,label,count])));
+  lines.push({ kind: 'spacer', text: '', gap: 20 }, { kind: 'section', text: 'SUPPORTING RESOURCE DETAIL', size: 13, gap: 36 });
+  const definition = type => ({'Type I':'Highest-capability NIMS typing level recorded in the inventory.','Type II':'NIMS Type II capability level recorded in the inventory.','Type III':'NIMS Type III capability level recorded in the inventory.','Type IV':'NIMS Type IV capability level recorded in the inventory.',NA:'No NIMS type is recorded for this resource.'}[type] || `Inventory type recorded as ${type}.`);
+  for (const hub of hubs) for (const resource of (hub.resources || []).sort((a,b) => a.name.localeCompare(b.name))) {
+    lines.push({ kind: 'resource-heading', text: `${hub.name} - ${resource.name}`, size: 11, gap: 24 });
+    const updated = resource.updated ? new Date(resource.updated).toLocaleString() : 'Not recorded';
+    const details = [['Resource name',resource.name],['Capabilities',resource.capabilities],['Resource kind',resource.kind],['NIMS type',resource.nimsType],['NIMS definition used',definition(resource.nimsType)],['Owning agency',resource.agency],['Actual / recorded location',resource.location],['Current availability',resource.availability],['Quantity represented',resource.quantity],['Information last updated',updated]];
+    lines.push({ kind: 'report-grid', cells: ['Field','Value'], header: true, size: 10, gap: 21 });
+    for (const [label,value] of details) for (const [index,part] of wrap(value,62).entries()) lines.push({ kind: 'report-grid', cells: [index ? '' : label,part], size: 10, gap: 20 });
+  }
+  lines.push({ kind: 'spacer', text: '', gap: 20 }, { kind: 'section', text: 'HOW TO INTERPRET THIS REPORT', size: 13, gap: 36 });
+  const notes = [
+    'One resource equals one feature record in the resource inventory. Quantity represented is shown in supporting detail and may be greater than one.',
+    'Assigned to a staging area means the resource record names that hub as its Site Name. This can represent an administrative assignment; use Actual / recorded location and Information last updated to assess whether the resource is physically there.',
+    'Available to deploy means Current availability is Available at report generation time. Other statuses are not counted as currently available.',
+    'NA means no NIMS type is recorded. It does not mean the resource has been evaluated and found incapable.',
+    'Capabilities and type definitions use the values available in the source inventory. Not recorded identifies information that the service does not currently provide.'
+  ];
+  for (const note of notes) for (const [index,part] of wrap(note,82).entries()) lines.push({ kind: index ? 'report-note-continuation' : 'report-note', text: part, size: 10, gap: 16 });
   return lines;
 }
 
@@ -131,6 +148,14 @@ function pageCommands(page, pageNumber, pageCount, branding, hasLogo, hasMap, re
     } else if (line.kind === 'event-heading') {
       commands.push(`${color(colors.border)} RG .7 w 36 ${(line.y - 5).toFixed(2)} m 576 ${(line.y - 5).toFixed(2)} l S`);
       commands.push(textCommand(line.text, 40, line.y, line.size, 'F2', colors.navy));
+    } else if (line.kind === 'resource-heading') {
+      commands.push(`${color(colors.panelAlt)} rg 36 ${(line.y - 8).toFixed(2)} 540 25 re f`);
+      commands.push(textCommand(line.text, 44, line.y, line.size, 'F2', colors.text));
+    } else if (line.kind === 'report-grid') {
+      const widths=line.cells.length===3?[280,170,90]:[190,350]; let x=36;
+      if(line.header)commands.push(`${color(colors.panelAlt)} rg 36 ${(line.y - 7).toFixed(2)} 540 19 re f`);
+      commands.push(`${color(colors.border)} RG .7 w 36 ${(line.y - 7).toFixed(2)} 540 19 re S`);
+      line.cells.forEach((cell,index)=>{if(index){commands.push(`${x} ${(line.y - 7).toFixed(2)} m ${x} ${(line.y + 12).toFixed(2)} l S`);}commands.push(textCommand(cell, x+5, line.y, line.size||10, line.header?'F2':'F1', line.header?colors.text:colors.background));x+=widths[index];});
     } else if (line.kind !== 'spacer') {
       const isLabel = line.kind === 'meta';
       const fill = line.kind === 'event-comment' ? colors.navy : line.kind === 'event-detail' ? colors.muted : colors.background;

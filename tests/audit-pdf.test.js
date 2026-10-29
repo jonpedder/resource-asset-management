@@ -46,17 +46,24 @@ test('applies app branding and embeds an agency logo', async () => {
 });
 
 test('builds a mapped resource report with hub, kind, and NIMS typing totals', async () => {
-  const hubs=[{name:'Texas Regional Staging Area',total:84,kinds:{Aircraft:5,Equipment:22,Facilities:3,Personnel:15,Supplies:5,Teams:34},types:{'Type I':10,'Type II':29,'Type III':28,'Type IV':9,NA:8}}];
+  const hubs=[{name:'Texas Regional Staging Area',total:84,kinds:{Aircraft:5,Equipment:22,Facilities:3,Personnel:15,Supplies:5,Teams:34},types:{'Type I':10,'Type II':29,'Type III':28,'Type IV':9,NA:8},resources:[{name:'Portable Generator 12',capabilities:'Emergency power generation',kind:'Equipment',nimsType:'Type II',agency:'Texas Emergency Management',location:'Austin / Texas Regional Staging Area',availability:'Available',quantity:2,updated:'2026-10-29T17:00:00Z'}]}];
   const mapImage={bytes:new Uint8Array([0xff,0xd8,0xff,0xd9]),width:2,height:1};
   const pdf=await buildResourceReportPdf(hubs,new Date('2026-10-29T18:00:00Z'),{mapImage}).text();
   assert.match(pdf,/RESOURCE REPORT/);
   assert.match(pdf,/RESOURCES BY STAGING AREA/);
   assert.match(pdf,/RESOURCES BY STAGING AREA AND KIND/);
   assert.match(pdf,/RESOURCES BY STAGING AREA AND NIMS TYPE/);
-  assert.match(pdf,/Staging area \| Resource kind \| Number of resources/);
-  assert.match(pdf,/Texas Regional Staging Area \| 84/);
-  assert.match(pdf,/Texas Regional Staging Area \| Equipment \| 22/);
-  assert.match(pdf,/Texas Regional Staging Area \| Type II \| 29/);
+  assert.match(pdf,/SUPPORTING RESOURCE DETAIL/);
+  assert.match(pdf,/HOW TO INTERPRET THIS REPORT/);
+  assert.match(pdf,/Texas Regional Staging Area/);
+  assert.match(pdf,/Equipment/);
+  assert.match(pdf,/Type II/);
+  assert.match(pdf,/Portable Generator 12/);
+  assert.match(pdf,/Emergency power generation/);
+  assert.match(pdf,/Texas Emergency Management/);
+  assert.match(pdf,/Currently available to deploy/);
+  assert.match(pdf,/One resource equals one feature record/);
+  assert.match(pdf,/NA means no NIMS type is recorded/);
   assert.match(pdf,/\/F1 10 Tf/);
   assert.match(pdf,/\/MapImage Do/);
 });
