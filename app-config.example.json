@@ -13,7 +13,8 @@
   "layers": {
     "resources": 0,
     "facilities": 1,
-    "requests": 2
+    "requests": 2,
+    "movements": 3
   },
   "mapNavigation": {
     "resourceSelectionScale": 24000

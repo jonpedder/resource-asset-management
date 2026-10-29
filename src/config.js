@@ -39,5 +39,10 @@ export function validateConfig(config) {
   if (!/^https:\/\//i.test(config.portalUrl) || !/^https:\/\//i.test(config.featureServiceUrl)) throw new Error('Portal and feature service URLs must use HTTPS.');
   const selectionScale=Number(config.mapNavigation?.resourceSelectionScale??24000);
   if (!Number.isFinite(selectionScale) || selectionScale < 100 || selectionScale > 100000000) throw new Error('Resource selection zoom scale must be between 100 and 100,000,000.');
+  if (config.layers) {
+    for (const name of ['resources','facilities','requests','movements']) if (!Number.isInteger(Number(config.layers[name]))) throw new Error(`Missing or invalid layer id: ${name}`);
+    const layerIds=['resources','facilities','requests','movements'].map(name=>Number(config.layers[name]));
+    if (new Set(layerIds).size !== layerIds.length) throw new Error('Configured resource, facility, request, and movement layer ids must be unique.');
+  }
   return config;
 }
