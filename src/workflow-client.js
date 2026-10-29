@@ -85,16 +85,6 @@ export class WorkflowClient {
 
   addComment(jobId, comment) { return this.call(`jobs/${encodeURIComponent(jobId)}/comments`, { method: 'POST', body: { comment: String(comment) } }); }
 
-  async updateExtendedProperties(jobId, values) {
-    const extendedProperties = Object.entries(stringsOnly(values)).map(([identifier, value]) => ({ identifier, value }));
-    await this.call(`jobs/${encodeURIComponent(jobId)}/update`, { method: 'POST', body: { extendedProperties } });
-    const job = await this.getJob(jobId);
-    for (const [identifier, expected] of Object.entries(stringsOnly(values))) {
-      if (String(jobExtendedProperty(job, identifier) ?? '') !== expected) throw new Error(`Workflow property ${identifier} could not be verified.`);
-    }
-    return job;
-  }
-
   async getComments(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/comments?_=${Date.now()}`); return result.jobComments||result.comments||[]; }
 
   async getHistory(jobId) { const result=await this.call(`jobs/${encodeURIComponent(jobId)}/history?_=${Date.now()}`); return result.jobHistory||result.history||[]; }
@@ -147,18 +137,15 @@ export class WorkflowClient {
     if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
     await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run')).catch(() => undefined);
     try {
-      return await this.sendStepInformation(jobId, stepId, response, note);
+      const currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
+      if (note) await this.addComment(jobId, note);
+      return currentSteps;
     } catch (firstError) {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const job = await this.getJob(jobId).catch(() => null);
-      const currentSteps = job?.currentSteps || [];
-      if (job && !currentSteps.some(step => step.stepId === stepId)) return currentSteps;
       await this.jobAction(jobId, 'Stop', stepId).catch(() => undefined);
-      await new Promise(resolve => setTimeout(resolve, 350));
       await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run'));
-      await new Promise(resolve => setTimeout(resolve, 350));
-      try { return await this.sendStepInformation(jobId, stepId, response, note); }
-      catch (retryError) { retryError.cause = firstError; throw retryError; }
+      const currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
+      if (note) await this.addComment(jobId, note);
+      return currentSteps;
     }
   }
 }
