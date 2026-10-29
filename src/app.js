@@ -2,7 +2,7 @@ import { loadConfig } from './config.js';
 import { createLinkedRequest } from './request-saga.js';
 import { applyPresentation } from './presentation.js';
 import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261028-4';
-import { buildResourceReportPdf, loadPdfLogo } from './audit-pdf.js?v=20261029-3';
+import { buildResourceReportPdf, loadPdfLogo } from './audit-pdf.js?v=20261029-4';
 
 const $ = (id) => document.getElementById(id);
 const state = { config: null, view: null, resourceLayer: null, facilityLayer: null, selectionHighlight: null, resources: [], facilities: [], requests: [], selected: null, selectedFacility: null, user: null, requestPoll: null };

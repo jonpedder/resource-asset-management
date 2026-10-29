@@ -31,12 +31,12 @@ function auditReportLines(request, entries, generatedAt, hasMap = false) {
     ['Date needed', request.DateNeeded ? new Date(request.DateNeeded).toLocaleString() : '-'],
     ['Generated', generatedAt.toLocaleString()]
   ];
-  const lines = [{ kind: 'request-title', text: request.RequestTitle || 'Resource Request', size: 14, gap: 24 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const lines = [...wrap(request.RequestTitle || 'Resource Request', 58).map(text => ({ kind: 'request-title', text, size: 14, gap: 26 })), ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
   for (const [label, value] of metadata) for (const [index, part] of wrap(`${label}: ${value}`, 82).entries()) lines.push({ kind: index ? 'meta-continuation' : 'meta', text: part, size: 9, gap: 13 });
-  lines.push({ kind: 'section', text: 'AUDIT EVENTS', size: 12, gap: 28 });
+  lines.push({ kind: 'spacer', text: '', gap: 16 }, { kind: 'section', text: 'AUDIT EVENTS', size: 12, gap: 34 });
   entries.forEach((entry, index) => {
     const stamp = entry.date ? new Date(entry.date).toLocaleString() : 'No timestamp';
-    lines.push({ kind: 'event-heading', text: `${index + 1}. ${stamp} | ${entry.user || 'Workflow Manager'}${entry.persona ? ` | ${entry.persona}` : ''}`, size: 9, gap: 15 });
+    for (const part of wrap(`${index + 1}. ${stamp} | ${entry.user || 'Workflow Manager'}${entry.persona ? ` | ${entry.persona}` : ''}`, 88)) lines.push({ kind: 'event-heading', text: part, size: 9, gap: 15 });
     for (const part of wrap(entry.title || 'Workflow change')) lines.push({ kind: 'event-title', text: part, indent: 14, size: 10, gap: 14 });
     for (const part of wrap(entry.detail ? `Details: ${entry.detail}` : '')) if (part) lines.push({ kind: 'event-detail', text: part, indent: 14, size: 9, gap: 13 });
     for (const part of wrap(entry.comment ? `Comment: ${entry.comment}` : '')) if (part) lines.push({ kind: 'event-comment', text: part, indent: 14, size: 9, gap: 13 });
@@ -65,9 +65,9 @@ function resourceReportLines(hubs, generatedAt, hasMap = false) {
   const total = hubs.reduce((sum, hub) => sum + Number(hub.total || 0), 0);
   lines.push({ kind: 'meta', text: `Regional staging areas: ${hubs.length}`, size: 9, gap: 13 }, { kind: 'meta', text: `Resources assigned to hubs: ${total}`, size: 9, gap: 13 }, { kind: 'meta', text: `Generated: ${generatedAt.toLocaleString()}`, size: 9, gap: 13 });
   const addSection = (title, headings, rows) => {
-    lines.push({ kind: 'section', text: title, size: 12, gap: 28 });
-    lines.push({ kind: 'event-heading', text: headings, size: 8, gap: 15 });
-    for (const row of rows) lines.push({ kind: 'report-row', text: row, size: 8, gap: 13 });
+    lines.push({ kind: 'spacer', text: '', gap: 18 }, { kind: 'section', text: title, size: 12, gap: 34 });
+    for (const part of wrap(headings, 104)) lines.push({ kind: 'event-heading', text: part, size: 7, gap: 14 });
+    for (const row of rows) for (const part of wrap(row, 104)) lines.push({ kind: 'report-row', text: part, size: 7, gap: 12 });
   };
   addSection('STAGING AREAS AND RESOURCE COUNTS', 'Staging area | Total', hubs.map(hub => `${hub.name} | ${hub.total}`));
   addSection('RESOURCE TOTALS BY KIND FOR EACH HUB', 'Staging area | Aircraft | Equipment | Facilities | Personnel | Supplies | Teams | Total', hubs.map(hub => `${hub.name} | ${hub.kinds.Aircraft || 0} | ${hub.kinds.Equipment || 0} | ${hub.kinds.Facilities || 0} | ${hub.kinds.Personnel || 0} | ${hub.kinds.Supplies || 0} | ${hub.kinds.Teams || 0} | ${hub.total}`));
@@ -84,12 +84,12 @@ function requestReportLines(request, generatedAt, approver) {
     ['Workflow job', request.WFMJobId], ['Integration state', request.IntegrationState], ['Request GlobalID', request.GlobalID],
     ['Approver / report user', approver || '-'], ['Generated', generatedAt.toLocaleString()]
   ];
-  const lines = [{ kind: 'request-title', text: request.RequestTitle || 'Resource Request', size: 14, gap: 24 }];
+  const lines = wrap(request.RequestTitle || 'Resource Request', 58).map(text => ({ kind: 'request-title', text, size: 14, gap: 26 }));
   for (const [label, value] of fields) for (const [index, part] of wrap(`${label}: ${value ?? '-'}`, 82).entries()) lines.push({ kind: index ? 'meta-continuation' : 'meta', text: part, size: 9, gap: 13 });
-  lines.push({ kind: 'section', text: 'NOTES / JUSTIFICATION', size: 12, gap: 28 });
+  lines.push({ kind: 'spacer', text: '', gap: 16 }, { kind: 'section', text: 'NOTES / JUSTIFICATION', size: 12, gap: 34 });
   for (const part of wrap(request.Notes || 'No notes or justification were provided.', 86)) lines.push({ kind: 'request-note', text: part, size: 10, gap: 14 });
   if (request.IntegrationError) {
-    lines.push({ kind: 'section', text: 'WORKFLOW INTEGRATION MESSAGE', size: 12, gap: 28 });
+    lines.push({ kind: 'spacer', text: '', gap: 16 }, { kind: 'section', text: 'WORKFLOW INTEGRATION MESSAGE', size: 12, gap: 34 });
     for (const part of wrap(request.IntegrationError, 86)) lines.push({ kind: 'request-note', text: part, size: 9, gap: 13 });
   }
   return lines;
