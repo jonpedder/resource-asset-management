@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildAuditPdf, buildRequestPdf, buildResourceReportPdf } from '../src/audit-pdf.js';
+import { buildAuditPdf, buildRequestPdf, buildResourceReportPdf, buildResourceSummaryPdf } from '../src/audit-pdf.js';
 
 test('builds a downloadable PDF containing request and audit text', async () => {
   const blob = buildAuditPdf(
@@ -65,6 +65,18 @@ test('builds a mapped resource report with hub, kind, and NIMS typing totals', a
   assert.match(pdf,/One resource equals one feature record/);
   assert.match(pdf,/NA means no NIMS type is recorded/);
   assert.match(pdf,/\/F1 10 Tf/);
+  assert.match(pdf,/\/MapImage Do/);
+});
+
+test('builds a concise mapped resource summary without supporting detail',async()=>{
+  const hubs=[{name:'Texas Regional Staging Area',total:84,kinds:{Equipment:22,Teams:34},types:{'Type II':29,NA:8},resources:[{availability:'Available'}]}];
+  const mapImage={bytes:new Uint8Array([0xff,0xd8,0xff,0xd9]),width:2,height:1};
+  const pdf=await buildResourceSummaryPdf(hubs,new Date('2026-10-29T18:00:00Z'),{mapImage}).text();
+  assert.match(pdf,/RESOURCE SUMMARY/);
+  assert.match(pdf,/NATIONAL TOTALS BY RESOURCE KIND/);
+  assert.match(pdf,/NATIONAL TOTALS BY NIMS TYPE/);
+  assert.match(pdf,/Texas Regional Staging Area/);
+  assert.doesNotMatch(pdf,/SUPPORTING RESOURCE DETAIL/);
   assert.match(pdf,/\/MapImage Do/);
 });
 

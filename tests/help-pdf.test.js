@@ -31,7 +31,7 @@ test('embeds interface images and paginates the help guide',async()=>{
 
 test('documents current buttons and report samples in Help and How-to',async()=>{
   const html=await readFile(new URL('../settings.html',import.meta.url),'utf8');
-  for(const label of ['Resource Report','Request Queue','Clear filters','Submit Asset Request','Refresh queue','Resource movement map','Export CSV','Export PDF','Locate address','Use home/staging location','Complete selected action','Contact requestor','Preview logo','Use default logo','Save &amp; reload','Reset to defaults','Download help PDF'])assert.ok(html.includes(label),`Missing help for ${label}`);
+  for(const label of ['Resource Report','Resource Summary','Request Queue','Clear filters','Submit Asset Request','Refresh queue','Resource movement map','Export CSV','Export PDF','Locate address','Use home/staging location','Complete selected action','Contact requestor','Preview logo','Use default logo','Save &amp; reload','Reset to defaults','Download help PDF'])assert.ok(html.includes(label),`Missing help for ${label}`);
   assert.match(html,/assets\/help\/report-samples\.svg/);
   assert.doesNotMatch(html,/Export request PDF/);
 });

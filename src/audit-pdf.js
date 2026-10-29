@@ -93,6 +93,21 @@ function resourceReportLines(hubs, generatedAt, hasMap = false) {
   return lines;
 }
 
+function resourceSummaryLines(hubs, generatedAt, hasMap = false) {
+  const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const total = hubs.reduce((sum, hub) => sum + Number(hub.total || 0), 0);
+  const available = hubs.reduce((sum, hub) => sum + (hub.resources || []).filter(resource => resource.availability === 'Available').length, 0);
+  const addGrid = (title, columns, rows) => {
+    lines.push({ kind: 'spacer', text: '', gap: 20 }, { kind: 'section', text: title, size: 13, gap: 36 }, { kind: 'report-grid', cells: columns, header: true, size: 10, gap: 21 });
+    for (const row of rows) lines.push({ kind: 'report-grid', cells: row, size: 10, gap: 20 });
+  };
+  addGrid('SUMMARY', ['Measure','Value'], [['Regional staging areas',hubs.length],['Resource records',total],['Available to deploy',available],['Generated',generatedAt.toLocaleString()]]);
+  addGrid('RESOURCES BY STAGING AREA', ['Staging area','Number of resources'], hubs.map(hub => [hub.name,hub.total]));
+  addGrid('NATIONAL TOTALS BY RESOURCE KIND', ['Resource kind','Number of resources'], Object.entries(hubs.reduce((totals,hub)=>{for(const [label,count] of Object.entries(hub.kinds||{}))totals[label]=(totals[label]||0)+count;return totals;},{})).sort(([a],[b])=>a.localeCompare(b)));
+  addGrid('NATIONAL TOTALS BY NIMS TYPE', ['NIMS type','Number of resources'], Object.entries(hubs.reduce((totals,hub)=>{for(const [label,count] of Object.entries(hub.types||{}))totals[label]=(totals[label]||0)+count;return totals;},{})).sort(([a],[b])=>a.localeCompare(b)));
+  return lines;
+}
+
 function requestReportLines(request, generatedAt, approver) {
   const fields = [
     ['Request title', request.RequestTitle], ['Incident', request.IncidentName], ['Requestor', request.Requestor],
@@ -243,4 +258,9 @@ export function buildRequestPdf(request = {}, generatedAt = new Date(), branding
 export function buildResourceReportPdf(hubs = [], generatedAt = new Date(), brandingInput = {}) {
   const hasMap = Boolean(brandingInput.mapImage?.bytes?.length);
   return buildPdf(resourceReportLines(hubs, generatedAt, hasMap), brandingInput, 'RESOURCE REPORT');
+}
+
+export function buildResourceSummaryPdf(hubs = [], generatedAt = new Date(), brandingInput = {}) {
+  const hasMap = Boolean(brandingInput.mapImage?.bytes?.length);
+  return buildPdf(resourceSummaryLines(hubs, generatedAt, hasMap), brandingInput, 'RESOURCE SUMMARY');
 }
