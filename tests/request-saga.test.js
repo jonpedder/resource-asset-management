@@ -20,6 +20,19 @@ test('request saga orders verified writes and preserves exact job id', async () 
   assert.deepEqual(calls.map(c => c[0]), ['create','find','job','verifyJob','link','verifyLink','audit']);
 });
 
+test('request saga keeps a verified link when the initial audit comment fails', async () => {
+  let deleted = false;
+  const result = await createLinkedRequest({
+    attributes: {}, createRequest: async () => request, findJobsByRequestGlobalId: async () => [],
+    createJob: async () => ({ jobId: 'J1' }), verifyJob: async () => {}, linkRequest: async () => {}, verifyRequestLink: async () => {},
+    addAuditComment: async () => { throw new Error('comment endpoint unavailable'); },
+    deleteJobIfSafe: async () => { deleted = true; return true; }
+  });
+  assert.equal(result.jobId, 'J1');
+  assert.match(result.auditWarning, /linked, but the initial audit comment/i);
+  assert.equal(deleted, false);
+});
+
 test('request saga reuses exactly one existing job', async () => {
   let created = false;
   const result = await createLinkedRequest({ attributes:{}, createRequest:async()=>request, findJobsByRequestGlobalId:async()=>[{jobId:'J1'}], createJob:async()=>{created=true;}, verifyJob:async()=>{}, linkRequest:async()=>{}, verifyRequestLink:async()=>{} });

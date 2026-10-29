@@ -21,8 +21,13 @@ export async function createLinkedRequest(options) {
     await options.verifyJob(job.jobId, request.GlobalID);
     await options.linkRequest(request.OBJECTID, job.jobId);
     await options.verifyRequestLink(request.OBJECTID, job.jobId);
-    await options.addAuditComment?.(job.jobId, { objectId: request.OBJECTID, globalId: request.GlobalID, correlationId });
-    return { request, jobId: job.jobId, correlationId, reusedJob: Boolean(existing[0]) };
+    let auditWarning = '';
+    try {
+      await options.addAuditComment?.(job.jobId, { objectId: request.OBJECTID, globalId: request.GlobalID, correlationId });
+    } catch (error) {
+      auditWarning = `The request and workflow job were linked, but the initial audit comment could not be saved: ${error.message || error}`;
+    }
+    return { request, jobId: job.jobId, correlationId, reusedJob: Boolean(existing[0]), auditWarning };
   } catch (error) {
     if (request?.OBJECTID && !job?.jobId) await options.markRequest?.(request.OBJECTID, 'Failed', String(error.message || error));
     else if (request?.OBJECTID && job?.jobId) {
