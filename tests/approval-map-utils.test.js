@@ -13,6 +13,7 @@ test('builds an origin-to-destination movement path', () => {
   const geometry = movementPath({
     attributes: { FromX: -116, FromY: 43, ToX: -115, ToY: 44, ToWKID: 4326 }
   });
+  assert.equal(geometry.type, 'polyline');
   assert.deepEqual(geometry.paths[0][0], [-116, 43]);
   assert.deepEqual(geometry.paths[0].at(-1), [-115, 44]);
   assert.equal(geometry.paths[0].length, 25);

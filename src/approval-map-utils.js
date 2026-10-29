@@ -39,6 +39,7 @@ export function movementPath(feature = {}) {
     ];
   });
   return {
+    type: 'polyline',
     paths: [vertices],
     spatialReference: { wkid: Number(attributes.ToWKID || attributes.FromWKID || feature.geometry?.spatialReference?.wkid || 4326) }
   };
