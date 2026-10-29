@@ -33,7 +33,7 @@ function auditReportLines(request, entries, generatedAt, hasMap = false) {
   ];
   const lines = [...wrap(request.RequestTitle || 'Resource Request', 58).map(text => ({ kind: 'request-title', text, size: 14, gap: 26 })), ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
   for (const [label, value] of metadata) for (const [index, part] of wrap(`${label}: ${value}`, 82).entries()) lines.push({ kind: index ? 'meta-continuation' : 'meta', text: part, size: 9, gap: 13 });
-  lines.push({ kind: 'spacer', text: '', gap: 16 }, { kind: 'section', text: 'AUDIT EVENTS', size: 12, gap: 34 });
+  lines.push({ kind: 'spacer', text: '', gap: 12 }, { kind: 'section', text: 'AUDIT EVENTS', size: 12, gap: 34 });
   entries.forEach((entry, index) => {
     const stamp = entry.date ? new Date(entry.date).toLocaleString() : 'No timestamp';
     for (const part of wrap(`${index + 1}. ${stamp} | ${entry.user || 'Workflow Manager'}${entry.persona ? ` | ${entry.persona}` : ''}`, 88)) lines.push({ kind: 'event-heading', text: part, size: 9, gap: 15 });

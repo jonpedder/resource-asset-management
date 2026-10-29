@@ -4,8 +4,8 @@ import { buildAuditPdf, buildRequestPdf, buildResourceReportPdf, buildResourceSu
 
 test('builds a downloadable PDF containing request and audit text', async () => {
   const blob = buildAuditPdf(
-    { RequestTitle: 'Generator Request', WFMJobId: 'JOB-42', GlobalID: '{ABC}', IncidentName: 'Storm Response' },
-    [{ date: '2026-10-28T17:00:00Z', user: 'operator', persona: 'Operations', title: 'Asset deployed', detail: 'Moved to staging', comment: 'Approved' }],
+    { RequestTitle: 'Generator Request', WFMJobId: 'JOB-42', GlobalID: '{ABC}', IncidentName: 'Storm Response', Notes: 'Initial request reason: restore emergency power.' },
+    [{ date: '2026-10-28T17:00:00Z', user: 'operator', persona: 'Operations', title: 'Asset deployed', detail: 'Moved to staging', comment: 'Approved for immediate deployment.' }],
     new Date('2026-10-28T18:00:00Z')
   );
   assert.equal(blob.type, 'application/pdf');
@@ -13,6 +13,8 @@ test('builds a downloadable PDF containing request and audit text', async () => 
   assert.match(pdf, /^%PDF-1\.4/);
   assert.match(pdf, /Generator Request/);
   assert.match(pdf, /\/F2 15 Tf 118 758 Td \(Resource & Asset Management\)/);
+  assert.match(pdf, /Approved for immediate/);
+  assert.match(pdf, /deployment\./);
   assert.match(pdf, /Asset deployed/);
   assert.match(pdf, /%%EOF$/);
 });
