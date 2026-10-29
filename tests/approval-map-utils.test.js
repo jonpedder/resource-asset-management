@@ -4,7 +4,7 @@ import { movementMidpoint, movementPath, requestMapFilters } from '../src/approv
 
 test('builds request and resource filters for the selected request', () => {
   assert.deepEqual(requestMapFilters({ GlobalID: "{REQ}'", ResourceGlobalID: '{RES}', WFMJobId: "JOB'1" }), {
-    request: "(RequestGlobalID='{REQ}''' OR WFMJobId='JOB''1')",
+    request: "RequestGlobalID='{REQ}'''",
     resource: "GlobalID='{RES}'"
   });
 });
