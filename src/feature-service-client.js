@@ -45,10 +45,20 @@ export class FeatureServiceClient {
       rollbackOnFailure: String(rollbackOnFailure),
       useGlobalIds: String(useGlobalIds)
     });
-    const failures = (result || []).flatMap(group => [
-      ...(group.addResults || []), ...(group.updateResults || []), ...(group.deleteResults || [])
-    ]).filter(edit => !edit.success);
-    if (failures.length) throw new Error(failures[0].error?.description || failures[0].error?.message || 'One or more feature-service edits failed.');
+    const failures = [];
+    for (const group of result || []) {
+      if (group.error) failures.push({ layerId: group.id, operation: 'layer', error: group.error });
+      for (const [operation, rows] of [['add',group.addResults],['update',group.updateResults],['delete',group.deleteResults]]) {
+        for (const edit of rows || []) if (!edit.success) failures.push({ layerId: group.id, operation, error: edit.error || {} });
+      }
+    }
+    if (failures.length) {
+      console.error('Feature service applyEdits failed', result);
+      const useful = failures.find(item => !/rolled back/i.test(item.error?.description || item.error?.message || '')) || failures[0];
+      const detail = useful.error?.description || useful.error?.message || 'Unknown edit error';
+      const code = useful.error?.code ? ` (code ${useful.error.code})` : '';
+      throw new Error(`Layer ${useful.layerId} ${useful.operation} failed: ${detail}${code}. The GIS transaction was rolled back; Workflow Manager was not advanced.`);
+    }
     return result;
   }
 }
