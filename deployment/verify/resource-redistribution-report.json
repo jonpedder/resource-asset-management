@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-10-29T19:09:58.999Z",
+  "backupFile": "resource-redistribution-backup-1793300990296.json",
+  "totalResources": 1000,
+  "protectedResources": 6,
+  "resourcesUpdated": 994,
+  "facilitiesUpdated": 12,
+  "extent": {
+    "xmin": -122.6308691452684,
+    "ymin": 30.564304662896475,
+    "xmax": -71.66248887358253,
+    "ymax": 47.37191978924619,
+    "spatialReference": {
+      "wkid": 4326
+    }
+  },
+  "resourcesPerHub": {
+    "Pacific Northwest Regional Staging Area": 74,
+    "Northern California Regional Staging Area": 68,
+    "Intermountain Regional Staging Area": 102,
+    "Rocky Mountain Regional Staging Area": 91,
+    "Southwest Regional Staging Area": 99,
+    "Texas Regional Staging Area": 84,
+    "Central Plains Regional Staging Area": 90,
+    "Great Lakes Regional Staging Area": 69,
+    "Southeast Regional Staging Area": 83,
+    "Gulf Coast Regional Staging Area": 75,
+    "Mid-Atlantic Regional Staging Area": 82,
+    "Northeast Regional Staging Area": 77
+  },
+  "distinctKindsPerHub": {
+    "Pacific Northwest Regional Staging Area": 6,
+    "Northern California Regional Staging Area": 6,
+    "Intermountain Regional Staging Area": 6,
+    "Rocky Mountain Regional Staging Area": 6,
+    "Southwest Regional Staging Area": 6,
+    "Texas Regional Staging Area": 6,
+    "Central Plains Regional Staging Area": 6,
+    "Great Lakes Regional Staging Area": 6,
+    "Southeast Regional Staging Area": 6,
+    "Gulf Coast Regional Staging Area": 6,
+    "Mid-Atlantic Regional Staging Area": 6,
+    "Northeast Regional Staging Area": 6
+  }
+}
