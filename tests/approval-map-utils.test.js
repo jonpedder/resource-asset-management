@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fallbackMovement, movementMidpoint, movementPath, requestMapFilters } from '../src/approval-map-utils.js';
+import { fallbackMovement, movementMidpoint, movementPath, plannedMovement, requestMapFilters } from '../src/approval-map-utils.js';
 
 test('builds request and resource filters for the selected request', () => {
   assert.deepEqual(requestMapFilters({ GlobalID: "{REQ}'", ResourceGlobalID: '{RES}', WFMJobId: "JOB'1" }), {
@@ -19,6 +19,16 @@ test('builds an origin-to-destination movement path', () => {
   assert.equal(geometry.paths[0].length, 25);
   assert.notEqual(geometry.paths[0][12][0], -115.5);
   assert.equal(geometry.spatialReference.wkid, 4326);
+});
+
+test('builds a planned deployment from the resource origin to the mobilization destination', () => {
+  const movement=plannedMovement({GlobalID:'{REQ}',WFMJobId:'JOB',StatusBadge:'Mobilize / Dispatch',DeploymentSiteName:'Incident Base',DeploymentAddress:'100 Main St',DeploymentLongitude:-115,DeploymentLatitude:44,DestinationFacilityGlobalID:'{FAC}'},{attributes:{CurrentFacilityGlobalID:'{ORIGIN}',SiteName:'North Yard',CurrentAddress:'1 Yard Rd'},geometry:{x:-116,y:43,spatialReference:{wkid:4326}}});
+  assert.equal(movement.attributes.MovementType,'Planned deployment');
+  assert.equal(movement.attributes.FromSiteName,'North Yard');
+  assert.equal(movement.attributes.ToSiteName,'Incident Base');
+  assert.deepEqual(movementPath(movement).paths[0][0],[-116,43]);
+  assert.deepEqual(movementPath(movement).paths[0].at(-1),[-115,44]);
+  assert.equal(plannedMovement({DeploymentLongitude:-115},{geometry:{x:-116,y:43}}),null);
 });
 
 test('builds a fallback request movement from home to current resource location', () => {

@@ -45,6 +45,33 @@ export function movementPath(feature = {}) {
   };
 }
 
+export function plannedMovement(requestAttributes = {}, resource = {}) {
+  const a = resource.attributes || {};
+  const origin = resource.geometry || {};
+  const fromX = coordinate(origin.x);
+  const fromY = coordinate(origin.y);
+  const toX = coordinate(requestAttributes.DeploymentLongitude);
+  const toY = coordinate(requestAttributes.DeploymentLatitude);
+  if (![fromX, fromY, toX, toY].every(Number.isFinite) || (fromX === toX && fromY === toY)) return null;
+  return {
+    geometry: { x: toX, y: toY, spatialReference: { wkid: 4326 } },
+    attributes: {
+      RequestGlobalID: requestAttributes.GlobalID,
+      WFMJobId: requestAttributes.WFMJobId,
+      MovementType: 'Planned deployment',
+      MovementState: requestAttributes.StatusBadge || 'Mobilize / Dispatch',
+      FromFacilityGlobalID: a.CurrentFacilityGlobalID || a.HomeFacilityGlobalID || '',
+      FromSiteName: a.SiteName || a.HomeSiteName || 'Resource origin',
+      FromAddress: a.CurrentAddress || a.HomeAddress || '',
+      ToFacilityGlobalID: requestAttributes.DestinationFacilityGlobalID || '',
+      ToSiteName: requestAttributes.DeploymentSiteName || requestAttributes.DeploymentAddress || 'Deployment destination',
+      DeploymentAddress: requestAttributes.DeploymentAddress || '',
+      FromX: fromX, FromY: fromY, FromWKID: origin.spatialReference?.latestWkid || origin.spatialReference?.wkid || 4326,
+      ToX: toX, ToY: toY, ToWKID: 4326
+    }
+  };
+}
+
 export function fallbackMovement(requestAttributes = {}, resource = {}) {
   const a = resource.attributes || {};
   const geometry = resource.geometry || {};
