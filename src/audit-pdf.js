@@ -94,7 +94,7 @@ function resourceReportLines(hubs, generatedAt, hasMap = false) {
 }
 
 function resourceSummaryLines(hubs, generatedAt, hasMap = false) {
-  const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const lines = [{ kind: 'request-title', text: 'National Resource Staging Summary', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', legend: 'heatmap', text: '', size: 0, gap: 252 }] : [])];
   const total = hubs.reduce((sum, hub) => sum + Number(hub.total || 0), 0);
   const available = hubs.reduce((sum, hub) => sum + (hub.resources || []).filter(resource => resource.availability === 'Available').length, 0);
   const addGrid = (title, columns, rows) => {
@@ -109,7 +109,7 @@ function resourceSummaryLines(hubs, generatedAt, hasMap = false) {
 }
 
 function resourceLocationSummaryLines(hubs, generatedAt, hasMap = false) {
-  const lines = [{ kind: 'request-title', text: 'Resource Summary by Location', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  const lines = [{ kind: 'request-title', text: 'Resource Summary by Location', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', legend: 'heatmap', text: '', size: 0, gap: 252 }] : [])];
   const locations = new Map();
   for (const hub of hubs) for (const resource of hub.resources || []) {
     const name=resource.location||hub.name||'Not recorded';
@@ -125,6 +125,34 @@ function resourceLocationSummaryLines(hubs, generatedAt, hasMap = false) {
   addGrid('RESOURCE KINDS BY LOCATION',['Location','Resource kind','Number'],rows.flatMap(row=>Object.entries(row.kinds).sort(([a],[b])=>a.localeCompare(b)).map(([label,count])=>[row.name,label,count])));
   addGrid('NIMS TYPES BY LOCATION',['Location','NIMS type','Number'],rows.flatMap(row=>Object.entries(row.types).sort(([a],[b])=>a.localeCompare(b)).map(([label,count])=>[row.name,label,count])));
   addGrid('REPORT INFORMATION',['Measure','Value'],[['Locations represented',rows.length],['Resource records',rows.reduce((sum,row)=>sum+row.total,0)],['Generated',generatedAt.toLocaleString()]]);
+  return lines;
+}
+
+function facilityReportLines(facilities, generatedAt, hasMap = false) {
+  const rows=Array.isArray(facilities)?facilities:[facilities];
+  const lines = [{ kind: 'request-title', text: 'Facility Report', size: 17, gap: 28 }, ...(hasMap ? [{ kind: 'map', text: '', size: 0, gap: 252 }] : [])];
+  lines.push({kind:'spacer',text:'',gap:20},{kind:'section',text:'REPORT SUMMARY',size:13,gap:36},{kind:'report-grid',cells:['Measure','Value'],header:true,size:10,gap:21},{kind:'report-grid',cells:['Facilities',rows.length],size:10,gap:20},{kind:'report-grid',cells:['Generated',generatedAt.toLocaleString()],size:10,gap:20},{kind:'spacer',text:'',gap:20},{kind:'section',text:'FACILITY INFORMATION',size:13,gap:36});
+  for(const facility of rows){
+    lines.push({kind:'resource-heading',text:facility.name||'Unnamed facility',size:11,gap:24},{kind:'report-grid',cells:['Field','Value'],header:true,size:10,gap:21});
+    const fields = [['Facility type',facility.type],['Operational status',facility.status],['Location',facility.location],['Coordinates',facility.coordinates],['Capacity',facility.capacity],['Jurisdiction',facility.jurisdiction],['Contact',facility.contact],['Contact phone',facility.phone],['Facility GlobalID',facility.globalId]];
+    for (const [label,value] of fields) for (const [index,part] of wrap(value || 'Not recorded',62).entries()) lines.push({kind:'report-grid',cells:[index?'':label,part],size:10,gap:20});
+  }
+  return lines;
+}
+
+function requestQueueReportLines(requests, generatedAt, hasMap = false) {
+  const mapped=requests.filter(request=>request.mapped).length;
+  const lines=[{kind:'request-title',text:'Pending Request Queue Report',size:17,gap:28},...(hasMap?[{kind:'map',text:'',size:0,gap:252}]:[])];
+  lines.push({kind:'spacer',text:'',gap:20},{kind:'section',text:'QUEUE SUMMARY',size:13,gap:36},{kind:'report-grid',cells:['Measure','Value'],header:true,size:10,gap:21});
+  for(const row of [['Pending requests',requests.length],['Mapped locations',mapped],['Location unavailable',requests.length-mapped],['Generated',generatedAt.toLocaleString()]])lines.push({kind:'report-grid',cells:row,size:10,gap:20});
+  lines.push({kind:'spacer',text:'',gap:20},{kind:'section',text:'PENDING REQUESTS',size:13,gap:36});
+  requests.forEach((request,index)=>{
+    lines.push({kind:'resource-heading',text:`${index+1}. ${request.title||'Untitled request'}`,size:11,gap:24},{kind:'report-grid',cells:['Field','Value'],header:true,size:10,gap:21});
+    const equipment=[request.category,request.kind,request.type].filter(Boolean).join(' / ')||'Not recorded';
+    const fields=[['Incident',request.incident],['Requestor',request.requestor],['Priority',request.priority],['Requested resource',equipment],['Quantity',request.quantity],['Date needed',request.dateNeeded],['Status',request.status],['Location',request.location],['Workflow job',request.jobId]];
+    for(const [label,value] of fields)for(const [partIndex,part] of wrap(value??'Not recorded',62).entries())lines.push({kind:'report-grid',cells:[partIndex?'':label,part],size:10,gap:20});
+  });
+  if(!requests.length)lines.push({kind:'report-note',text:'No pending requests were found at report generation time.',size:10,gap:16});
   return lines;
 }
 
@@ -177,6 +205,14 @@ function pageCommands(page, pageNumber, pageCount, branding, hasLogo, hasMap, re
     } else if (line.kind === 'map' && hasMap) {
       commands.push(`${color(colors.border)} RG 1 w 36 ${(line.y - 226).toFixed(2)} 540 220 re S`);
       commands.push(`q 540 0 0 220 36 ${(line.y - 226).toFixed(2)} cm /MapImage Do Q`);
+      if(line.legend==='heatmap'){
+        const legendY=line.y-216;
+        commands.push(`1 1 1 rg 375 ${legendY.toFixed(2)} 191 25 re f`);
+        ['#FFFF00','#FFCC00','#FF8800','#FF4400','#FF0000'].forEach((shade,index)=>commands.push(`${color(shade)} rg ${444+index*20} ${legendY+8} 20 8 re f`));
+        commands.push(textCommand('Resource density',381,legendY+9,7,'F2','#071824'));
+        commands.push(textCommand('Low',426,legendY-1,6,'F1','#071824'));
+        commands.push(textCommand('High',548,legendY-1,6,'F1','#071824'));
+      }
     } else if (line.kind === 'section') {
       commands.push(`${color(colors.accent)} rg 36 ${(line.y - 7).toFixed(2)} 540 22 re f`);
       commands.push(textCommand(line.text, 44, line.y, line.size, 'F2', colors.background));
@@ -288,4 +324,14 @@ export function buildResourceSummaryPdf(hubs = [], generatedAt = new Date(), bra
 export function buildResourceLocationSummaryPdf(hubs = [], generatedAt = new Date(), brandingInput = {}) {
   const hasMap = Boolean(brandingInput.mapImage?.bytes?.length);
   return buildPdf(resourceLocationSummaryLines(hubs, generatedAt, hasMap), brandingInput, 'RESOURCE SUMMARY BY LOCATION');
+}
+
+export function buildFacilityReportPdf(facility = {}, generatedAt = new Date(), brandingInput = {}) {
+  const hasMap=Boolean(brandingInput.mapImage?.bytes?.length);
+  return buildPdf(facilityReportLines(facility,generatedAt,hasMap),brandingInput,'FACILITY REPORT');
+}
+
+export function buildRequestQueueReportPdf(requests = [], generatedAt = new Date(), brandingInput = {}) {
+  const hasMap=Boolean(brandingInput.mapImage?.bytes?.length);
+  return buildPdf(requestQueueReportLines(requests,generatedAt,hasMap),brandingInput,'REQUEST QUEUE REPORT');
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildAuditPdf, buildRequestPdf, buildResourceReportPdf, buildResourceSummaryPdf, buildResourceLocationSummaryPdf } from '../src/audit-pdf.js';
+import { buildAuditPdf, buildRequestPdf, buildResourceReportPdf, buildResourceSummaryPdf, buildResourceLocationSummaryPdf, buildFacilityReportPdf, buildRequestQueueReportPdf } from '../src/audit-pdf.js';
 
 test('builds a downloadable PDF containing request and audit text', async () => {
   const blob = buildAuditPdf(
