@@ -28,6 +28,7 @@ test('completeStep never retries an advanced step when durable comment saving fa
   let sends = 0;
   client.jobAction = async () => ({ success: true, stepResponses: [{ status: 'Success' }] });
   client.sendStepInformation = async () => { sends++; return [{ stepId: 'next-step' }]; };
+  client.getJob = async () => ({ currentSteps: [{ stepId: 'next-step' }] });
   client.addComment = async () => { throw new Error('comment endpoint unavailable'); };
   const originalWarn = console.warn;
   console.warn = () => undefined;
@@ -52,6 +53,17 @@ test('completeStep verifies job movement before retrying a failed websocket ackn
   assert.deepEqual(result, [{ stepId: 'next-step' }]);
   assert.equal(sends, 1);
   assert.equal(actions, 1);
+});
+
+test('completeStep waits for the job read endpoint to reflect the acknowledged step advance', async () => {
+  const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
+  let reads = 0;
+  client.jobAction = async () => ({ success: true, stepResponses: [{ status: 'Success' }] });
+  client.sendStepInformation = async () => [{ stepId: 'next-step' }];
+  client.getJob = async () => ({ currentSteps: reads++ < 2 ? [{ stepId: 'mobilize-step' }] : [{ stepId: 'deploy-step' }] });
+  const result = await client.completeStep('job-1', 'mobilize-step', null, '', { persistComment: false });
+  assert.deepEqual(result, [{ stepId: 'deploy-step' }]);
+  assert.equal(reads, 3);
 });
 
 test('finishStep runs and finishes an automatic workflow step, then verifies movement', async () => {

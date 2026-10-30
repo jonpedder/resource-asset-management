@@ -132,6 +132,17 @@ export class WorkflowClient {
     });
   }
 
+  async waitForStepAdvance(jobId, stepId, { attempts = 8, delayMs = 500 } = {}) {
+    let job = null;
+    for (let attempt = 0; attempt < attempts; attempt++) {
+      if (attempt) await new Promise(resolve => setTimeout(resolve, delayMs));
+      job = await this.getJob(jobId);
+      const currentSteps = job.currentSteps || [];
+      if (!currentSteps.some(step => step.stepId === stepId)) return currentSteps;
+    }
+    throw new Error(`Workflow step ${stepId} did not complete after Workflow Manager acknowledged the response.`);
+  }
+
   async completeStep(jobId, stepId, response, note, { persistComment = true } = {}) {
     const username = await this.getUsername();
     if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
@@ -153,6 +164,7 @@ export class WorkflowClient {
         currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
       }
     }
+    currentSteps = await this.waitForStepAdvance(jobId, stepId);
     if (note && persistComment) {
       try { await this.addComment(jobId, note); }
       catch (error) { console.warn('Workflow advanced, but its audit comment could not be saved.', error); }
