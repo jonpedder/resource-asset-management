@@ -66,6 +66,26 @@ test('completeStep waits for the job read endpoint to reflect the acknowledged s
   assert.equal(reads, 3);
 });
 
+test('finishStep treats an already-finished refusal as success after verifying the step advanced', async () => {
+  const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
+  client.jobAction = async (_jobId,type) => type==='Finish'
+    ? { success:true,stepResponses:[{status:'Failed',statusDescription:'The step is already finished'}] }
+    : { success:true,stepResponses:[{status:'Success'}] };
+  client.getJob = async () => ({currentSteps:[{stepId:'deploy-step'}]});
+  const result=await client.finishStep('job-1','mobilize-step');
+  assert.equal(result.alreadyAdvanced,true);
+  assert.deepEqual(result.currentSteps,[{stepId:'deploy-step'}]);
+});
+
+test('finishStep preserves a refusal when the attempted step is still current', async () => {
+  const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
+  client.jobAction = async (_jobId,type) => type==='Finish'
+    ? { success:true,stepResponses:[{status:'Failed',statusDescription:'Not allowed'}] }
+    : { success:true,stepResponses:[{status:'Success'}] };
+  client.getJob = async () => ({currentSteps:[{stepId:'email-step'}]});
+  await assert.rejects(()=>client.finishStep('job-1','email-step'),/Finish was refused: Not allowed/);
+});
+
 test('finishStep runs and finishes an automatic workflow step, then verifies movement', async () => {
   const calls = [];
   const client = new WorkflowClient({

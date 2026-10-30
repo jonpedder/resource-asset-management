@@ -101,10 +101,17 @@ export class WorkflowClient {
     const username = await this.getUsername();
     if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
     await this.jobAction(jobId, 'Run', stepId).catch(() => undefined);
-    const result = assertStepAction(await this.jobAction(jobId, 'Finish', stepId), 'Finish');
+    let result = null, finishError = null;
+    try { result = assertStepAction(await this.jobAction(jobId, 'Finish', stepId), 'Finish'); }
+    catch (error) { finishError = error; }
     const job = await this.getJob(jobId);
-    if ((job.currentSteps || []).some(step => step.stepId === stepId)) throw new Error(`Workflow step ${stepId} did not complete.`);
-    return { result, currentSteps: job.currentSteps || [] };
+    const currentSteps = job.currentSteps || [];
+    const stillCurrent = currentSteps.some(step => step.stepId === stepId);
+    if (stillCurrent) {
+      if (finishError) throw finishError;
+      throw new Error(`Workflow step ${stepId} did not complete.`);
+    }
+    return { result, currentSteps, alreadyAdvanced: Boolean(finishError) };
   }
 
   async sendStepInformation(jobId, stepId, response, note, timeoutMs = 20000) {
