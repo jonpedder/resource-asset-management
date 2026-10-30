@@ -106,3 +106,21 @@ export function movementMidpoint(path) {
     spatialReference: path.spatialReference
   };
 }
+
+export function movementDirectionMarker(path, fraction = 0.72) {
+  const vertices = path?.paths?.[0] || [];
+  if (vertices.length < 2) return null;
+  const index = Math.min(vertices.length - 2, Math.max(0, Math.round((vertices.length - 1) * fraction)));
+  const start = vertices[index], end = vertices[index + 1];
+  const dx = Number(end[0]) - Number(start[0]), dy = Number(end[1]) - Number(start[1]);
+  if (![dx, dy].every(Number.isFinite) || (!dx && !dy)) return null;
+  return {
+    geometry: {
+      type: 'point',
+      x: (Number(start[0]) + Number(end[0])) / 2,
+      y: (Number(start[1]) + Number(end[1])) / 2,
+      spatialReference: path.spatialReference
+    },
+    angle: 90 - Math.atan2(dy, dx) * 180 / Math.PI
+  };
+}

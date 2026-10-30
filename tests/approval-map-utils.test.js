@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fallbackMovement, movementMidpoint, movementPath, plannedMovement, requestMapFilters } from '../src/approval-map-utils.js';
+import { fallbackMovement, movementDirectionMarker, movementMidpoint, movementPath, plannedMovement, requestMapFilters } from '../src/approval-map-utils.js';
 
 test('builds request and resource filters for the selected request', () => {
   assert.deepEqual(requestMapFilters({ GlobalID: "{REQ}'", ResourceGlobalID: '{RES}', WFMJobId: "JOB'1" }), {
@@ -42,6 +42,15 @@ test('calculates a label point at the movement line midpoint', () => {
   assert.deepEqual(movementMidpoint({ paths: [[[-116, 43], [-115, 44], [-114, 45]]], spatialReference: { wkid: 4326 } }), {
     type: 'point', x: -115, y: 44, spatialReference: { wkid: 4326 }
   });
+});
+
+test('calculates a directional arrow that follows outbound and return paths', () => {
+  const outbound=movementDirectionMarker({paths:[[[0,0],[1,0],[2,0]]],spatialReference:{wkid:4326}});
+  const returning=movementDirectionMarker({paths:[[[2,0],[1,0],[0,0]]],spatialReference:{wkid:4326}});
+  assert.equal(outbound.angle,90);
+  assert.equal(returning.angle,-90);
+  assert.deepEqual(outbound.geometry,{type:'point',x:1.5,y:0,spatialReference:{wkid:4326}});
+  assert.equal(movementDirectionMarker({paths:[[[0,0]]]}),null);
 });
 
 test('uses destination feature geometry and rejects incomplete paths', () => {
