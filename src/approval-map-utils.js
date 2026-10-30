@@ -23,7 +23,7 @@ export function movementPath(feature = {}) {
   const fromY = coordinate(attributes.FromY);
   const toX = coordinate(attributes.ToX ?? feature.geometry?.x);
   const toY = coordinate(attributes.ToY ?? feature.geometry?.y);
-  if (![fromX, fromY, toX, toY].every(Number.isFinite)) return null;
+  if (![fromX, fromY, toX, toY].every(Number.isFinite) || (fromX === toX && fromY === toY)) return null;
   const dx = toX - fromX;
   const dy = toY - fromY;
   const distance = Math.hypot(dx, dy);

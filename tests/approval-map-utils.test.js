@@ -49,4 +49,5 @@ test('uses destination feature geometry and rejects incomplete paths', () => {
   assert.deepEqual(path.paths[0][0], [1, 2]);
   assert.deepEqual(path.paths[0].at(-1), [3, 4]);
   assert.equal(movementPath({ attributes: { FromX: 1, FromY: null, ToX: 3, ToY: 4 } }), null);
+  assert.equal(movementPath({ attributes: { FromX: 1, FromY: 2, ToX: 1, ToY: 2 } }), null);
 });
