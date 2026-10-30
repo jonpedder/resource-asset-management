@@ -66,6 +66,17 @@ test('completeStep waits for the job read endpoint to reflect the acknowledged s
   assert.equal(reads, 3);
 });
 
+test('completeStep waits when Workflow Manager briefly returns the same step name under a new execution id', async () => {
+  const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
+  let reads=0;
+  client.jobAction=async()=>({success:true,stepResponses:[{status:'Success'}]});
+  client.sendStepInformation=async()=>[{stepId:'next-execution',stepName:'Deploy / In Use'}];
+  client.getJob=async()=>({currentSteps:reads++===0?[{stepId:'next-execution',stepName:'Deploy / In Use'}]:[{stepId:'ready-return',stepName:'Ready to Return?'}]});
+  const result=await client.completeStep('job-1','deploy-execution','manual', '', {persistComment:false,expectedStepName:'Deploy / In Use'});
+  assert.deepEqual(result,[{stepId:'ready-return',stepName:'Ready to Return?'}]);
+  assert.equal(reads,2);
+});
+
 test('finishStep treats an already-finished refusal as success after verifying the step advanced', async () => {
   const client = new WorkflowClient({ baseUrl: 'https://workflow.example.test/org/item', getToken: async () => 'token' });
   client.jobAction = async (_jobId,type) => type==='Finish'

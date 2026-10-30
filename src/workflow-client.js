@@ -139,18 +139,19 @@ export class WorkflowClient {
     });
   }
 
-  async waitForStepAdvance(jobId, stepId, { attempts = 8, delayMs = 500 } = {}) {
+  async waitForStepAdvance(jobId, stepId, { attempts = 8, delayMs = 500, expectedStepName = '' } = {}) {
     let job = null;
     for (let attempt = 0; attempt < attempts; attempt++) {
       if (attempt) await new Promise(resolve => setTimeout(resolve, delayMs));
       job = await this.getJob(jobId);
       const currentSteps = job.currentSteps || [];
-      if (!currentSteps.some(step => step.stepId === stepId)) return currentSteps;
+      const stillCurrent = currentSteps.some(step => step.stepId === stepId || (expectedStepName && step.stepName === expectedStepName));
+      if (!stillCurrent) return currentSteps;
     }
     throw new Error(`Workflow step ${stepId} did not complete after Workflow Manager acknowledged the response.`);
   }
 
-  async completeStep(jobId, stepId, response, note, { persistComment = true } = {}) {
+  async completeStep(jobId, stepId, response, note, { persistComment = true, expectedStepName = '' } = {}) {
     const username = await this.getUsername();
     if (username) await this.assignStep(jobId, stepId, username).catch(() => undefined);
     await this.jobAction(jobId, 'Run', stepId).then(result => assertStepAction(result, 'Run')).catch(() => undefined);
@@ -162,7 +163,7 @@ export class WorkflowClient {
       await new Promise(resolve => setTimeout(resolve, 500));
       const job = await this.getJob(jobId).catch(() => null);
       const verifiedSteps = job?.currentSteps || [];
-      if (job && !verifiedSteps.some(step => step.stepId === stepId)) currentSteps = verifiedSteps;
+      if (job && !verifiedSteps.some(step => step.stepId === stepId || (expectedStepName && step.stepName === expectedStepName))) currentSteps = verifiedSteps;
       else {
         await this.jobAction(jobId, 'Stop', stepId).catch(() => undefined);
         await new Promise(resolve => setTimeout(resolve, 350));
@@ -171,7 +172,7 @@ export class WorkflowClient {
         currentSteps = await this.sendStepInformation(jobId, stepId, response, note);
       }
     }
-    currentSteps = await this.waitForStepAdvance(jobId, stepId);
+    currentSteps = await this.waitForStepAdvance(jobId, stepId, { expectedStepName });
     if (note && persistComment) {
       try { await this.addComment(jobId, note); }
       catch (error) { console.warn('Workflow advanced, but its audit comment could not be saved.', error); }

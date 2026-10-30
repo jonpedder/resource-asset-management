@@ -69,7 +69,7 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
 
   try {
     if (action.mode === 'finish') await workflow.finishStep(request.attributes.WFMJobId, step.stepId);
-    else await workflow.completeStep(request.attributes.WFMJobId, step.stepId, action.response, note, { persistComment: false });
+    else await workflow.completeStep(request.attributes.WFMJobId, step.stepId, action.response, note, { persistComment: false, expectedStepName: step.stepName });
   } catch (workflowError) {
     if (resumed) {
       await client.applyServiceEdits([

@@ -1,7 +1,7 @@
 import { loadConfig } from './config.js';
 import { createLinkedRequest } from './request-saga.js?v=20261029-1';
 import { applyPresentation } from './presentation.js';
-import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261030-10';
+import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261030-11';
 import { buildResourceReportPdf, buildResourceSummaryPdf, buildResourceLocationSummaryPdf, buildFacilityReportPdf, buildRequestQueueReportPdf, loadPdfLogo } from './audit-pdf.js?v=20261030-9';
 
 const $ = (id) => document.getElementById(id);
