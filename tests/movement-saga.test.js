@@ -2,14 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { executeMovementSaga } from '../src/movement-saga.js';
 
-function fixture({ failWorkflow = false, priorMovement = null } = {}) {
+function fixture({ failWorkflow = false, priorMovement = null, staleReadBacks = 0 } = {}) {
   const calls=[];
-  let resource={ attributes:{ OBJECTID:1, GlobalID:'{RES}', Status:'En Route', SiteName:'Staging', LocationVersion:0 }, geometry:{x:1,y:2,spatialReference:{wkid:4326}} };
+  let remainingStaleReadBacks=staleReadBacks,resource={ attributes:{ OBJECTID:1, GlobalID:'{RES}', Status:'En Route', SiteName:'Staging', LocationVersion:0 }, geometry:{x:1,y:2,spatialReference:{wkid:4326}} },resourceBeforeEdit;
   if(priorMovement)resource={attributes:{...resource.attributes,Status:'Deployed',SiteName:priorMovement.attributes.ToSiteName,LocationVersion:1},geometry:structuredClone(priorMovement.geometry)};
   const client={
-    async oneByGlobalId(){ calls.push('read'); return structuredClone(resource); },
+    async oneByGlobalId(){ calls.push('read'); if(resourceBeforeEdit&&remainingStaleReadBacks>0){remainingStaleReadBacks--;return structuredClone(resourceBeforeEdit);} return structuredClone(resource); },
     async query(){ calls.push('movement-query'); return priorMovement?[structuredClone(priorMovement)]:[]; },
-    async applyServiceEdits(edits){ calls.push(edits); const update=edits.find(e=>e.id===0)?.updates?.[0]; if(update) resource={attributes:{...resource.attributes,...update.attributes},geometry:update.geometry||resource.geometry}; }
+    async applyServiceEdits(edits){ calls.push(edits); const update=edits.find(e=>e.id===0)?.updates?.[0]; if(update){resourceBeforeEdit=structuredClone(resource);resource={attributes:{...resource.attributes,...update.attributes},geometry:update.geometry||resource.geometry};} }
   };
   const workflow={
     async completeStep(){ calls.push('workflow'); if(failWorkflow) throw new Error('WFM failed'); },
@@ -26,6 +26,13 @@ test('moves GIS atomically before workflow and confirms the movement', async()=>
   assert.equal(f.calls[2][0].id,0);
   assert.equal(f.calls[4],'workflow');
   assert.equal(f.calls.at(-1),'comment');
+});
+
+test('waits through stale feature-service read-backs before advancing workflow', async()=>{
+  const f=fixture({staleReadBacks:2});
+  await executeMovementSaga({...f,layers:{resources:0,requests:2,movements:3},note:'Arrived',username:'op',now:()=>100,movementGlobalId:'{MOVE}'});
+  assert.equal(f.calls.filter(call=>call==='read').length,4);
+  assert.equal(f.calls.filter(call=>call==='workflow').length,1);
 });
 
 test('compensates the GIS move when workflow completion fails', async()=>{

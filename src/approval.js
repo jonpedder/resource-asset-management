@@ -5,7 +5,7 @@ import { applyPresentation } from './presentation.js';
 import { statusForStep, nextActionForStep, responsibleForStep, personaDescription, timelineForStep } from './workflow-state.js';
 import { buildAuditPdf, loadPdfLogo } from './audit-pdf.js?v=20261029-8';
 import { FeatureServiceClient } from './feature-service-client.js?v=20261029-2';
-import { executeMovementSaga } from './movement-saga.js?v=20261029-4';
+import { executeMovementSaga } from './movement-saga.js?v=20261030-5';
 import { requiresMovementLocation, validateMovementLocation } from './resource-movement.js?v=20261029-1';
 import { fallbackMovement, movementMidpoint, movementPath, plannedMovement, requestMapFilters } from './approval-map-utils.js?v=20261030-6';
 import { auditEntryHeading, auditEntryIdentity, normalizeAuditEntries } from './audit-history.js?v=20261029-4';

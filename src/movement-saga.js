@@ -1,5 +1,15 @@
 import { buildMovement, buildResourceUpdate, guid, movementForStep, rollbackResourceUpdate } from './resource-movement.js';
 
+async function readVerifiedResource(client, layerId, resourceGlobalId, expectedVersion, { attempts = 8, delayMs = 350 } = {}) {
+  let resource;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    if (attempt) await new Promise(resolve => setTimeout(resolve, delayMs));
+    resource = await client.oneByGlobalId(layerId, resourceGlobalId, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
+    if (Number(resource.attributes?.LocationVersion) === Number(expectedVersion)) return resource;
+  }
+  throw new Error('Resource location read-back verification failed after waiting for the feature service to reflect the accepted edit.');
+}
+
 function requestUpdate(request, movement, state, error = '', returnedDate) {
   return { attributes: {
     OBJECTID: request.attributes.OBJECTID,
@@ -54,8 +64,7 @@ export async function executeMovementSaga({ client, layers, workflow, request, s
       { id: layers.requests, updates: [requestEdit] },
       { id: layers.movements, ...movementEdit }
     ]);
-    edited = await client.oneByGlobalId(layers.resources, request.attributes.ResourceGlobalID, { outFields: '*', returnGeometry: true, outSpatialReference: 4326 });
-    if (Number(edited.attributes.LocationVersion) !== Number(resourceEdit.attributes.LocationVersion)) throw new Error('Resource location read-back verification failed.');
+    edited = await readVerifiedResource(client, layers.resources, request.attributes.ResourceGlobalID, resourceEdit.attributes.LocationVersion);
   }
 
   try {
