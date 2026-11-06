@@ -3,6 +3,7 @@ import { createLinkedRequest } from './request-saga.js?v=20261029-1';
 import { applyPresentation } from './presentation.js';
 import { WorkflowClient, workflowBaseUrl, jobExtendedProperty } from './workflow-client.js?v=20261030-11';
 import { buildResourceReportPdf, buildResourceSummaryPdf, buildResourceLocationSummaryPdf, buildFacilityReportPdf, buildRequestQueueReportPdf, loadPdfLogo } from './audit-pdf.js?v=20261030-9';
+import { sharedResourceSymbol, SHARED_FACILITY_SYMBOL_URL } from './shared-symbology.js?v=20261106-1';
 
 const $ = (id) => document.getElementById(id);
 const state = { config: null, view: null, resourceLayer: null, facilityLayer: null, selectionHighlight: null, resources: [], facilities: [], requests: [], selected: null, selectedFacility: null, user: null, requestPoll: null };
@@ -15,6 +16,9 @@ function el(tag, className, value) {
   if (className) node.className = className;
   if (value !== undefined) node.textContent = text(value);
   return node;
+}
+function listIcon(url) {
+  const image = document.createElement('img'); image.className = 'resource-list-icon'; image.src = url; image.alt = ''; image.loading = 'lazy'; return image;
 }
 function toast(message, kind = '') {
   const node = el('div', `toast ${kind}`, message); $('toastRegion').append(node); setTimeout(() => node.remove(), 6500);
@@ -43,7 +47,7 @@ function renderResources() {
   const list = $('resourceList'); list.replaceChildren(); const rows = filteredResources(); $('visibleCount').textContent = rows.length;
   for (const feature of rows) {
     const a = attrs(feature); const button = el('button', `resource-card${state.selected === feature ? ' selected' : ''}`); button.type = 'button';
-    const line = el('div','card-line'); line.append(el('span','card-title',a.ResourceName || 'Unnamed resource'), el('span',`status ${statusClass(a.Status)}`,a.Status || 'Unknown'));
+    const line = el('div','card-line'); line.append(listIcon(sharedResourceSymbol(a).url), el('span','card-title',a.ResourceName || 'Unnamed resource'), el('span',`status ${statusClass(a.Status)}`,a.Status || 'Unknown'));
     button.append(line, el('div','card-meta',`${a.NIMS_Category || 'Unclassified'} · ${a.NIMS_Kind || 'Unknown kind'} · ${a.TypeClass || 'Unspecified'}\n${a.OwningAgency || 'No agency'} · Qty ${a.Quantity ?? 0}`),el('span','request-hint','Select to request this asset'));
     button.addEventListener('click', () => selectResource(feature)); list.append(button);
   }
@@ -61,7 +65,7 @@ function renderFacilities() {
   for(const feature of rows){
     const a=attrs(feature); const name=facilityValue(a,['FacilityName','Name','SiteName'],'Unnamed facility'); const type=facilityValue(a,['FacilityType','Type','TypeClass','Category'],'Facility'); const status=facilityStatus(a);
     const location=facilityValue(a,['Address','FullAddress','City','SiteName','Location'],'Location not recorded'); const button=el('button',`resource-card${state.selectedFacility===feature?' selected':''}`); button.type='button';
-    const line=el('div','card-line'); line.append(el('span','card-title',name)); if(status)line.append(el('span',`status ${statusClass(status)}`,status));
+    const line=el('div','card-line'); line.append(listIcon(SHARED_FACILITY_SYMBOL_URL),el('span','card-title',name)); if(status)line.append(el('span',`status ${statusClass(status)}`,status));
     button.append(line,el('div','card-meta',`${type}\n${location}`),el('span','request-hint','Select to locate this facility')); button.addEventListener('click',()=>selectFacility(feature)); list.append(button);
   }
   if(!rows.length)list.append(el('li','empty-state','No facilities match the current search.'));
