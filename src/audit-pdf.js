@@ -239,7 +239,7 @@ function pageCommands(page, pageNumber, pageCount, branding, hasLogo, hasMap, re
 function normalizeBranding(input = {}) {
   const source = input.colors || {};
   return {
-    appName: ascii(input.appName || 'Resource & Asset Management').slice(0, 60),
+    appName: ascii(input.appName || 'Resource Request System').slice(0, 60),
     subtitle: ascii(input.subtitle || 'FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager').slice(0, 100),
     logo: input.logo,
     mapImage: input.mapImage,

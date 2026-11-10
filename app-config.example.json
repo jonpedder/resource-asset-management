@@ -20,7 +20,7 @@
     "resourceSelectionScale": 24000
   },
   "branding": {
-    "appName": "Resource & Asset Management",
+    "appName": "Resource Request System",
     "subtitle": "FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager",
     "logoUrl": ""
   }

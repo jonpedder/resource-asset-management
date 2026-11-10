@@ -1,6 +1,6 @@
-# Resource & Asset Management
+# Resource Request System
 
-Clean rebuild of an ArcGIS EOC Resource & Asset Management solution with Workflow Manager integration.
+Clean rebuild of an ArcGIS EOC Resource Request System solution with Workflow Manager integration.
 
 ## Status
 

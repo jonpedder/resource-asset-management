@@ -8,7 +8,7 @@ export function applyPresentation(config, root = document) {
   const branding = config.branding || {}; const labels = config.labels || {}; const style = root.documentElement.style;
   for (const [key, variable] of Object.entries(COLOR_VARS)) if (/^#[0-9a-f]{6}$/i.test(branding.colors?.[key] || '')) style.setProperty(variable, branding.colors[key]);
   for (const [key, variable] of Object.entries(STATUS_VARS)) if (/^#[0-9a-f]{6}$/i.test(config.statusColors?.[key] || '')) style.setProperty(variable, config.statusColors[key]);
-  root.querySelectorAll('[data-brand-name]').forEach(node => node.textContent = branding.appName || 'Resource & Asset Management');
+  root.querySelectorAll('[data-brand-name]').forEach(node => node.textContent = branding.appName || 'Resource Request System');
   const defaultSubtitle = 'FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager';
   const subtitle = !branding.subtitle || branding.subtitle === 'FEMA NIMS Common Operating Picture' ? defaultSubtitle : branding.subtitle;
   root.querySelectorAll('[data-brand-subtitle]').forEach(node => node.textContent = subtitle);

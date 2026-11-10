@@ -1,4 +1,4 @@
-# Consolidated build prompt: EOC Resource & Asset Management
+# Consolidated build prompt: EOC Resource Request System
 
 Use this prompt in a new coding session to create a **new Git repository and new ArcGIS deployment from scratch**. Do not clone, repair, or reuse the existing application, feature service, Web Map, Workflow Manager item, job template, diagram, jobs, or hard-coded item IDs. Existing resources may be inspected only as functional reference.
 
@@ -6,7 +6,7 @@ Use this prompt in a new coding session to create a **new Git repository and new
 
 ## PROMPT START
 
-You are a senior ArcGIS solution architect and web application engineer. Build and deploy a clean, production-ready **EOC Resource & Asset Management** solution consisting of:
+You are a senior ArcGIS solution architect and web application engineer. Build and deploy a clean, production-ready **EOC Resource Request System** solution consisting of:
 
 1. A new Git repository containing a static ArcGIS Maps SDK for JavaScript web application.
 2. A new hosted feature service with resource, facility, and resource-request data.
