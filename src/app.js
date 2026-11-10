@@ -139,7 +139,7 @@ function toggleDrawer(open){$('requestsDrawer').classList.toggle('open',open);$(
 async function setupArcGIS() {
   const cfg=state.config; window.require(['esri/WebMap','esri/views/MapView','esri/config','esri/identity/IdentityManager','esri/identity/OAuthInfo','esri/widgets/LayerList','esri/widgets/BasemapGallery','esri/widgets/Bookmarks','esri/widgets/Home','esri/widgets/Legend','esri/widgets/Expand'], async (WebMap,MapView,esriConfig,IdentityManager,OAuthInfo,LayerList,BasemapGallery,Bookmarks,Home,Legend,Expand)=>{
     esriConfig.portalUrl=cfg.portalUrl;
-    if(cfg.oauthClientId && !cfg.oauthClientId.startsWith('NEW_')) IdentityManager.registerOAuthInfos([new OAuthInfo({appId:cfg.oauthClientId,portalUrl:cfg.portalUrl,popup:true,flowType:'implicit',popupCallbackUrl:`${location.origin}${location.pathname.replace(/[^/]*$/,'')}oauth-callback.html`})]);
+    if(cfg.oauthClientId && !cfg.oauthClientId.startsWith('NEW_')) IdentityManager.registerOAuthInfos([new OAuthInfo({appId:cfg.oauthClientId,portalUrl:cfg.portalUrl,popup:false,flowType:'implicit',popupCallbackUrl:`${location.origin}${location.pathname.replace(/[^/]*$/,'')}oauth-callback.html`})]);
 
     const showSignedOut=()=>{
       state.user=null;
