@@ -13,13 +13,15 @@
   <a class="skip-link" href="#main">Skip to operations workspace</a>
   <header class="app-header">
     <a class="brand" href="./index.html" aria-label="Resource Request System home">
+      <img class="brand-logo" data-brand-logo hidden alt="Agency logo">
       <span class="brand-mark" aria-hidden="true">EOC</span>
       <span class="brand-copy"><strong data-brand-name>Resource Request System</strong><span data-brand-subtitle>FEMA NIMS Common Operating Picture - Powered by ArcGIS Workflow Manager</span></span>
     </a>
     <nav class="app-nav header-actions" aria-label="Primary navigation">
       <div class="header-report-group" aria-label="Reports"><label for="reportType">Reports</label><select id="reportType" disabled><option value="" selected>Select a report</option><option value="report">Resource Report</option><option value="summary">Resource Summary</option><option value="location">Resource Summary by Location</option><option value="facility">Facility Report</option><option value="requests">Request Queue Report</option></select><button class="header-action header-action-small" id="exportReportButton" type="button" disabled>PDF</button></div>
+      <a class="header-action" href="./index.html" aria-current="page">Operations Map</a>
       <button class="header-action" id="requestsButton" type="button">Request Queue <span class="count-badge" id="requestCount">0</span></button>
-      <a class="header-action header-action-primary" href="./approval.html?v=20261028-2" target="_self" id="approvalWorkspaceLink">Request Approval</a>
+      <a class="header-action" href="./approval.html?v=20261028-2" target="_self" id="approvalWorkspaceLink">Request Approval</a>
     </nav>
     <div class="session-area">
       <div class="user-chip"><span class="user-dot" id="sessionDot"></span><span id="sessionUser">Not signed in</span></div>
